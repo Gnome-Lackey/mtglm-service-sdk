@@ -1,0 +1,12 @@
+module.exports.DynamoClient = require("./build/clients/dynamo");
+module.exports.requestMiddleware = require("./build/middleware/request");
+module.exports.logger = require("./build/utils/logger");
+module.exports.responseHandler = require("./build/utils/response");
+module.exports.models.Dynamo = require("./build/models/Dynamo");
+module.exports.models.Filters = require("./build/models/Filters");
+module.exports.models.Items = require("./build/models/Items");
+module.exports.models.Lambda = require("./build/models/Lambda");
+module.exports.models.PathParameters = require("./build/models/PathParameters");
+module.exports.models.PrimaryKey = require("./build/models/PrimaryKey");
+module.exports.models.Requests = require("./build/models/Requests");
+module.exports.models.Responses = require("./build/models/Responses");

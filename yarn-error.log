@@ -1,0 +1,78 @@
+Arguments: 
+  /Users/matthew.pfister/.nvm/versions/node/v12.1.0/bin/node /usr/local/Cellar/yarn/1.19.0/libexec/bin/yarn.js
+
+PATH: 
+  /usr/local/opt/openssl/bin:/Users/matthew.pfister/Library/Python/2.7/bin:/Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home::/Users/matthew.pfister/.node/lib/node_modules:/Users/matthew.pfister/.nvm/versions/node/v12.1.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.19.0
+
+Node version: 
+  12.1.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/matthew.pfister/Development/apps/mtglm/service-sdk/package.json: Unexpected token / in JSON at position 281
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.19.0/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.19.0/libexec/lib/cli.js:304:30)
+      at /usr/local/Cellar/yarn/1.19.0/libexec/lib/cli.js:315:13
+
+npm manifest: 
+  {
+    "name": "mtglm-service-sdk",
+    "parser": "babel-eslint",
+    "version": "1.0.0",
+    "description": "SDK for common tools and utilities in mtglm service layer.",
+    "scripts": {
+      "build": "tsc --project ./tsconfig.json --noUnusedLocals",
+      "lint": "eslint --ext .ts src/",
+      // "preinstall": "yarn build"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+ssh://git@gitlab.com/mtglm-service-sdk.git"
+    },
+    "author": "herrpfister",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://gitlab.com/mtglm-service-sdk/issues"
+    },
+    "homepage": "https://gitlab.com/mtglm-service-sdk#readme",
+    "pre-commit": [
+      "lint",
+      "build"
+    ],
+    "files": [
+      "index.js",
+      "build/"
+    ],
+    "dependencies": {
+      "@types/aws-sdk": "^2.7.0",
+      "@types/jwt-decode": "^2.2.1",
+      "@types/node": "^12.7.12",
+      "@types/uuid": "^3.4.5",
+      "aws-sdk": "^2.482.0",
+      "global": "^4.4.0",
+      "jwt-decode": "^2.2.0",
+      "typescript": "^3.6.4",
+      "uuid": "^3.3.3"
+    },
+    "devDependencies": {
+      "@bsokol/eslint-config": "^3.0.0",
+      "@typescript-eslint/eslint-plugin": "^2.0.0",
+      "babel-eslint": "8",
+      "eslint": "5.x",
+      "eslint-plugin-filenames": "^1.3.2",
+      "pre-commit": "^1.2.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
