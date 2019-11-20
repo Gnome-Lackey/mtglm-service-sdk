@@ -7,7 +7,6 @@ import { PotentialRequest } from "../models/Requests";
 import { PotentialPathParameters } from "../models/PathParameters";
 
 type RequestMiddlewareCallbackType = (
-  userId: string,
   pathParameters?: PotentialPathParameters,
   data?: PotentialRequest
 ) => Promise<LambdaResponse>;
@@ -46,7 +45,7 @@ export default function getUserId(
     const data = parseData(body);
 
     if (userId) {
-      return await callback(userId, pathParameters, data);
+      return await callback(pathParameters, data);
     } else {
       return handleError({
         code: "InvalidIdTokenException",

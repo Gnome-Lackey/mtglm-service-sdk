@@ -7,9 +7,9 @@ import { RecordView } from "../models/Views";
 import { RecordNode } from "../models/Nodes";
 import { RecordDynamoItem } from "../models/Items";
 
-export function toItem(userId: string, data: RecordCreateRequest): RecordDynamoItem;
-export function toItem(userId: string, data: RecordUpdateRequest): RecordDynamoItem;
-export function toItem(userId: string, data: any): RecordDynamoItem {
+export function toItem(data: RecordCreateRequest): RecordDynamoItem;
+export function toItem(data: RecordUpdateRequest): RecordDynamoItem;
+export function toItem(data: any): RecordDynamoItem {
   const date = new Date().valueOf().toString();
 
   return {

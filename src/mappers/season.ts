@@ -7,9 +7,9 @@ import { SeasonView } from "../models/Views";
 import { SeasonNode } from "../models/Nodes";
 import { SeasonDynamoItem } from "../models/Items";
 
-export function toItem(userId: string, data: SeasonCreateRequest): SeasonDynamoItem;
-export function toItem(userId: string, data: SeasonUpdateRequest): SeasonDynamoItem;
-export function toItem(userId: string, data: any): SeasonDynamoItem {
+export function toItem(data: SeasonCreateRequest): SeasonDynamoItem;
+export function toItem(data: SeasonUpdateRequest): SeasonDynamoItem;
+export function toItem(data: any): SeasonDynamoItem {
   const date = new Date().valueOf().toString();
 
   return {

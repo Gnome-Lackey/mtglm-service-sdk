@@ -6,9 +6,9 @@ import { SetCreateRequest, SetUpdateRequest } from "../models/Requests";
 import { SetNode } from "../models/Nodes";
 import { SetDynamoItem } from "../models/Items";
 
-export function toItem(userId: string, data: SetCreateRequest): SetDynamoItem;
-export function toItem(userId: string, data: SetUpdateRequest): SetDynamoItem;
-export function toItem(userId: string, data: any): SetDynamoItem {
+export function toItem(data: SetCreateRequest): SetDynamoItem;
+export function toItem(data: SetUpdateRequest): SetDynamoItem;
+export function toItem(data: any): SetDynamoItem {
   const date = new Date().valueOf().toString();
 
   return {

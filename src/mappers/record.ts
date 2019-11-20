@@ -7,9 +7,9 @@ import { MatchView } from "../models/Views";
 import { MatchNode } from "../models/Nodes";
 import { MatchDynamoItem } from "../models/Items";
 
-export function toItem(userId: string, data: MatchCreateRequest): MatchDynamoItem;
-export function toItem(userId: string, data: MatchUpdateRequest): MatchDynamoItem;
-export function toItem(userId: string, data: any): MatchDynamoItem {
+export function toItem(data: MatchCreateRequest): MatchDynamoItem;
+export function toItem(data: MatchUpdateRequest): MatchDynamoItem;
+export function toItem(data: any): MatchDynamoItem {
   const date = new Date().valueOf().toString();
 
   return {

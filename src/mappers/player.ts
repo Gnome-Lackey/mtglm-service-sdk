@@ -7,9 +7,9 @@ import { PlayerView } from "../models/Views";
 import { PlayerNode } from "../models/Nodes";
 import { PlayerDynamoItem } from "../models/Items";
 
-export function toItem(userId: string, data: PlayerCreateRequest): PlayerDynamoItem;
-export function toItem(userId: string, data: PlayerUpdateRequest): PlayerDynamoItem;
-export function toItem(userId: string, data: any): PlayerDynamoItem {
+export function toItem(data: PlayerCreateRequest): PlayerDynamoItem;
+export function toItem(data: PlayerUpdateRequest): PlayerDynamoItem;
+export function toItem(data: any): PlayerDynamoItem {
   const date = new Date().valueOf().toString();
 
   return {

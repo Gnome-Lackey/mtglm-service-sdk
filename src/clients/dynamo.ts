@@ -77,11 +77,9 @@ export class MTGLMDynamoClient {
   //   const GSIResults = await dynamoDB.query(config).promise();
 
   //   const keys = GSIResults.Items.map((result: AttributeMap) => {
-  //     const userId = result.userId as string;
   //     const hashValue = result[hashKey] as string;
 
   //     return {
-  //       userId,
   //       [hashKey]: hashValue
   //     };
   //   });
