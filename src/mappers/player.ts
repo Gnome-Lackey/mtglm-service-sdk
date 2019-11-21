@@ -17,7 +17,7 @@ export function toNode(data: any): PlayerNode {
   const totalWins = parseInt(getAttributeByName("custom:totalWins", attributes), 10);
   const totalLosses = parseInt(getAttributeByName("custom:totalLosses", attributes), 10);
   const isFirstTimeLogin = !!parseInt(
-    getAttributeByName("custom:isFirstTimeLogin", attributes),
+    getAttributeByName("custom:firstTimeLogin", attributes),
     10
   );
 
