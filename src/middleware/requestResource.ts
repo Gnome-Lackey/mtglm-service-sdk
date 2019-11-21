@@ -6,7 +6,7 @@ import { LambdaResponse, LambdaEvent, LambdaHeaders, LambdaToken } from "../mode
 import { PotentialRequest } from "../models/Requests";
 import { PotentialPathParameters } from "../models/PathParameters";
 
-type RequestMiddlewareCallbackType = (
+type RequestResourceMiddlewareCallbackType = (
   pathParameters?: PotentialPathParameters,
   data?: PotentialRequest
 ) => Promise<LambdaResponse>;
@@ -36,7 +36,7 @@ const parseData = (body: string): PotentialRequest => {
 };
 
 export default function getUserId(
-  callback: RequestMiddlewareCallbackType
+  callback: RequestResourceMiddlewareCallbackType
 ): GetUserIdMiddlewareType {
   return async (event: LambdaEvent): Promise<LambdaResponse> => {
     const { headers, body, pathParameters } = event;

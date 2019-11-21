@@ -61,6 +61,28 @@ export interface SetUpdateRequest {
   icon?: string;
 }
 
+export interface LoginBodyRequest {
+  userName: string;
+  password: string;
+}
+
+export interface ConfirmRegistrationBodyRequest {
+  userName: string;
+  verificationCode: string;
+}
+
+export interface ResendConfirmationCodeBodyRequest {
+  userName: string;
+}
+
+export interface SignUpBodyRequest {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  userName: string;
+  password: string;
+}
+
 export type PotentialRequest =
   | RecordCreateRequest
   | RecordUpdateRequest
@@ -71,4 +93,8 @@ export type PotentialRequest =
   | SeasonCreateRequest
   | SeasonUpdateRequest
   | SetCreateRequest
-  | SetUpdateRequest;
+  | SetUpdateRequest
+  | LoginBodyRequest
+  | ConfirmRegistrationBodyRequest
+  | ResendConfirmationCodeBodyRequest
+  | SignUpBodyRequest;

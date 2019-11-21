@@ -5,8 +5,6 @@ import {
   RecordDetailsResponse,
   MatchResponse,
   MatchDetailsResponse,
-  PlayerResponse,
-  PlayerDetailsResponse,
   SeasonResponse,
   SeasonDetailsResponse,
   SetResponse,
@@ -20,17 +18,29 @@ import {
   ERROR_CODES,
   ERROR_DISPLAY_CODES,
   DEFAULT_ERROR_CODE,
-  DEFAULT_ERROR_DISPLAY_CODE,
+  DEFAULT_ERROR_DISPLAY_CODES,
   DEFAULT_ERROR_MESSAGE
 } from "../constants/errors";
 
-export const handleError = (error: ErrorResponse): LambdaResponse => {
+type ErrorDomains =
+  | "DEFAULT"
+  | "LOGIN"
+  | "CONFIRM_REGISTRATION"
+  | "SIGN_UP"
+  | "VALIDATE"
+  | "LOGOUT"
+  | "RESEND_CONFIRMATION_CODE";
+
+export const handleError = (
+  error: ErrorResponse,
+  domain: ErrorDomains = "DEFAULT"
+): LambdaResponse => {
   console.log("[ERROR] Original Error:", error);
 
   const name = ERROR_NAMES[error.code];
   const code = ERROR_CODES[name] || DEFAULT_ERROR_CODE;
-  const displayCode = ERROR_DISPLAY_CODES[name] || DEFAULT_ERROR_DISPLAY_CODE;
-  const message = ERROR_MESSAGES[name] || DEFAULT_ERROR_MESSAGE;
+  const displayCode = ERROR_DISPLAY_CODES[name] || DEFAULT_ERROR_DISPLAY_CODES;
+  const message = ERROR_MESSAGES[domain] ? ERROR_MESSAGES[domain][name] : DEFAULT_ERROR_MESSAGE;
 
   console.log("[ERROR] Response:", code, displayCode, message);
 
@@ -57,10 +67,6 @@ export function handleSuccess(body: MatchResponse): LambdaResponse;
 export function handleSuccess(body: MatchResponse[]): LambdaResponse;
 export function handleSuccess(body: MatchDetailsResponse): LambdaResponse;
 export function handleSuccess(body: MatchDetailsResponse[]): LambdaResponse;
-export function handleSuccess(body: PlayerResponse): LambdaResponse;
-export function handleSuccess(body: PlayerResponse[]): LambdaResponse;
-export function handleSuccess(body: PlayerDetailsResponse): LambdaResponse;
-export function handleSuccess(body: PlayerDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: SeasonResponse): LambdaResponse;
 export function handleSuccess(body: SeasonResponse[]): LambdaResponse;
 export function handleSuccess(body: SeasonDetailsResponse): LambdaResponse;

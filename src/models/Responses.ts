@@ -20,14 +20,6 @@ export interface MatchDetailsResponse extends MatchView {
   playerBRecord: RecordDetailsResponse;
 }
 
-export interface PlayerResponse extends PlayerView {
-  matches: string[];
-}
-
-export interface PlayerDetailsResponse extends PlayerView {
-  matches: MatchView[];
-}
-
 export interface SeasonResponse extends SeasonView {
   set: string;
   players: string[];
@@ -44,14 +36,27 @@ export interface SetResponse {
   id: string;
   name: string;
   icon: string;
-};
+}
 
 export interface SuccessResponse {
   message: string;
 }
 
 export interface ErrorResponse {
-  code: "NotAuthorizedException" | "InvalidIdTokenException";
+  code:
+    | "AccountConflictException"
+    | "AliasExistsException"
+    | "CodeMismatchException"
+    | "ExpiredCodeException"
+    | "InvalidIdTokenException"
+    | "InvalidPasswordException"
+    | "InvalidParameterException"
+    | "InvalidTokenException"
+    | "MissingTokenException"
+    | "NotAuthorizedException"
+    | "UsernameExistsException"
+    | "UserNotConfirmedException"
+    | "UserNotFoundException";
   message?: string;
   content?: object | string;
 }

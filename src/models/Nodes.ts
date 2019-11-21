@@ -15,12 +15,14 @@ export interface MatchNode {
 }
 
 export interface PlayerNode {
-  playerId: string;
-  playerName: string;
-  totalMatchWins: number;
-  totalMatchLosses: number;
-  matchIds: string[];
-  updatedOn: string;
+  id: string;
+  userName: string;
+  name: string;
+  totalWins: number;
+  totalLosses: number;
+  email: string;
+  isFirstTimeLogin: boolean;
+  role: string;
 }
 
 export interface SeasonNode {
@@ -39,4 +41,23 @@ export interface SetNode {
   setName: string;
   icon: string;
   updatedOn: string;
+}
+
+export interface TokensNode {
+  accessToken: string;
+  refreshToken: string;
+  idToken: string;
+}
+
+export interface AuthNode {
+  user: PlayerNode;
+  tokens: TokensNode;
+}
+
+export interface SignUpNode {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  userName: string;
+  password: string;
 }

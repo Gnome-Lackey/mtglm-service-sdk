@@ -4,8 +4,6 @@ import {
   RecordDetailsResponse,
   MatchResponse,
   MatchDetailsResponse,
-  PlayerResponse,
-  PlayerDetailsResponse,
   SeasonResponse,
   SeasonDetailsResponse,
   SetResponse,
@@ -20,10 +18,6 @@ export function logSuccess(resource: string, event: string, data: MatchResponse)
 export function logSuccess(resource: string, event: string, data: MatchResponse[]): void;
 export function logSuccess(resource: string, event: string, data: MatchDetailsResponse): void;
 export function logSuccess(resource: string, event: string, data: MatchDetailsResponse[]): void;
-export function logSuccess(resource: string, event: string, data: PlayerResponse): void;
-export function logSuccess(resource: string, event: string, data: PlayerResponse[]): void;
-export function logSuccess(resource: string, event: string, data: PlayerDetailsResponse): void;
-export function logSuccess(resource: string, event: string, data: PlayerDetailsResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonDetailsResponse): void;
