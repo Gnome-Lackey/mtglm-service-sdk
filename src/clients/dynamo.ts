@@ -4,7 +4,6 @@ import { AttributeMap } from "aws-sdk/clients/dynamodb";
 import * as dynamoMapper from "../mappers/dynamo";
 
 import {
-  PlayerPrimaryKey,
   MatchPrimaryKey,
   SeasonPrimaryKey,
   SetPrimaryKey,
@@ -13,7 +12,6 @@ import {
 } from "../models/PrimaryKeys";
 import {
   MatchDynamoItem,
-  PlayerDynamoItem,
   SeasonDynamoItem,
   SetDynamoItem,
   RecordDynamoItem
@@ -101,7 +99,6 @@ export class MTGLMDynamoClient {
   };
 
   async create(key: MatchPrimaryKey, item: MatchDynamoItem): Promise<AttributeMap>;
-  async create(key: PlayerPrimaryKey, item: PlayerDynamoItem): Promise<AttributeMap>;
   async create(key: SeasonPrimaryKey, item: SeasonDynamoItem): Promise<AttributeMap>;
   async create(key: SetPrimaryKey, item: SetDynamoItem): Promise<AttributeMap>;
   async create(key: RecordPrimaryKey, item: RecordDynamoItem): Promise<AttributeMap>;
@@ -117,7 +114,6 @@ export class MTGLMDynamoClient {
   }
 
   async update(key: MatchPrimaryKey, item: MatchDynamoItem): Promise<AttributeMap>;
-  async update(key: PlayerPrimaryKey, item: PlayerDynamoItem): Promise<AttributeMap>;
   async update(key: SeasonPrimaryKey, item: SeasonDynamoItem): Promise<AttributeMap>;
   async update(key: SetPrimaryKey, item: SetDynamoItem): Promise<AttributeMap>;
   async update(key: RecordPrimaryKey, item: RecordDynamoItem): Promise<AttributeMap>;

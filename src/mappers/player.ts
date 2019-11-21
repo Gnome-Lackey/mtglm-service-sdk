@@ -1,28 +1,9 @@
-import * as uuid from "uuid";
-
 import { GetUserResponse, AdminGetUserResponse } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 import { getAttributeByName } from "../utils/attributes";
 
-import { PlayerCreateRequest, PlayerUpdateRequest } from "../models/Requests";
 import { PlayerView } from "../models/Views";
 import { PlayerNode } from "../models/Nodes";
-import { PlayerDynamoItem } from "../models/Items";
-
-export function toItem(data: PlayerCreateRequest): PlayerDynamoItem;
-export function toItem(data: PlayerUpdateRequest): PlayerDynamoItem;
-export function toItem(data: any): PlayerDynamoItem {
-  const date = new Date().valueOf().toString();
-
-  return {
-    playerId: uuid.v4(),
-    playerName: data.name,
-    totalMatchLosses: data.totalMatchLosses,
-    totalMatchWins: data.totalMatchWins,
-    matchIds: data.matchIds,
-    updatedOn: date
-  };
-}
 
 export function toNode(data: AdminGetUserResponse): PlayerNode;
 export function toNode(data: GetUserResponse): PlayerNode;
