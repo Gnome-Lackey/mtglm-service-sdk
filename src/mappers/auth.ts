@@ -8,7 +8,7 @@ import { getAttributeByName } from "../utils/attributes";
 import { SignUpBodyRequest } from "../models/Requests";
 import { SignUpNode, AuthNode, TokensNode } from "../models/Nodes";
 import { AuthResponse, AuthHeaderResponse } from "../models/Responses";
-import { USER_ROLE } from "src/constants/roles";
+import { USER_ROLE } from "../constants/roles";
 
 export const toNodeSignUp = (data: SignUpBodyRequest): SignUpNode => ({
   email: data.email,
