@@ -32,6 +32,22 @@ export interface SeasonDetailsResponse extends SeasonView {
   matches: MatchView[];
 }
 
+export interface AuthHeaderResponse {
+  "X-ID-Token": string;
+  "X-Access-Token": string;
+  "set-cookie": string;
+  "Access-Control-Expose-Headers": string;
+}
+
+export interface AuthResponse {
+  user: PlayerView;
+}
+
+export interface LoginResponse {
+  body: AuthResponse;
+  headers: AuthHeaderResponse;
+}
+
 export interface SetResponse {
   id: string;
   name: string;

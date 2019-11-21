@@ -22,17 +22,6 @@ export interface PlayerView {
   userName: string;
   totalWins: number;
   totalLosses: number;
-  isFirstTimeLogin?: boolean;
   accountType: string;
-}
-
-export interface AuthView {
-  body: {
-    user: PlayerView;
-  };
-  headers: {
-    "X-ID-Token": string;
-    "X-Access-Token": string;
-    "set-cookie": string;
-  };
+  isFirstTimeLogin?: boolean;
 }

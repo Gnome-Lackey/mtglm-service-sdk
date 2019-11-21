@@ -35,7 +35,7 @@ const parseData = (body: string): PotentialRequest => {
   return JSON.parse(body);
 };
 
-export default function getUserId(
+export default function requestResourceMiddleware(
   callback: RequestResourceMiddlewareCallbackType
 ): GetUserIdMiddlewareType {
   return async (event: LambdaEvent): Promise<LambdaResponse> => {

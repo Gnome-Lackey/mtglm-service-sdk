@@ -5,10 +5,10 @@ import {
 
 import { getAttributeByName } from "../utils/attributes";
 
-import { AuthNode } from "../models/Nodes";
 import { SignUpBodyRequest } from "../models/Requests";
-import { SignUpNode } from "../models/Nodes";
-import { AuthView } from "../models/Views";
+import { SignUpNode, AuthNode, TokensNode } from "../models/Nodes";
+import { AuthResponse, AuthHeaderResponse } from "../models/Responses";
+import { USER_ROLE } from "src/constants/roles";
 
 export const toNodeSignUp = (data: SignUpBodyRequest): SignUpNode => ({
   email: data.email,
@@ -18,9 +18,8 @@ export const toNodeSignUp = (data: SignUpBodyRequest): SignUpNode => ({
   password: data.password
 });
 
-export const toNodeAuth = (user: GetUserResponse, tokens: AuthenticationResultType): AuthNode => {
-  const { TokenType, AccessToken, IdToken, RefreshToken } = tokens;
-  const { Username: userName, UserAttributes: attributes } = user;
+export const toNodeAuth = (data: GetUserResponse): AuthNode => {
+  const { Username: userName, UserAttributes: attributes } = data;
 
   const id = getAttributeByName("sub", attributes);
   const email = getAttributeByName("email", attributes);
@@ -40,34 +39,67 @@ export const toNodeAuth = (user: GetUserResponse, tokens: AuthenticationResultTy
       role,
       totalLosses,
       totalWins
-    },
-    tokens: {
-      accessToken: `${TokenType} ${AccessToken}`,
-      refreshToken: RefreshToken,
-      idToken: IdToken
     }
   };
 };
 
-export const toViewAuth = (data: AuthNode): AuthView => {
-  const headers = {
-    "X-ID-Token": data.tokens.idToken,
-    "X-Access-Token": data.tokens.accessToken,
-    "set-cookie": `refreshToken=${data.tokens.refreshToken}; HttpOnly; Secure; SameSite=None;`
-  };
+export const toNodeTokens = (tokens: AuthenticationResultType): TokensNode => ({
+  accessToken: `${tokens.TokenType} ${tokens.AccessToken}`,
+  refreshToken: tokens.RefreshToken,
+  idToken: tokens.IdToken
+});
+
+export const toResponseLoginHeaders = (data: TokensNode): AuthHeaderResponse => ({
+  "X-ID-Token": data.idToken,
+  "X-Access-Token": data.accessToken,
+  "set-cookie": `refreshToken=${data.refreshToken}; HttpOnly; Secure; SameSite=None;`,
+  "Access-Control-Expose-Headers": "Authorization, x-access-token, x-id-token"
+});
+
+export const toResponseLogin = (data: AuthNode): AuthResponse => ({
+  user: {
+    id: data.user.id,
+    userName: data.user.userName,
+    email: data.user.email,
+    name: data.user.name,
+    totalLosses: data.user.totalLosses,
+    totalWins: data.user.totalWins,
+    accountType: data.user.role,
+    isFirstTimeLogin: data.user.isFirstTimeLogin
+  }
+});
+
+export const toResponseSignUp = (uid: string, data: SignUpNode): AuthResponse => ({
+  user: {
+    id: uid,
+    userName: data.userName,
+    email: data.email,
+    name: `${data.firstName} ${data.lastName}`,
+    totalLosses: 0,
+    totalWins: 0,
+    accountType: USER_ROLE
+  }
+});
+
+export const toResponseValidate = (data: GetUserResponse): AuthResponse => {
+  const { Username: userName, UserAttributes: attributes } = data;
+
+  const id = getAttributeByName("sub", attributes);
+  const email = getAttributeByName("email", attributes);
+  const name = getAttributeByName("name", attributes);
+  const role = getAttributeByName("custom:role", attributes);
+  const totalWins = parseInt(getAttributeByName("custom:totalWins", attributes), 10);
+  const totalLosses = parseInt(getAttributeByName("custom:totalLosses", attributes), 10);
 
   return {
-    body: {
-      user: {
-        id: data.user.id,
-        userName: data.user.userName,
-        email: data.user.email,
-        name: data.user.name,
-        totalLosses: data.user.totalLosses,
-        totalWins: data.user.totalWins,
-        accountType: data.user.role
-      }
-    },
-    headers
+    user: {
+      id,
+      userName,
+      email,
+      name,
+      totalLosses,
+      totalWins,
+      accountType: role
+    }
   };
 };

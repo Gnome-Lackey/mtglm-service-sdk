@@ -7,9 +7,13 @@ import {
   SeasonResponse,
   SeasonDetailsResponse,
   SetResponse,
-  SuccessResponse
+  SuccessResponse,
+  LoginResponse,
+  AuthResponse
 } from "../models/Responses";
 
+export function logSuccess(resource: string, event: string, data: AuthResponse): void;
+export function logSuccess(resource: string, event: string, data: LoginResponse): void;
 export function logSuccess(resource: string, event: string, data: RecordResponse): void;
 export function logSuccess(resource: string, event: string, data: RecordResponse[]): void;
 export function logSuccess(resource: string, event: string, data: RecordDetailsResponse): void;

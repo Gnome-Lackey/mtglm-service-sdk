@@ -8,7 +8,9 @@ import {
   SeasonResponse,
   SeasonDetailsResponse,
   SetResponse,
-  SuccessResponse
+  SuccessResponse,
+  AuthResponse,
+  AuthHeaderResponse
 } from "../models/Responses";
 
 import { DEFAULT_HEADERS } from "../constants/headers";
@@ -59,6 +61,7 @@ export const handleError = (
   };
 };
 
+export function handleSuccess(body: AuthResponse, headers?: AuthHeaderResponse): LambdaResponse;
 export function handleSuccess(body: RecordResponse): LambdaResponse;
 export function handleSuccess(body: RecordResponse[]): LambdaResponse;
 export function handleSuccess(body: RecordDetailsResponse): LambdaResponse;
@@ -74,7 +77,7 @@ export function handleSuccess(body: SeasonDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: SetResponse): LambdaResponse;
 export function handleSuccess(body: SetResponse[]): LambdaResponse;
 export function handleSuccess(body: SuccessResponse): LambdaResponse;
-export function handleSuccess(body: any): LambdaResponse {
+export function handleSuccess(body: any, headers?: any): LambdaResponse {
   const statusCode = 200;
   const parsedBody = body || {};
 
@@ -82,7 +85,7 @@ export function handleSuccess(body: any): LambdaResponse {
 
   return {
     statusCode,
-    headers: DEFAULT_HEADERS,
+    headers: { ...DEFAULT_HEADERS, ...headers },
     body: JSON.stringify({
       status: statusCode,
       data: parsedBody

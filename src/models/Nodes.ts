@@ -51,7 +51,6 @@ export interface TokensNode {
 
 export interface AuthNode {
   user: PlayerNode;
-  tokens: TokensNode;
 }
 
 export interface SignUpNode {

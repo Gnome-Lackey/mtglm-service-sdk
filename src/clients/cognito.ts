@@ -11,7 +11,7 @@ import InvalidTokenException from "../exceptions/InvalidTokenException";
 
 import { SignUpNode } from "../models/Nodes";
 import { SuccessResponse } from "../models/Responses";
-import { UserAttribute } from "src/models/Cognito";
+import { UserAttribute } from "../models/Cognito";
 
 const { USER_POOL_ID, CLIENT_ID } = process.env;
 
