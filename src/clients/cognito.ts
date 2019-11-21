@@ -1,7 +1,9 @@
 import * as aws from "aws-sdk";
 import {
   GetUserResponse,
-  AuthenticationResultType
+  AuthenticationResultType,
+  ListUsersResponse,
+  AdminGetUserResponse
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 import * as cognitoMapper from "../mappers/cognito";
@@ -42,7 +44,31 @@ export const getLoggedInUser = async (token: string): Promise<GetUserResponse> =
   return response;
 };
 
-export const updateUserAttribute = async (token: string, attributes: UserAttribute[]): Promise<SuccessResponse> => {
+export const getUser = async (userName: string): Promise<AdminGetUserResponse> => {
+  const response = cognito
+    .adminGetUser({
+      UserPoolId: USER_POOL_ID,
+      Username: userName
+    })
+    .promise();
+
+  return response;
+};
+
+export const getAllUsers = async (): Promise<ListUsersResponse> => {
+  const response = cognito
+    .listUsers({
+      UserPoolId: USER_POOL_ID
+    })
+    .promise();
+
+  return response;
+};
+
+export const updateUserAttribute = async (
+  token: string,
+  attributes: UserAttribute[]
+): Promise<SuccessResponse> => {
   const updateAttributeConfig = cognitoMapper.toUpdateAttributeConfig(token, attributes);
 
   await cognito.updateUserAttributes(updateAttributeConfig).promise();
