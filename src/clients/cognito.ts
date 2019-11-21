@@ -2,7 +2,7 @@ import * as aws from "aws-sdk";
 import {
   GetUserResponse,
   AuthenticationResultType,
-  ListUsersResponse,
+  UserType,
   AdminGetUserResponse
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
@@ -25,44 +25,47 @@ export const login = async (
 ): Promise<AuthenticationResultType> => {
   const authConfig = cognitoMapper.toAuthConfig(CLIENT_ID, USER_POOL_ID, userName, password);
 
-  const response = await cognito.adminInitiateAuth(authConfig).promise();
+  const result = await cognito.adminInitiateAuth(authConfig).promise();
 
-  return response.AuthenticationResult;
+  return result.AuthenticationResult;
 };
 
 export const getLoggedInUser = async (token: string): Promise<GetUserResponse> => {
   const getUserConfig = cognitoMapper.toGetUserConfig(token);
 
-  const response = await cognito.getUser(getUserConfig).promise();
+  const result = await cognito.getUser(getUserConfig).promise();
 
-  const isTokenInvalid = !response || !response.UserAttributes;
+  const isTokenInvalid = !result || !result.UserAttributes;
 
   if (isTokenInvalid) {
     throw new InvalidTokenException();
   }
 
-  return response;
+  return result;
 };
 
 export const getUser = async (userName: string): Promise<AdminGetUserResponse> => {
-  const response = cognito
+  const result = cognito
     .adminGetUser({
       UserPoolId: USER_POOL_ID,
       Username: userName
     })
     .promise();
 
-  return response;
+  return result;
 };
 
-export const getAllUsers = async (): Promise<ListUsersResponse> => {
-  const response = cognito
+export const getAllUsers = async (): Promise<GetUserResponse[]> => {
+  const results = await cognito
     .listUsers({
       UserPoolId: USER_POOL_ID
     })
     .promise();
 
-  return response;
+  return results.Users.map((result: UserType) => ({
+    Username: result.Username,
+    UserAttributes: result.Attributes
+  }));
 };
 
 export const updateUserAttribute = async (
@@ -106,9 +109,9 @@ export const signUp = async (node: SignUpNode): Promise<string> => {
 
   const listUsersConfig = cognitoMapper.toListUsersConfig(USER_POOL_ID, email);
 
-  const response = await cognito.listUsers(listUsersConfig).promise();
+  const listUsersResult = await cognito.listUsers(listUsersConfig).promise();
 
-  const accountWithEmailExists = response && response.Users.length;
+  const accountWithEmailExists = listUsersResult && listUsersResult.Users.length;
 
   if (accountWithEmailExists) {
     throw new AccountConflictException();
@@ -116,21 +119,21 @@ export const signUp = async (node: SignUpNode): Promise<string> => {
 
   const signUpConfig = cognitoMapper.toSignUpConfig(CLIENT_ID, node);
 
-  const result = await cognito.signUp(signUpConfig).promise();
+  const signUpResult = await cognito.signUp(signUpConfig).promise();
 
-  return result.UserSub;
+  return signUpResult.UserSub;
 };
 
 export const validate = async (token: string): Promise<GetUserResponse> => {
   const config = cognitoMapper.toGetUserConfig(token);
 
-  const response = await cognito.getUser(config).promise();
+  const result = await cognito.getUser(config).promise();
 
-  const isTokenInvalid = !response || !response.UserAttributes;
+  const isTokenInvalid = !result || !result.UserAttributes;
 
   if (isTokenInvalid) {
     throw new InvalidTokenException();
   }
 
-  return response;
+  return result;
 };

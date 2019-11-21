@@ -1,6 +1,6 @@
 import * as uuid from "uuid";
 
-import { GetUserResponse } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { GetUserResponse, AdminGetUserResponse } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 import { getAttributeByName } from "../utils/attributes";
 
@@ -24,7 +24,9 @@ export function toItem(data: any): PlayerDynamoItem {
   };
 }
 
-export const toNode = (data: GetUserResponse): PlayerNode => {
+export function toNode(data: AdminGetUserResponse): PlayerNode;
+export function toNode(data: GetUserResponse): PlayerNode;
+export function toNode(data: any): PlayerNode {
   const { Username: userName, UserAttributes: attributes } = data;
 
   const id = getAttributeByName("sub", attributes);
