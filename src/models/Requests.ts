@@ -1,3 +1,23 @@
+export interface ConfirmRegistrationBodyRequest {
+  userName: string;
+  verificationCode: string;
+}
+
+export interface LoginBodyRequest {
+  userName: string;
+  password: string;
+}
+
+export interface MatchCreateRequest {
+  playerA: RecordCreateRequest;
+  playerB: RecordCreateRequest;
+}
+
+export interface MatchUpdateRequest {
+  playerA?: RecordUpdateRequest;
+  playerB?: RecordUpdateRequest;
+}
+
 export interface RecordCreateRequest {
   wins: number;
   losses: number;
@@ -11,26 +31,8 @@ export interface RecordUpdateRequest {
   player?: string;
 }
 
-export interface MatchCreateRequest {
-  playerA: RecordCreateRequest;
-  playerB: RecordCreateRequest;
-}
-
-export interface MatchUpdateRequest {
-  playerA?: RecordUpdateRequest;
-  playerB?: RecordUpdateRequest;
-}
-
-export interface PlayerCreateRequest {
-  name: string;
-  totalWins: number;
-  totalLosses: number;
-}
-
-export interface PlayerUpdateRequest {
-  name?: string;
-  totalWins?: number;
-  totalLosses?: number;
+export interface ResendConfirmationCodeBodyRequest {
+  userName: string;
 }
 
 export interface SeasonCreateRequest {
@@ -61,20 +63,6 @@ export interface SetUpdateRequest {
   icon?: string;
 }
 
-export interface LoginBodyRequest {
-  userName: string;
-  password: string;
-}
-
-export interface ConfirmRegistrationBodyRequest {
-  userName: string;
-  verificationCode: string;
-}
-
-export interface ResendConfirmationCodeBodyRequest {
-  userName: string;
-}
-
 export interface SignUpBodyRequest {
   email: string;
   firstName?: string;
@@ -88,8 +76,6 @@ export type PotentialRequest =
   | RecordUpdateRequest
   | MatchCreateRequest
   | MatchUpdateRequest
-  | PlayerCreateRequest
-  | PlayerUpdateRequest
   | SeasonCreateRequest
   | SeasonUpdateRequest
   | SetCreateRequest

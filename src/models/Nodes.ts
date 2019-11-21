@@ -1,10 +1,5 @@
-export interface RecordNode {
-  recordId: string;
-  wins: number;
-  losses: number;
-  playerId: string;
-  matchId: string;
-  updatedOn: string;
+export interface AuthNode {
+  user: PlayerNode;
 }
 
 export interface MatchNode {
@@ -25,6 +20,15 @@ export interface PlayerNode {
   role: string;
 }
 
+export interface RecordNode {
+  recordId: string;
+  wins: number;
+  losses: number;
+  playerId: string;
+  matchId: string;
+  updatedOn: string;
+}
+
 export interface SeasonNode {
   seasonId: string;
   isActive: boolean;
@@ -43,20 +47,16 @@ export interface SetNode {
   updatedOn: string;
 }
 
-export interface TokensNode {
-  accessToken: string;
-  refreshToken: string;
-  idToken: string;
-}
-
-export interface AuthNode {
-  user: PlayerNode;
-}
-
 export interface SignUpNode {
   email: string;
   firstName?: string;
   lastName?: string;
   userName: string;
   password: string;
+}
+
+export interface TokensNode {
+  accessToken: string;
+  refreshToken: string;
+  idToken: string;
 }

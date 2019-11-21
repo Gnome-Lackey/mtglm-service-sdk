@@ -6,16 +6,16 @@ export interface PlayerPathParameters {
   playerUserName: string;
 }
 
+export interface RecordPathParameters {
+  recordId: string;
+}
+
 export interface SeasonPathParameters {
   seasonId: string;
 }
 
 export interface SetPathParameters {
   setId: string;
-}
-
-export interface RecordPathParameters {
-  recordId: string;
 }
 
 export interface PotentialPathParameters {

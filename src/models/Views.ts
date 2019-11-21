@@ -1,18 +1,5 @@
-export interface RecordView {
-  id: string;
-  wins: number;
-  losses: number;
-}
-
 export interface MatchView {
   id: string;
-}
-
-export interface SeasonView {
-  id: string;
-  isActive: boolean;
-  startDate: string;
-  endDate: string;
 }
 
 export interface PlayerView {
@@ -24,4 +11,17 @@ export interface PlayerView {
   totalLosses: number;
   accountType: string;
   isFirstTimeLogin?: boolean;
+}
+
+export interface RecordView {
+  id: string;
+  wins: number;
+  losses: number;
+}
+
+export interface SeasonView {
+  id: string;
+  isActive: boolean;
+  startDate: string;
+  endDate: string;
 }
