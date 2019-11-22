@@ -19,17 +19,22 @@ export interface MatchUpdateRequest {
 }
 
 export interface PlayerCreateRequest {
+  id: string;
   name: string;
+  userName: string;
+  email: string;
   totalWins: number;
   totalLosses: number;
-  matchIds: string[];
+  matches: string[];
 }
 
 export interface PlayerUpdateRequest {
   name: string;
+  userName: string;
+  email: string;
   totalWins: number;
   totalLosses: number;
-  matchIds: string[];
+  matches: string[];
 }
 
 export interface RecordCreateRequest {

@@ -6,8 +6,10 @@ export interface MatchDynamoItem {
 }
 
 export interface PlayerDynamoItem {
-  playerId: string;
+  playerId?: string;
   playerName: string;
+  userName: string;
+  email: string;
   totalMatchWins: number;
   totalMatchLosses: number;
   matchIds: string[];
