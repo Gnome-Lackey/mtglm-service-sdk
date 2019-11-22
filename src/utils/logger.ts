@@ -15,16 +15,16 @@ import {
 
 export function logSuccess(resource: string, event: string, data: AuthResponse): void;
 export function logSuccess(resource: string, event: string, data: LoginResponse): void;
-export function logSuccess(resource: string, event: string, data: RecordResponse): void;
-export function logSuccess(resource: string, event: string, data: RecordResponse[]): void;
-export function logSuccess(resource: string, event: string, data: RecordDetailsResponse): void;
-export function logSuccess(resource: string, event: string, data: RecordDetailsResponse[]): void;
 export function logSuccess(resource: string, event: string, data: MatchResponse): void;
 export function logSuccess(resource: string, event: string, data: MatchResponse[]): void;
 export function logSuccess(resource: string, event: string, data: MatchDetailsResponse): void;
 export function logSuccess(resource: string, event: string, data: MatchDetailsResponse[]): void;
 export function logSuccess(resource: string, event: string, data: PlayerResponse): void;
 export function logSuccess(resource: string, event: string, data: PlayerResponse[]): void;
+export function logSuccess(resource: string, event: string, data: RecordResponse): void;
+export function logSuccess(resource: string, event: string, data: RecordResponse[]): void;
+export function logSuccess(resource: string, event: string, data: RecordDetailsResponse): void;
+export function logSuccess(resource: string, event: string, data: RecordDetailsResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonDetailsResponse): void;

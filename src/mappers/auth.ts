@@ -25,8 +25,6 @@ export const toNodeAuth = (data: GetUserResponse): AuthNode => {
   const email = getAttributeByName("email", attributes);
   const name = getAttributeByName("name", attributes);
   const role = getAttributeByName("custom:role", attributes);
-  const totalWins = parseInt(getAttributeByName("custom:totalWins", attributes), 10);
-  const totalLosses = parseInt(getAttributeByName("custom:totalLosses", attributes), 10);
   const isFirstTimeLogin = !!parseInt(getAttributeByName("custom:firstTimeLogin", attributes), 10);
 
   return {
@@ -36,9 +34,7 @@ export const toNodeAuth = (data: GetUserResponse): AuthNode => {
       email,
       name,
       isFirstTimeLogin,
-      role,
-      totalLosses,
-      totalWins
+      role
     }
   };
 };
@@ -61,9 +57,7 @@ export const toResponseLogin = (data: AuthNode): AuthResponse => ({
     id: data.user.id,
     userName: data.user.userName,
     email: data.user.email,
-    name: data.user.name,
-    totalLosses: data.user.totalLosses,
-    totalWins: data.user.totalWins,
+    displayName: data.user.name,
     accountType: data.user.role,
     isFirstTimeLogin: data.user.isFirstTimeLogin
   }
@@ -74,9 +68,7 @@ export const toResponseSignUp = (uid: string, data: SignUpNode): AuthResponse =>
     id: uid,
     userName: data.userName,
     email: data.email,
-    name: `${data.firstName} ${data.lastName}`,
-    totalLosses: 0,
-    totalWins: 0,
+    displayName: `${data.firstName} ${data.lastName}`,
     accountType: USER_ROLE
   }
 });
@@ -88,17 +80,13 @@ export const toResponseValidate = (data: GetUserResponse): AuthResponse => {
   const email = getAttributeByName("email", attributes);
   const name = getAttributeByName("name", attributes);
   const role = getAttributeByName("custom:role", attributes);
-  const totalWins = parseInt(getAttributeByName("custom:totalWins", attributes), 10);
-  const totalLosses = parseInt(getAttributeByName("custom:totalLosses", attributes), 10);
 
   return {
     user: {
       id,
       userName,
       email,
-      name,
-      totalLosses,
-      totalWins,
+      displayName: name,
       accountType: role
     }
   };

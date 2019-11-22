@@ -2,6 +2,10 @@ export interface MatchPrimaryKey {
   matchId: string;
 }
 
+export interface PlayerPrimaryKey {
+  playerId: string;
+}
+
 export interface RecordPrimaryKey {
   recordId: string;
   matchId: string;
@@ -17,6 +21,7 @@ export interface SetPrimaryKey {
 
 export interface PotentialPrimaryKey {
   matchId?: string;
+  playerId?: string;
   seasonId?: string;
   setId?: string;
   recordId?: string;

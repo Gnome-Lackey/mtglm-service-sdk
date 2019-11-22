@@ -63,16 +63,16 @@ export const handleError = (
 };
 
 export function handleSuccess(body: AuthResponse, headers?: AuthHeaderResponse): LambdaResponse;
-export function handleSuccess(body: RecordResponse): LambdaResponse;
-export function handleSuccess(body: RecordResponse[]): LambdaResponse;
-export function handleSuccess(body: RecordDetailsResponse): LambdaResponse;
-export function handleSuccess(body: RecordDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: MatchResponse): LambdaResponse;
 export function handleSuccess(body: MatchResponse[]): LambdaResponse;
 export function handleSuccess(body: MatchDetailsResponse): LambdaResponse;
 export function handleSuccess(body: MatchDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: PlayerResponse): LambdaResponse;
 export function handleSuccess(body: PlayerResponse[]): LambdaResponse;
+export function handleSuccess(body: RecordResponse): LambdaResponse;
+export function handleSuccess(body: RecordResponse[]): LambdaResponse;
+export function handleSuccess(body: RecordDetailsResponse): LambdaResponse;
+export function handleSuccess(body: RecordDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: SeasonResponse): LambdaResponse;
 export function handleSuccess(body: SeasonResponse[]): LambdaResponse;
 export function handleSuccess(body: SeasonDetailsResponse): LambdaResponse;

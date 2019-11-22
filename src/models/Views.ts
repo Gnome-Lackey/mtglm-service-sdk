@@ -5,12 +5,10 @@ export interface MatchView {
 export interface PlayerView {
   id: string;
   email: string;
-  name?: string;
+  displayName?: string;
   userName: string;
   totalWins: number;
   totalLosses: number;
-  accountType: string;
-  isFirstTimeLogin?: boolean;
 }
 
 export interface RecordView {

@@ -8,13 +8,15 @@ import {
   SeasonPrimaryKey,
   SetPrimaryKey,
   RecordPrimaryKey,
-  PotentialPrimaryKey
+  PotentialPrimaryKey,
+  PlayerPrimaryKey
 } from "../models/PrimaryKeys";
 import {
   MatchDynamoItem,
   SeasonDynamoItem,
   SetDynamoItem,
-  RecordDynamoItem
+  RecordDynamoItem,
+  PlayerDynamoItem
 } from "../models/Items";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
@@ -99,6 +101,7 @@ export class MTGLMDynamoClient {
   };
 
   async create(key: MatchPrimaryKey, item: MatchDynamoItem): Promise<AttributeMap>;
+  async create(key: PlayerPrimaryKey, item: PlayerDynamoItem): Promise<AttributeMap>;
   async create(key: SeasonPrimaryKey, item: SeasonDynamoItem): Promise<AttributeMap>;
   async create(key: SetPrimaryKey, item: SetDynamoItem): Promise<AttributeMap>;
   async create(key: RecordPrimaryKey, item: RecordDynamoItem): Promise<AttributeMap>;
@@ -114,6 +117,7 @@ export class MTGLMDynamoClient {
   }
 
   async update(key: MatchPrimaryKey, item: MatchDynamoItem): Promise<AttributeMap>;
+  async update(key: PlayerPrimaryKey, item: PlayerDynamoItem): Promise<AttributeMap>;
   async update(key: SeasonPrimaryKey, item: SeasonDynamoItem): Promise<AttributeMap>;
   async update(key: SetPrimaryKey, item: SetDynamoItem): Promise<AttributeMap>;
   async update(key: RecordPrimaryKey, item: RecordDynamoItem): Promise<AttributeMap>;

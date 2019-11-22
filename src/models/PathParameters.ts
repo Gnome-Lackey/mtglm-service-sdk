@@ -3,7 +3,7 @@ export interface MatchPathParameters {
 }
 
 export interface PlayerPathParameters {
-  playerUserName: string;
+  playerId: string;
 }
 
 export interface RecordPathParameters {
@@ -20,7 +20,7 @@ export interface SetPathParameters {
 
 export interface PotentialPathParameters {
   matchId?: string;
-  playerUserName?: string;
+  playerId?: string;
   seasonId?: string;
   setId?: string;
   recordId?: string;

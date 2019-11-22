@@ -8,7 +8,7 @@ export interface AuthHeaderResponse {
 }
 
 export interface AuthResponse {
-  user: PlayerView;
+  user: UserResponse;
 }
 
 export interface ErrorResponse {
@@ -48,12 +48,10 @@ export interface MatchDetailsResponse extends MatchView {
 export interface PlayerResponse {
   id: string;
   email: string;
-  name?: string;
+  displayName?: string;
   userName: string;
   totalWins: number;
   totalLosses: number;
-  accountType: string;
-  isFirstTimeLogin?: boolean;
 }
 
 export interface RecordResponse extends RecordView {
@@ -86,4 +84,13 @@ export interface SetResponse {
 
 export interface SuccessResponse {
   message: string;
+}
+
+export interface UserResponse {
+  id: string;
+  userName: string;
+  email: string;
+  displayName: string;
+  isFirstTimeLogin?: boolean;
+  accountType: string;
 }

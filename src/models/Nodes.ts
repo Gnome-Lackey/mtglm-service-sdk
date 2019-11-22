@@ -1,5 +1,5 @@
 export interface AuthNode {
-  user: PlayerNode;
+  user: UserNode;
 }
 
 export interface MatchNode {
@@ -10,14 +10,13 @@ export interface MatchNode {
 }
 
 export interface PlayerNode {
-  id: string;
+  playerId: string;
+  playerName: string;
   userName: string;
-  name: string;
-  totalWins: number;
-  totalLosses: number;
+  totalMatchWins: number;
+  totalMatchLosses: number;
   email: string;
-  isFirstTimeLogin: boolean;
-  role: string;
+  updatedOn: string;
 }
 
 export interface RecordNode {
@@ -59,4 +58,13 @@ export interface TokensNode {
   accessToken: string;
   refreshToken: string;
   idToken: string;
+}
+
+export interface UserNode {
+  id: string;
+  userName: string;
+  email: string;
+  name: string;
+  isFirstTimeLogin: boolean;
+  role: string;
 }

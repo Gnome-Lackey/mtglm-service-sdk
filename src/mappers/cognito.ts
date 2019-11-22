@@ -74,14 +74,6 @@ export const toSignUpConfig = (clientId: string, data: SignUpNode): SignUpReques
       Value: "1"
     },
     {
-      Name: "custom:totalWins",
-      Value: "0"
-    },
-    {
-      Name: "custom:totalLosses",
-      Value: "0"
-    },
-    {
       Name: "custom:role",
       Value: USER_ROLE
     }
