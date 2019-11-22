@@ -1,12 +1,14 @@
 import * as uuid from "uuid";
 
+import { AttributeMap } from "aws-sdk/clients/dynamodb";
+
 import { PlayerView } from "../models/Views";
 import { PlayerNode } from "../models/Nodes";
 import { PlayerCreateRequest, PlayerUpdateRequest } from "src/models/Requests";
 
-export function toNode(data: PlayerCreateRequest): PlayerNode;
-export function toNode(data: PlayerUpdateRequest): PlayerNode;
-export function toNode(data: any): PlayerNode {
+export function toItem(data: PlayerCreateRequest): PlayerNode;
+export function toItem(data: PlayerUpdateRequest): PlayerNode;
+export function toItem(data: any): PlayerNode {
   const date = new Date().valueOf().toString();
 
   return {
@@ -19,6 +21,16 @@ export function toNode(data: any): PlayerNode {
     updatedOn: date
   };
 }
+
+export const toNode = (data: AttributeMap): PlayerNode => ({
+  playerId: data.playerId as string,
+  playerName: data.playerName as string,
+  userName: data.userName as string,
+  totalMatchWins: data.totalMatchWins as number,
+  totalMatchLosses: data.totalMatchLosses as number,
+  email: data.email as string,
+  updatedOn: data.updatedOn as string
+});
 
 export const toView = (data: PlayerNode): PlayerView => ({
   id: data.playerId,
