@@ -45,13 +45,12 @@ export interface MatchDetailsResponse extends MatchView {
   playerBRecord: RecordDetailsResponse;
 }
 
-export interface PlayerResponse {
-  id: string;
-  email: string;
-  displayName?: string;
-  userName: string;
-  totalWins: number;
-  totalLosses: number;
+export interface PlayerResponse extends PlayerView {
+  matches: string[];
+}
+
+export interface PlayerDetailsResponse extends PlayerView {
+  matches: MatchView[];
 }
 
 export interface RecordResponse extends RecordView {

@@ -18,6 +18,7 @@ export function toItem(data: any): PlayerNode {
     totalMatchWins: data.totalWins,
     totalMatchLosses: data.totalLosses,
     email: data.email,
+    matchIds: data.matches,
     updatedOn: date
   };
 }
@@ -29,6 +30,7 @@ export const toNode = (data: AttributeMap): PlayerNode => ({
   totalMatchWins: data.totalMatchWins as number,
   totalMatchLosses: data.totalMatchLosses as number,
   email: data.email as string,
+  matchIds: data.matchIds as string[],
   updatedOn: data.updatedOn as string
 });
 

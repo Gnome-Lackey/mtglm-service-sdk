@@ -16,6 +16,7 @@ export interface PlayerNode {
   totalMatchWins: number;
   totalMatchLosses: number;
   email: string;
+  matchIds: string[];
   updatedOn: string;
 }
 

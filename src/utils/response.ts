@@ -11,7 +11,8 @@ import {
   SuccessResponse,
   AuthResponse,
   AuthHeaderResponse,
-  PlayerResponse
+  PlayerResponse,
+  PlayerDetailsResponse
 } from "../models/Responses";
 
 import { DEFAULT_HEADERS } from "../constants/headers";
@@ -69,6 +70,8 @@ export function handleSuccess(body: MatchDetailsResponse): LambdaResponse;
 export function handleSuccess(body: MatchDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: PlayerResponse): LambdaResponse;
 export function handleSuccess(body: PlayerResponse[]): LambdaResponse;
+export function handleSuccess(body: PlayerDetailsResponse): LambdaResponse;
+export function handleSuccess(body: PlayerDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: RecordResponse): LambdaResponse;
 export function handleSuccess(body: RecordResponse[]): LambdaResponse;
 export function handleSuccess(body: RecordDetailsResponse): LambdaResponse;
