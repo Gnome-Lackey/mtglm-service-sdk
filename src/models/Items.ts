@@ -12,6 +12,8 @@ export interface PlayerDynamoItem {
   email: string;
   totalMatchWins: number;
   totalMatchLosses: number;
+  epithet: string;
+  favoriteColors: string[];
   matchIds: string[];
   updatedOn: string;
 }

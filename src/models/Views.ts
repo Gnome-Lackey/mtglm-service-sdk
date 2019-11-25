@@ -7,6 +7,8 @@ export interface PlayerView {
   email: string;
   displayName?: string;
   userName: string;
+  epithet: string;
+  colors: string[];
   totalWins: number;
   totalLosses: number;
 }
