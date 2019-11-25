@@ -5,7 +5,8 @@ import {
   GetUserRequest,
   ResendConfirmationCodeRequest,
   ListUsersRequest,
-  SignUpRequest
+  SignUpRequest,
+  AdminUpdateUserAttributesRequest
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 import { UserAttribute } from "../models/Cognito";
@@ -28,7 +29,20 @@ export const toAuthConfig = (
   }
 });
 
-export const toUpdateAttributeConfig = (AccessToken: string, UserAttributes: UserAttribute[]): UpdateUserAttributesRequest => ({
+export const toAdminUpdateAttributeConfig = (
+  poolId: string,
+  userName: string,
+  UserAttributes: UserAttribute[]
+): AdminUpdateUserAttributesRequest => ({
+  UserPoolId: poolId,
+  Username: userName,
+  UserAttributes
+});
+
+export const toUpdateAttributeConfig = (
+  AccessToken: string,
+  UserAttributes: UserAttribute[]
+): UpdateUserAttributesRequest => ({
   AccessToken,
   UserAttributes
 });

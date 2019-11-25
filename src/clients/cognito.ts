@@ -42,6 +42,21 @@ export const getLoggedInUser = async (token: string): Promise<GetUserResponse> =
   return result;
 };
 
+export const adminUpdateUserAttribute = async (
+  userName: string,
+  attributes: UserAttribute[]
+): Promise<SuccessResponse> => {
+  const adminUpdateAttributeConfig = cognitoMapper.toAdminUpdateAttributeConfig(
+    USER_POOL_ID,
+    userName,
+    attributes
+  );
+
+  await cognito.adminUpdateUserAttributes(adminUpdateAttributeConfig).promise();
+
+  return { message: "successfully updated attribute." };
+};
+
 export const updateUserAttribute = async (
   token: string,
   attributes: UserAttribute[]
