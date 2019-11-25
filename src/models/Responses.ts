@@ -88,6 +88,8 @@ export interface SuccessResponse {
 export interface UserResponse {
   id: string;
   userName: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
   displayName: string;
   isFirstTimeLogin?: boolean;

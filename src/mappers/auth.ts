@@ -24,6 +24,8 @@ export const toNodeAuth = (data: GetUserResponse): AuthNode => {
   const id = getAttributeByName("sub", attributes);
   const email = getAttributeByName("email", attributes);
   const name = getAttributeByName("name", attributes);
+  const firstName = getAttributeByName("given_name", attributes);
+  const lastName = getAttributeByName("family_name", attributes);
   const role = getAttributeByName("custom:role", attributes);
   const isFirstTimeLogin = !!parseInt(getAttributeByName("custom:firstTimeLogin", attributes), 10);
 
@@ -33,6 +35,8 @@ export const toNodeAuth = (data: GetUserResponse): AuthNode => {
       userName,
       email,
       name,
+      firstName,
+      lastName,
       isFirstTimeLogin,
       role
     }
@@ -57,6 +61,8 @@ export const toResponseLogin = (data: AuthNode): AuthResponse => ({
     id: data.user.id,
     userName: data.user.userName,
     email: data.user.email,
+    firstName: data.user.firstName,
+    lastName: data.user.lastName,
     displayName: data.user.name,
     accountType: data.user.role,
     isFirstTimeLogin: data.user.isFirstTimeLogin
@@ -79,6 +85,8 @@ export const toResponseValidate = (data: GetUserResponse): AuthResponse => {
   const id = getAttributeByName("sub", attributes);
   const email = getAttributeByName("email", attributes);
   const name = getAttributeByName("name", attributes);
+  const firstName = getAttributeByName("given_name", attributes);
+  const lastName = getAttributeByName("family_name", attributes);
   const role = getAttributeByName("custom:role", attributes);
 
   return {
@@ -86,6 +94,8 @@ export const toResponseValidate = (data: GetUserResponse): AuthResponse => {
       id,
       userName,
       email,
+      firstName,
+      lastName,
       displayName: name,
       accountType: role
     }

@@ -68,6 +68,8 @@ export interface UserNode {
   userName: string;
   email: string;
   name: string;
+  firstName?: string;
+  lastName?: string;
   isFirstTimeLogin: boolean;
   role: string;
 }
