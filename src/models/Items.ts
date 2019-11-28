@@ -2,7 +2,7 @@ export interface MatchDynamoItem {
   matchId: string;
   playerARecordId: string;
   playerBRecordId: string;
-  updatedOn: string;
+  updatedOn?: string;
 }
 
 export interface PlayerDynamoItem {
@@ -15,7 +15,7 @@ export interface PlayerDynamoItem {
   epithet: string;
   favoriteColors: string[];
   matchIds: string[];
-  updatedOn: string;
+  updatedOn?: string;
 }
 
 export interface RecordDynamoItem {
@@ -23,8 +23,8 @@ export interface RecordDynamoItem {
   wins: number;
   losses: number;
   playerId: string;
-  matchId: string;
-  updatedOn: string;
+  matchId?: string;
+  updatedOn?: string;
 }
 
 export interface SeasonDynamoItem {
@@ -35,12 +35,12 @@ export interface SeasonDynamoItem {
   setId: string;
   playerIds: string[];
   matchIds: string[];
-  updatedOn: string;
+  updatedOn?: string;
 }
 
 export interface SetDynamoItem {
   setId: string;
   setName: string;
   icon: string;
-  updatedOn: string;
+  updatedOn?: string;
 }

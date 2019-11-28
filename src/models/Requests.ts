@@ -14,6 +14,7 @@ export interface MatchCreateRequest {
 }
 
 export interface MatchUpdateRequest {
+  id?: string;
   playerA?: RecordUpdateRequest;
   playerB?: RecordUpdateRequest;
 }
@@ -49,6 +50,7 @@ export interface RecordCreateRequest {
 }
 
 export interface RecordUpdateRequest {
+  id?: string;
   wins?: number;
   losses?: number;
   player?: string;
