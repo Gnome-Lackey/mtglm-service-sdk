@@ -1,5 +1,5 @@
 export interface PlayerQueryParameters {
-  displayName?: string;
+  name?: string;
   userName?: string;
 }
 
