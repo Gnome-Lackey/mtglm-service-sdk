@@ -9,6 +9,8 @@ import {
 } from "../models/Dynamo";
 
 import { PotentialPrimaryKey } from "../models/PrimaryKeys";
+import { ExpressionAttributeValueMap, ScanInput } from "aws-sdk/clients/dynamodb";
+import { PotentialQueryParameters } from "src/models/QueryParameters";
 
 const buildAttributeMapping = (
   attributes: string[],
@@ -140,3 +142,28 @@ export const toIndexConfiguration = (
   IndexName: index,
   TableName: tableName
 });
+
+export const toScanConfiguration = (
+  filters: PotentialQueryParameters,
+  tableName: string
+): ScanInput => {
+  const filterMapping = Object.keys(filters).reduce(
+    (map, filter) => ({
+      values: {
+        ...map.values,
+        [`:${filter}`]: filters[filter]
+      },
+      expression: [...map.expression, `${filter} = :${filter}`]
+    }),
+    {
+      values: {} as ExpressionAttributeValueMap,
+      expression: [] as string[]
+    }
+  );
+
+  return {
+    ExpressionAttributeValues: filterMapping.values as ExpressionAttributeValueMap,
+    FilterExpression: filterMapping.expression.join(" OR "),
+    TableName: tableName
+  };
+};

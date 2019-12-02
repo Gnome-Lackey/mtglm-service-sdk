@@ -18,6 +18,7 @@ import {
   RecordDynamoItem,
   PlayerDynamoItem
 } from "../models/Items";
+import { PotentialQueryParameters } from "src/models/QueryParameters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
@@ -55,41 +56,13 @@ export class MTGLMDynamoClient {
     return result.Item;
   };
 
-  // TODO: Uncomment when we need this
-  // fetchByIndex = async (iid: string, index: string): Promise<AttributeMap[]> => {
-  //   const config = dynamoMapper.toIndexConfiguration(iid, index, this.tableName);
+  query = async (filters: PotentialQueryParameters): Promise<AttributeMap[]> => {
+    const config = dynamoMapper.toScanConfiguration(filters, this.tableName);
 
-  //   const GSIResults = await dynamoDB.query(config).promise();
+    const results = await dynamoDB.scan(config).promise();
 
-  //   const keys = GSIResults.Items.map(({ objectiveId, missionId }) => ({ objectiveId, missionId }));
-
-  //   if (!keys.length) {
-  //     return [];
-  //   }
-
-  //   return await this.fetchByKeys(keys);
-  // };
-
-  // TODO: Uncomment when we need this
-  // query = async (id: string, hashKey: string): Promise<AttributeMap[]> => {
-  //   const config = dynamoMapper.toQueryConfiguration(id, this.tableName);
-
-  //   const GSIResults = await dynamoDB.query(config).promise();
-
-  //   const keys = GSIResults.Items.map((result: AttributeMap) => {
-  //     const hashValue = result[hashKey] as string;
-
-  //     return {
-  //       [hashKey]: hashValue
-  //     };
-  //   });
-
-  //   if (!keys.length) {
-  //     return [];
-  //   }
-
-  //   return await this.fetchByKeys(keys);
-  // };
+    return results.Items;
+  };
 
   remove = async (key: PotentialPrimaryKey): Promise<void> => {
     const config = {

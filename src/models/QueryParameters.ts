@@ -14,4 +14,6 @@ export interface SetQueryParameters {
 export interface PotentialQueryParameters
   extends PlayerQueryParameters,
     SeasonQueryParameters,
-    SetQueryParameters {}
+    SetQueryParameters {
+  [key: string]: string;
+}
