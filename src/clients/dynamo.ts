@@ -19,7 +19,7 @@ import {
   PlayerDynamoItem
 } from "../models/Items";
 
-import { PlayerFilters, SetFilters } from "src/models/Filters";
+import { PlayerFilters, SetFilters } from "../models/Filters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
