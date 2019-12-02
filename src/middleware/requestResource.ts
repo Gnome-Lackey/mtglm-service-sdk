@@ -3,12 +3,14 @@ import * as decodeToken from "jwt-decode";
 import { handleError } from "../utils/response";
 
 import { LambdaResponse, LambdaEvent, LambdaHeaders, LambdaToken } from "../models/Lambda";
-import { PotentialRequest } from "../models/Requests";
 import { PotentialPathParameters } from "../models/PathParameters";
+import { PotentialQueryParameters } from "../models/QueryParameters";
+import { PotentialRequest } from "../models/Requests";
 
 type RequestResourceMiddlewareCallbackType = (
   pathParameters?: PotentialPathParameters,
-  data?: PotentialRequest
+  data?: PotentialRequest,
+  queryParameters?: PotentialQueryParameters
 ) => Promise<LambdaResponse>;
 
 type GetUserIdMiddlewareType = (event: LambdaEvent) => Promise<LambdaResponse>;
@@ -39,13 +41,13 @@ export default function requestResourceMiddleware(
   callback: RequestResourceMiddlewareCallbackType
 ): GetUserIdMiddlewareType {
   return async (event: LambdaEvent): Promise<LambdaResponse> => {
-    const { headers, body, pathParameters } = event;
+    const { headers, body, pathParameters, queryParameters } = event;
 
     const userId = parseUserId(headers);
     const data = parseData(body);
 
     if (userId) {
-      return await callback(pathParameters, data);
+      return await callback(pathParameters, data, queryParameters);
     } else {
       return handleError({
         code: "InvalidIdTokenException",
