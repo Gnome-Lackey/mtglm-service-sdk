@@ -18,12 +18,8 @@ import {
   RecordDynamoItem,
   PlayerDynamoItem
 } from "../models/Items";
-import {
-  PotentialQueryParameters,
-  PlayerQueryParameters,
-  SeasonQueryParameters,
-  SetQueryParameters
-} from "../models/QueryParameters";
+
+import { PlayerFilters, SetFilters } from "src/models/Filters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
@@ -61,10 +57,9 @@ export class MTGLMDynamoClient {
     return result.Item;
   };
 
-  async query(filters: PlayerQueryParameters): Promise<AttributeMap[]>;
-  async query(filters: SeasonQueryParameters): Promise<AttributeMap[]>;
-  async query(filters: SetQueryParameters): Promise<AttributeMap[]>;
-  async query(filters: PotentialQueryParameters): Promise<AttributeMap[]> {
+  async query(filters: PlayerFilters): Promise<AttributeMap[]>;
+  async query(filters: SetFilters): Promise<AttributeMap[]>;
+  async query(filters: any): Promise<AttributeMap[]> {
     const config = dynamoMapper.toScanConfiguration(filters, this.tableName);
 
     const results = await dynamoDB.scan(config).promise();

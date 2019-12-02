@@ -11,11 +11,7 @@ import {
 } from "../models/Dynamo";
 
 import { PotentialPrimaryKey } from "../models/PrimaryKeys";
-import {
-  PlayerQueryParameters,
-  SeasonQueryParameters,
-  SetQueryParameters
-} from "../models/QueryParameters";
+import { PlayerFilters, SetFilters } from "../models/Filters";
 
 const buildAttributeMapping = (
   attributes: string[],
@@ -148,9 +144,8 @@ export const toIndexConfiguration = (
   TableName: tableName
 });
 
-export function toScanConfiguration(filters: PlayerQueryParameters, tableName: string): ScanInput;
-export function toScanConfiguration(filters: SeasonQueryParameters, tableName: string): ScanInput;
-export function toScanConfiguration(filters: SetQueryParameters, tableName: string): ScanInput;
+export function toScanConfiguration(filters: PlayerFilters, tableName: string): ScanInput;
+export function toScanConfiguration(filters: SetFilters, tableName: string): ScanInput;
 export function toScanConfiguration(filters: any, tableName: string): ScanInput {
   if (!filters) {
     return {
