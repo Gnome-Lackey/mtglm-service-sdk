@@ -40,7 +40,6 @@ export const toNode = (data: AttributeMap): RecordNode => ({
 
 export const toView = (data: RecordNode): RecordView => ({
   id: data.recordId,
-  player: data.playerId,
   wins: data.wins,
   losses: data.losses
 });
