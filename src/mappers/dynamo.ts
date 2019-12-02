@@ -1,3 +1,5 @@
+import { ExpressionAttributeValueMap, ScanInput } from "aws-sdk/clients/dynamodb";
+
 import {
   DynamoUpdateListConfig,
   DynamoGetBatchConfig,
@@ -9,8 +11,7 @@ import {
 } from "../models/Dynamo";
 
 import { PotentialPrimaryKey } from "../models/PrimaryKeys";
-import { ExpressionAttributeValueMap, ScanInput } from "aws-sdk/clients/dynamodb";
-import { PotentialQueryParameters } from "src/models/QueryParameters";
+import { PotentialQueryParameters } from "../models/QueryParameters";
 
 const buildAttributeMapping = (
   attributes: string[],

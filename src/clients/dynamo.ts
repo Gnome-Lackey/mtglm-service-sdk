@@ -18,7 +18,7 @@ import {
   RecordDynamoItem,
   PlayerDynamoItem
 } from "../models/Items";
-import { PotentialQueryParameters } from "src/models/QueryParameters";
+import { PotentialQueryParameters } from "../models/QueryParameters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
