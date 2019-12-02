@@ -152,6 +152,12 @@ export function toScanConfiguration(filters: PlayerQueryParameters, tableName: s
 export function toScanConfiguration(filters: SeasonQueryParameters, tableName: string): ScanInput;
 export function toScanConfiguration(filters: SetQueryParameters, tableName: string): ScanInput;
 export function toScanConfiguration(filters: any, tableName: string): ScanInput {
+  if (!filters) {
+    return {
+      TableName: tableName
+    };
+  }
+
   const filterMapping = Object.keys(filters).reduce(
     (map, filter) => ({
       values: {
