@@ -43,6 +43,8 @@ export default function requestResourceMiddleware(
   return async (event: LambdaEvent): Promise<LambdaResponse> => {
     const { headers, body, pathParameters, queryParameters } = event;
 
+    console.log(JSON.stringify(event));
+
     const userId = parseUserId(headers);
     const data = parseData(body);
 
