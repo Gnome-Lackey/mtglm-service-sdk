@@ -11,7 +11,11 @@ import {
 } from "../models/Dynamo";
 
 import { PotentialPrimaryKey } from "../models/PrimaryKeys";
-import { PotentialQueryParameters } from "../models/QueryParameters";
+import {
+  PlayerQueryParameters,
+  SeasonQueryParameters,
+  SetQueryParameters
+} from "../models/QueryParameters";
 
 const buildAttributeMapping = (
   attributes: string[],
@@ -144,10 +148,10 @@ export const toIndexConfiguration = (
   TableName: tableName
 });
 
-export const toScanConfiguration = (
-  filters: PotentialQueryParameters,
-  tableName: string
-): ScanInput => {
+export function toScanConfiguration(filters: PlayerQueryParameters, tableName: string): ScanInput;
+export function toScanConfiguration(filters: SeasonQueryParameters, tableName: string): ScanInput;
+export function toScanConfiguration(filters: SetQueryParameters, tableName: string): ScanInput;
+export function toScanConfiguration(filters: any, tableName: string): ScanInput {
   const filterMapping = Object.keys(filters).reduce(
     (map, filter) => ({
       values: {
@@ -167,4 +171,4 @@ export const toScanConfiguration = (
     FilterExpression: filterMapping.expression.join(" OR "),
     TableName: tableName
   };
-};
+}
