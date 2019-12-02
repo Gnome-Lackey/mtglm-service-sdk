@@ -159,7 +159,7 @@ export function toScanConfiguration(filters: any, tableName: string): ScanInput 
         ...map.values,
         [`:${filter}`]: filters[filter]
       },
-      expression: [...map.expression, `${filter} = :${filter}`]
+      expression: [...map.expression, `contains(${filter}, :${filter})`]
     }),
     {
       values: {} as ExpressionAttributeValueMap,
