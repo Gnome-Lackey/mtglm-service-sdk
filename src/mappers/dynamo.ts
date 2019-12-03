@@ -1,5 +1,3 @@
-import { ExpressionAttributeValueMap, ScanInput } from "aws-sdk/clients/dynamodb";
-
 import {
   DynamoUpdateListConfig,
   DynamoGetBatchConfig,
@@ -11,7 +9,6 @@ import {
 } from "../models/Dynamo";
 
 import { PotentialPrimaryKey } from "../models/PrimaryKeys";
-import { PlayerFilters, SetFilters } from "../models/Filters";
 
 const buildAttributeMapping = (
   attributes: string[],
@@ -143,33 +140,3 @@ export const toIndexConfiguration = (
   IndexName: index,
   TableName: tableName
 });
-
-export function toScanConfiguration(filters: PlayerFilters, tableName: string): ScanInput;
-export function toScanConfiguration(filters: SetFilters, tableName: string): ScanInput;
-export function toScanConfiguration(filters: any, tableName: string): ScanInput {
-  if (!filters) {
-    return {
-      TableName: tableName
-    };
-  }
-
-  const filterMapping = Object.keys(filters).reduce(
-    (map, filter) => ({
-      values: {
-        ...map.values,
-        [`:${filter}`]: filters[filter]
-      },
-      expression: [...map.expression, `contains(${filter}, :${filter})`]
-    }),
-    {
-      values: {} as ExpressionAttributeValueMap,
-      expression: [] as string[]
-    }
-  );
-
-  return {
-    ExpressionAttributeValues: filterMapping.values as ExpressionAttributeValueMap,
-    FilterExpression: filterMapping.expression.join(" OR "),
-    TableName: tableName
-  };
-}

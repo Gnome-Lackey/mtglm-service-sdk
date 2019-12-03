@@ -60,11 +60,21 @@ export class MTGLMDynamoClient {
   async query(filters: PlayerFilters): Promise<AttributeMap[]>;
   async query(filters: SetFilters): Promise<AttributeMap[]>;
   async query(filters: any): Promise<AttributeMap[]> {
-    const config = dynamoMapper.toScanConfiguration(filters, this.tableName);
+    const result = await dynamoDB
+      .scan({
+        TableName: this.tableName
+      })
+      .promise();
 
-    const results = await dynamoDB.scan(config).promise();
+    const filterNames = Object.keys(filters);
 
-    return results.Items;
+    return filters
+      ? result.Items.filter((item) =>
+          filterNames.some((name) =>
+            item[name] ? item[name].toLowerCase().includes(filters[name].toLowerCase()) : false
+          )
+        )
+      : result.Items;
   }
 
   remove = async (key: PotentialPrimaryKey): Promise<void> => {
