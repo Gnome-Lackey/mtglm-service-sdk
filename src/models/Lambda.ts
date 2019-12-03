@@ -13,7 +13,7 @@ export interface LambdaEvent {
   headers: LambdaHeaders;
   body?: string;
   pathParameters?: PotentialPathParameters;
-  queryParameters?: PotentialQueryParameters;
+  queryStringParameters?: PotentialQueryParameters;
 }
 
 export interface LambdaResponse {

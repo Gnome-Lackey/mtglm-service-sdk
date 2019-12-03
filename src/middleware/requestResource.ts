@@ -10,7 +10,7 @@ import { PotentialRequest } from "../models/Requests";
 type RequestResourceMiddlewareCallbackType = (
   pathParameters?: PotentialPathParameters,
   data?: PotentialRequest,
-  queryParameters?: PotentialQueryParameters
+  queryStringParameters?: PotentialQueryParameters
 ) => Promise<LambdaResponse>;
 
 type GetUserIdMiddlewareType = (event: LambdaEvent) => Promise<LambdaResponse>;
@@ -41,15 +41,13 @@ export default function requestResourceMiddleware(
   callback: RequestResourceMiddlewareCallbackType
 ): GetUserIdMiddlewareType {
   return async (event: LambdaEvent): Promise<LambdaResponse> => {
-    const { headers, body, pathParameters, queryParameters } = event;
-
-    console.log(JSON.stringify(event));
+    const { headers, body, pathParameters, queryStringParameters } = event;
 
     const userId = parseUserId(headers);
     const data = parseData(body);
 
     if (userId) {
-      return await callback(pathParameters, data, queryParameters);
+      return await callback(pathParameters, data, queryStringParameters);
     } else {
       return handleError({
         code: "InvalidIdTokenException",
