@@ -6,10 +6,19 @@ export const toPlayerFilters = (query: PlayerQueryParameters): PlayerFilters => 
     return null;
   }
 
-  return {
-    playerName: query.name,
-    userName: query.userName
-  };
+  const { name, userName } = query;
+
+  const filters = {} as PlayerFilters;
+
+  if (query.name) {
+    filters.playerName = name;
+  }
+
+  if (query.userName) {
+    filters.userName = userName;
+  }
+
+  return filters;
 };
 
 export const toSetFilters = (query: SetQueryParameters): SetFilters => {
@@ -17,7 +26,13 @@ export const toSetFilters = (query: SetQueryParameters): SetFilters => {
     return null;
   }
 
-  return {
-    setName: query.name
-  };
+  const { name } = query;
+
+  const filters = {} as SetFilters;
+
+  if (query.name) {
+    filters.setName = name;
+  }
+
+  return filters;
 };
