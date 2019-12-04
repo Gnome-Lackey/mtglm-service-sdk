@@ -46,7 +46,6 @@ export interface RecordCreateRequest {
   wins: number;
   losses: number;
   player: string;
-  match: string;
 }
 
 export interface RecordUpdateRequest {

@@ -7,15 +7,15 @@ import { RecordView } from "../models/Views";
 import { RecordNode } from "../models/Nodes";
 import { RecordDynamoItem } from "../models/Items";
 
-export function toCreateItem(data: RecordCreateRequest): RecordDynamoItem {
+export function toCreateItem(matchId: string, data: RecordCreateRequest): RecordDynamoItem {
   const date = new Date().valueOf().toString();
 
   return {
     recordId: uuid.v4(),
+    matchId,
     wins: data.wins,
     losses: data.losses,
     playerId: data.player,
-    matchId: data.match,
     updatedOn: date
   };
 }
