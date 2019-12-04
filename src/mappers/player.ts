@@ -3,9 +3,9 @@ import { AttributeMap } from "aws-sdk/clients/dynamodb";
 import { PlayerView } from "../models/Views";
 import { PlayerNode } from "../models/Nodes";
 import { PlayerCreateRequest, PlayerUpdateRequest } from "../models/Requests";
-import { PlayerDynamoItem } from "../models/Items";
+import { PlayerDynamoCreateItem, PlayerDynamoUpdateItem } from "../models/Items";
 
-export const toUpdateItem = (data: PlayerUpdateRequest): PlayerDynamoItem => {
+export const toUpdateItem = (data: PlayerUpdateRequest): PlayerDynamoUpdateItem => {
   const date = new Date().valueOf().toString();
 
   return {
@@ -21,7 +21,7 @@ export const toUpdateItem = (data: PlayerUpdateRequest): PlayerDynamoItem => {
   };
 };
 
-export const toCreateItem = (data: PlayerCreateRequest): PlayerDynamoItem => {
+export const toCreateItem = (data: PlayerCreateRequest): PlayerDynamoCreateItem => {
   const date = new Date().valueOf().toString();
 
   return {

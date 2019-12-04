@@ -12,11 +12,16 @@ import {
   PlayerPrimaryKey
 } from "../models/PrimaryKeys";
 import {
-  MatchDynamoItem,
-  SeasonDynamoItem,
-  SetDynamoItem,
-  RecordDynamoItem,
-  PlayerDynamoItem
+  MatchDynamoCreateItem,
+  SeasonDynamoCreateItem,
+  SetDynamoCreateItem,
+  RecordDynamoCreateItem,
+  PlayerDynamoCreateItem,
+  MatchDynamoUpdateItem,
+  SeasonDynamoUpdateItem,
+  SetDynamoUpdateItem,
+  RecordDynamoUpdateItem,
+  PlayerDynamoUpdateItem
 } from "../models/Items";
 
 import { PlayerFilters, SetFilters } from "../models/Filters";
@@ -86,11 +91,11 @@ export class MTGLMDynamoClient {
     await dynamoDB.delete(config).promise();
   };
 
-  async create(key: MatchPrimaryKey, item: MatchDynamoItem): Promise<AttributeMap>;
-  async create(key: SeasonPrimaryKey, item: SeasonDynamoItem): Promise<AttributeMap>;
-  async create(key: SetPrimaryKey, item: SetDynamoItem): Promise<AttributeMap>;
-  async create(key: RecordPrimaryKey, item: RecordDynamoItem): Promise<AttributeMap>;
-  async create(key: PlayerPrimaryKey, item: PlayerDynamoItem): Promise<AttributeMap>;
+  async create(key: MatchPrimaryKey, item: MatchDynamoCreateItem): Promise<AttributeMap>;
+  async create(key: SeasonPrimaryKey, item: SeasonDynamoCreateItem): Promise<AttributeMap>;
+  async create(key: SetPrimaryKey, item: SetDynamoCreateItem): Promise<AttributeMap>;
+  async create(key: RecordPrimaryKey, item: RecordDynamoCreateItem): Promise<AttributeMap>;
+  async create(key: PlayerPrimaryKey, item: PlayerDynamoCreateItem): Promise<AttributeMap>;
   async create(key: any, item: any): Promise<AttributeMap> {
     const config = {
       Item: item,
@@ -102,11 +107,11 @@ export class MTGLMDynamoClient {
     return await this.fetchByKey(key);
   }
 
-  async update(key: MatchPrimaryKey, item: MatchDynamoItem): Promise<AttributeMap>;
-  async update(key: SeasonPrimaryKey, item: SeasonDynamoItem): Promise<AttributeMap>;
-  async update(key: SetPrimaryKey, item: SetDynamoItem): Promise<AttributeMap>;
-  async update(key: RecordPrimaryKey, item: RecordDynamoItem): Promise<AttributeMap>;
-  async update(key: PlayerPrimaryKey, item: PlayerDynamoItem): Promise<AttributeMap>;
+  async update(key: MatchPrimaryKey, item: MatchDynamoUpdateItem): Promise<AttributeMap>;
+  async update(key: SeasonPrimaryKey, item: SeasonDynamoUpdateItem): Promise<AttributeMap>;
+  async update(key: SetPrimaryKey, item: SetDynamoUpdateItem): Promise<AttributeMap>;
+  async update(key: RecordPrimaryKey, item: RecordDynamoUpdateItem): Promise<AttributeMap>;
+  async update(key: PlayerPrimaryKey, item: PlayerDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: any, item: any): Promise<AttributeMap> {
     const config = dynamoMapper.toUpdateConfiguration(
       key,

@@ -4,11 +4,11 @@ import { AttributeMap } from "aws-sdk/clients/dynamodb";
 
 import { SetCreateRequest, SetUpdateRequest } from "../models/Requests";
 import { SetNode } from "../models/Nodes";
-import { SetDynamoItem } from "../models/Items";
+import { SetDynamoCreateItem, SetDynamoUpdateItem } from "../models/Items";
 
-export function toItem(data: SetCreateRequest): SetDynamoItem;
-export function toItem(data: SetUpdateRequest): SetDynamoItem;
-export function toItem(data: any): SetDynamoItem {
+export function toItem(data: SetCreateRequest): SetDynamoCreateItem;
+export function toItem(data: SetUpdateRequest): SetDynamoUpdateItem;
+export function toItem(data: any): SetDynamoCreateItem | SetDynamoUpdateItem {
   const date = new Date().valueOf().toString();
 
   return {

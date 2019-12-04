@@ -5,11 +5,11 @@ import { AttributeMap } from "aws-sdk/clients/dynamodb";
 import { SeasonCreateRequest, SeasonUpdateRequest } from "../models/Requests";
 import { SeasonView } from "../models/Views";
 import { SeasonNode } from "../models/Nodes";
-import { SeasonDynamoItem } from "../models/Items";
+import { SeasonDynamoCreateItem, SeasonDynamoUpdateItem } from "../models/Items";
 
-export function toItem(data: SeasonCreateRequest): SeasonDynamoItem;
-export function toItem(data: SeasonUpdateRequest): SeasonDynamoItem;
-export function toItem(data: any): SeasonDynamoItem {
+export function toItem(data: SeasonCreateRequest): SeasonDynamoCreateItem;
+export function toItem(data: SeasonUpdateRequest): SeasonDynamoUpdateItem;
+export function toItem(data: any): SeasonDynamoCreateItem | SeasonDynamoUpdateItem {
   const date = new Date().valueOf().toString();
 
   return {
@@ -32,7 +32,7 @@ export const toNode = (data: AttributeMap): SeasonNode => ({
   setId: data.setId as string,
   playerIds: data.playerIds as string[],
   matchIds: data.matchIds as string[],
-  updatedOn: data.updatedOn as string,
+  updatedOn: data.updatedOn as string
 });
 
 export const toView = (data: SeasonNode): SeasonView => ({

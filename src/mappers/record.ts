@@ -5,9 +5,9 @@ import { AttributeMap } from "aws-sdk/clients/dynamodb";
 import { RecordCreateRequest, RecordUpdateRequest } from "../models/Requests";
 import { RecordView } from "../models/Views";
 import { RecordNode } from "../models/Nodes";
-import { RecordDynamoItem } from "../models/Items";
+import { RecordDynamoCreateItem, RecordDynamoUpdateItem } from "../models/Items";
 
-export function toCreateItem(matchId: string, data: RecordCreateRequest): RecordDynamoItem {
+export function toCreateItem(matchId: string, data: RecordCreateRequest): RecordDynamoCreateItem {
   const date = new Date().valueOf().toString();
 
   return {
@@ -20,14 +20,10 @@ export function toCreateItem(matchId: string, data: RecordCreateRequest): Record
   };
 }
 
-export function toItem(data: RecordUpdateRequest): RecordDynamoItem {
-  return {
-    recordId: data.id,
-    wins: data.wins,
-    losses: data.losses,
-    playerId: data.player
-  };
-}
+export const toItem = (data: RecordUpdateRequest): RecordDynamoUpdateItem => ({
+  wins: data.wins,
+  losses: data.losses
+});
 
 export const toNode = (data: AttributeMap): RecordNode => ({
   recordId: data.recordId as string,

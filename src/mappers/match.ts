@@ -5,9 +5,9 @@ import { AttributeMap } from "aws-sdk/clients/dynamodb";
 import { MatchUpdateRequest } from "../models/Requests";
 import { MatchView } from "../models/Views";
 import { MatchNode } from "../models/Nodes";
-import { MatchDynamoItem } from "../models/Items";
+import { MatchDynamoCreateItem, MatchDynamoUpdateItem } from "../models/Items";
 
-export function toCreateItem(): MatchDynamoItem {
+export function toCreateItem(): MatchDynamoCreateItem {
   const date = new Date().valueOf().toString();
 
   return {
@@ -18,13 +18,10 @@ export function toCreateItem(): MatchDynamoItem {
   };
 }
 
-export function toItem(data: MatchUpdateRequest): MatchDynamoItem {
-  return {
-    matchId: data.id,
-    playerARecordId: "",
-    playerBRecordId: ""
-  };
-}
+export const toItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem => ({
+  playerARecordId: data.playerA.id,
+  playerBRecordId: data.playerB.id
+});
 
 export const toNode = (data: AttributeMap): MatchNode => ({
   matchId: data.matchId as string,
