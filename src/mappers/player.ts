@@ -5,21 +5,16 @@ import { PlayerNode } from "../models/Nodes";
 import { PlayerCreateRequest, PlayerUpdateRequest } from "../models/Requests";
 import { PlayerDynamoCreateItem, PlayerDynamoUpdateItem } from "../models/Items";
 
-export const toUpdateItem = (data: PlayerUpdateRequest): PlayerDynamoUpdateItem => {
-  const date = new Date().valueOf().toString();
-
-  return {
-    playerName: data.name,
-    userName: data.userName,
-    totalMatchWins: data.totalWins,
-    totalMatchLosses: data.totalLosses,
-    email: data.email,
-    favoriteColors: data.favoriteColors,
-    epithet: data.epithet,
-    matchIds: data.matches,
-    updatedOn: date
-  };
-};
+export const toUpdateItem = (data: PlayerUpdateRequest): PlayerDynamoUpdateItem => ({
+  playerName: data.name,
+  userName: data.userName,
+  totalMatchWins: data.totalWins,
+  totalMatchLosses: data.totalLosses,
+  email: data.email,
+  favoriteColors: data.favoriteColors,
+  epithet: data.epithet,
+  matchIds: data.matches
+});
 
 export const toCreateItem = (data: PlayerCreateRequest): PlayerDynamoCreateItem => {
   const date = new Date().valueOf().toString();
