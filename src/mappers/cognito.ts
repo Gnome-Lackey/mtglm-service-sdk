@@ -91,8 +91,20 @@ export const toAdminCreateUser = (
       Value: email
     },
     {
+      Name: "given_name",
+      Value: "Boss Man"
+    },
+    {
+      Name: "family_name",
+      Value: "McBoss"
+    },
+    {
+      Name: "name",
+      Value: "Boss Man McBoss"
+    },
+    {
       Name: "custom:firstTimeLogin",
-      Value: "1"
+      Value: "0"
     },
     {
       Name: "custom:role",
