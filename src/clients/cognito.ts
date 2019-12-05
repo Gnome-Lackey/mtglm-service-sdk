@@ -26,6 +26,8 @@ export const login = async (
 
   const result = await cognito.adminInitiateAuth(authConfig).promise();
 
+  console.log(JSON.stringify(result));
+
   return result.AuthenticationResult;
 };
 
