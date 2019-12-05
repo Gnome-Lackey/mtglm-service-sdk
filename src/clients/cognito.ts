@@ -26,8 +26,6 @@ export const login = async (
 
   const result = await cognito.adminInitiateAuth(authConfig).promise();
 
-  console.log(JSON.stringify(result));
-
   return result.AuthenticationResult;
 };
 
@@ -107,9 +105,18 @@ export const initAdminAccount = async (): Promise<AdminCreateUserResponse> => {
     return null;
   }
 
-  const config = cognitoMapper.toAdminCreateUser(USER_POOL_ID, ADMIN_PASS, ADMIN_EMAIL);
+  const userName =  "admin";
+
+  const config = cognitoMapper.toAdminCreateUser(userName, USER_POOL_ID, ADMIN_PASS, ADMIN_EMAIL);
     
   const adminCreateUserResult = await cognito.adminCreateUser(config).promise();
+
+  await cognito.adminSetUserPassword({
+    Password: ADMIN_PASS,
+    UserPoolId: USER_POOL_ID,
+    Username: userName,
+    Permanent: true
+  }).promise();
 
   return adminCreateUserResult;
 };

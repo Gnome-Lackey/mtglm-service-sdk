@@ -77,12 +77,13 @@ export const toListUsersConfig = (poolId: string, email: string): ListUsersReque
 });
 
 export const toAdminCreateUser = (
+  userName: string,
   poolId: string,
   pass: string,
   email: string
 ): AdminCreateUserRequest => ({
   UserPoolId: poolId,
-  Username: "admin",
+  Username: userName,
   TemporaryPassword: pass,
   UserAttributes: [
     {
