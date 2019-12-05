@@ -71,11 +71,9 @@ export class MTGLMDynamoClient {
       })
       .promise();
 
-    const filterNames = Object.keys(filters);
-
     return filters
       ? result.Items.filter((item) =>
-          filterNames.some((name) =>
+          Object.keys(filters).some((name) =>
             item[name] ? item[name].toLowerCase().includes(filters[name].toLowerCase()) : false
           )
         )
