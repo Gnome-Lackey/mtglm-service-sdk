@@ -33,7 +33,8 @@ type ErrorDomains =
   | "SIGN_UP"
   | "VALIDATE"
   | "LOGOUT"
-  | "RESEND_CONFIRMATION_CODE";
+  | "RESEND_CONFIRMATION_CODE"
+  | "INIT_ADMIN_ACCOUNT";
 
 export const handleError = (
   error: ErrorResponse,

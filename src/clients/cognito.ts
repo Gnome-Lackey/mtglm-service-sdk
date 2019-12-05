@@ -95,8 +95,18 @@ export const resendConfirmationCode = async (userName: string): Promise<SuccessR
 };
 
 export const initAdminAccount = async (): Promise<AdminCreateUserResponse> => {
-  const config = cognitoMapper.toAdminCreateUser(USER_POOL_ID, ADMIN_PASS, ADMIN_EMAIL);
+  const listUsersConfig = cognitoMapper.toListUsersConfig(USER_POOL_ID, ADMIN_EMAIL);
 
+  const listUsersResult = await cognito.listUsers(listUsersConfig).promise();
+
+  const accountWithEmailExists = listUsersResult && listUsersResult.Users.length;
+
+  if (accountWithEmailExists) { 
+    return null;
+  }
+
+  const config = cognitoMapper.toAdminCreateUser(USER_POOL_ID, ADMIN_PASS, ADMIN_EMAIL);
+    
   const adminCreateUserResult = await cognito.adminCreateUser(config).promise();
 
   return adminCreateUserResult;

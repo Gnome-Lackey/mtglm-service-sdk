@@ -65,6 +65,10 @@ export const ERROR_MESSAGES: {
     INVALID_TOKEN_EXCEPTION: string;
     MISSING_TOKEN_EXCEPTION: string;
     UNAUTHORIZED: string;
+  },
+  INIT_ADMIN_ACCOUNT: {
+    [key: string]: string;
+    UNAUTHORIZED: string;
   }
 } = {
   DEFAULT: {
@@ -93,6 +97,9 @@ export const ERROR_MESSAGES: {
     INVALID_TOKEN_EXCEPTION: "The token you provided is invalid.",
     MISSING_TOKEN_EXCEPTION: "Missing required token.",
     UNAUTHORIZED: "We're sorry, but you are not authorized to access this page."
+  },
+  INIT_ADMIN_ACCOUNT: {
+    UNAUTHORIZED: "We're sorry, but you are not authorized to access this endpoint."
   }
 };
 
