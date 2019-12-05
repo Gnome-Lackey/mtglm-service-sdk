@@ -1,6 +1,7 @@
 import {
   AuthenticationResultType,
-  GetUserResponse
+  GetUserResponse,
+  AdminCreateUserResponse
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 import { getAttributeByName } from "../utils/attributes";
@@ -68,6 +69,31 @@ export const toResponseLogin = (data: AuthNode): AuthResponse => ({
     isFirstTimeLogin: data.user.isFirstTimeLogin
   }
 });
+
+export const toResponseInitAdmin = (data: AdminCreateUserResponse): AuthResponse => {
+  const {
+    User: { Username: userName, Attributes: attributes }
+  } = data;
+
+  const id = getAttributeByName("sub", attributes);
+  const email = getAttributeByName("email", attributes);
+  const name = getAttributeByName("name", attributes);
+  const firstName = getAttributeByName("given_name", attributes);
+  const lastName = getAttributeByName("family_name", attributes);
+  const role = getAttributeByName("custom:role", attributes);
+
+  return {
+    user: {
+      id,
+      userName,
+      email,
+      firstName,
+      lastName,
+      displayName: name,
+      accountType: role
+    }
+  };
+};
 
 export const toResponseSignUp = (uid: string, data: SignUpNode): AuthResponse => ({
   user: {
