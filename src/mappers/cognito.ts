@@ -6,13 +6,14 @@ import {
   ResendConfirmationCodeRequest,
   ListUsersRequest,
   SignUpRequest,
-  AdminUpdateUserAttributesRequest
+  AdminUpdateUserAttributesRequest,
+  AdminCreateUserRequest
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 import { UserAttribute } from "../models/Cognito";
 import { SignUpNode } from "../models/Nodes";
 
-import { USER_ROLE } from "../constants/roles";
+import { USER_ROLE, ADMIN_ROLE } from "../constants/roles";
 
 export const toAuthConfig = (
   clientId: string,
@@ -73,6 +74,30 @@ export const toListUsersConfig = (poolId: string, email: string): ListUsersReque
   UserPoolId: poolId,
   AttributesToGet: ["email"],
   Filter: `email="${email}"`
+});
+
+export const toAdminCreateUser = (
+  poolId: string,
+  pass: string,
+  email: string
+): AdminCreateUserRequest => ({
+  UserPoolId: poolId,
+  Username: "admin",
+  TemporaryPassword: pass,
+  UserAttributes: [
+    {
+      Name: "email",
+      Value: email
+    },
+    {
+      Name: "custom:firstTimeLogin",
+      Value: "1"
+    },
+    {
+      Name: "custom:role",
+      Value: ADMIN_ROLE
+    }
+  ]
 });
 
 export const toSignUpConfig = (clientId: string, data: SignUpNode): SignUpRequest => {

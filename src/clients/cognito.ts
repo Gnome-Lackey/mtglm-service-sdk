@@ -1,7 +1,8 @@
 import * as aws from "aws-sdk";
 import {
   GetUserResponse,
-  AuthenticationResultType
+  AuthenticationResultType,
+  AdminCreateUserResponse
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 import * as cognitoMapper from "../mappers/cognito";
@@ -13,7 +14,7 @@ import { SignUpNode } from "../models/Nodes";
 import { SuccessResponse } from "../models/Responses";
 import { UserAttribute } from "../models/Cognito";
 
-const { USER_POOL_ID, CLIENT_ID } = process.env;
+const { ADMIN_PASS, ADMIN_EMAIL, USER_POOL_ID, CLIENT_ID } = process.env;
 
 const cognito = new aws.CognitoIdentityServiceProvider({ region: "us-east-1" });
 
@@ -91,6 +92,14 @@ export const resendConfirmationCode = async (userName: string): Promise<SuccessR
   await cognito.resendConfirmationCode(config).promise();
 
   return { message: "successfully resent confirmation code." };
+};
+
+export const initAdminAccount = async (): Promise<AdminCreateUserResponse> => {
+  const config = cognitoMapper.toAdminCreateUser(USER_POOL_ID, ADMIN_PASS, ADMIN_EMAIL);
+
+  const adminCreateUserResult = await cognito.adminCreateUser(config).promise();
+
+  return adminCreateUserResult;
 };
 
 export const signUp = async (node: SignUpNode): Promise<string> => {
