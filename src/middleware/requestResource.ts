@@ -7,6 +7,8 @@ import { PotentialPathParameters } from "../models/PathParameters";
 import { PotentialQueryParameters } from "../models/QueryParameters";
 import { PotentialRequest } from "../models/Requests";
 
+import { ADMIN_ROLE } from "../constants/roles";
+
 type RequestResourceMiddlewareCallbackType = (
   pathParameters?: PotentialPathParameters,
   data?: PotentialRequest,
@@ -15,7 +17,7 @@ type RequestResourceMiddlewareCallbackType = (
 
 type GetUserIdMiddlewareType = (event: LambdaEvent) => Promise<LambdaResponse>;
 
-const parseUserId = (headers: LambdaHeaders): string => {
+const parseToken = (headers: LambdaHeaders, isAdminResource: boolean): LambdaToken => {
   if (!headers) {
     return null;
   }
@@ -26,7 +28,13 @@ const parseUserId = (headers: LambdaHeaders): string => {
     return null;
   }
 
-  return body.sub;
+  const resourceAccessibleByAccount = !isAdminResource || body["custom:role"] === ADMIN_ROLE;
+
+  if (!resourceAccessibleByAccount) {
+    return null;
+  }
+
+  return body;
 };
 
 const parseData = (body: string): PotentialRequest => {
@@ -38,15 +46,18 @@ const parseData = (body: string): PotentialRequest => {
 };
 
 export default function requestResourceMiddleware(
-  callback: RequestResourceMiddlewareCallbackType
+  callback: RequestResourceMiddlewareCallbackType,
+  isAdminResource: boolean
 ): GetUserIdMiddlewareType {
   return async (event: LambdaEvent): Promise<LambdaResponse> => {
     const { headers, body, pathParameters, queryStringParameters } = event;
 
-    const userId = parseUserId(headers);
-    const data = parseData(body);
+    const tokenBody = parseToken(headers, isAdminResource);
+    const hasValidToken = tokenBody && tokenBody.sub;
 
-    if (userId) {
+    if (hasValidToken) {
+      const data = parseData(body);
+
       return await callback(pathParameters, data, queryStringParameters);
     } else {
       return handleError({

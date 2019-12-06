@@ -3,6 +3,7 @@ import { PotentialQueryParameters } from "./QueryParameters";
 
 export interface LambdaToken {
   sub: string;
+  "custom:role": string;
 }
 
 export interface LambdaHeaders {
