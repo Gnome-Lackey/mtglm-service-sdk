@@ -62,6 +62,7 @@ export interface SeasonDynamoCreateItem {
 export interface SeasonDynamoUpdateItem {
   isActive?: boolean;
   endDate?: string;
+  setId?: string;
   playerIds?: string[];
   matchIds?: string[];
 }

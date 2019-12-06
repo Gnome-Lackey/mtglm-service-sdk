@@ -20,7 +20,7 @@ export function toCreateItem(matchId: string, data: RecordCreateRequest): Record
   };
 }
 
-export const toItem = (data: RecordUpdateRequest): RecordDynamoUpdateItem => ({
+export const toUpdateItem = (data: RecordUpdateRequest): RecordDynamoUpdateItem => ({
   wins: data.wins,
   losses: data.losses
 });

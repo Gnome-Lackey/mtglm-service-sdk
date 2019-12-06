@@ -22,7 +22,7 @@ export interface RecordView {
 export interface SeasonView {
   id: string;
   isActive: boolean;
-  startDate: string;
-  endDate: string;
+  startedOn: string;
+  endedOn: string;
   set: string;
 }

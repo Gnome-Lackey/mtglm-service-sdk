@@ -61,8 +61,8 @@ export interface ResendConfirmationCodeBodyRequest {
 
 export interface SeasonCreateRequest {
   isActive: boolean;
-  startDate: string;
-  endDate: string;
+  startedOn: string;
+  endedOn: string;
   set: string;
   players: string[];
   matches: string[];
@@ -70,8 +70,8 @@ export interface SeasonCreateRequest {
 
 export interface SeasonUpdateRequest {
   isActive?: boolean;
-  startDate?: string;
-  endDate?: string;
+  startedOn?: string;
+  endedOn?: string;
   set?: string;
   players?: string[];
   matches?: string[];

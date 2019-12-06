@@ -8,11 +8,12 @@ export interface PlayerPrimaryKey {
 
 export interface RecordPrimaryKey {
   recordId: string;
-  matchId: string;
+  matchId?: string;
 }
 
 export interface SeasonPrimaryKey {
   seasonId: string;
+  startDate?: string;
 }
 
 export interface PotentialPrimaryKey {

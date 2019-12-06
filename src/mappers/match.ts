@@ -18,7 +18,7 @@ export function toCreateItem(): MatchDynamoCreateItem {
   };
 }
 
-export const toItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem => ({
+export const toUpdateItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem => ({
   playerARecordId: data.playerA.id,
   playerBRecordId: data.playerB.id
 });
