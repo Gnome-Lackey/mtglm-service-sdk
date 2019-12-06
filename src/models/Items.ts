@@ -65,15 +65,3 @@ export interface SeasonDynamoUpdateItem {
   playerIds?: string[];
   matchIds?: string[];
 }
-
-export interface SetDynamoCreateItem {
-  setId: string;
-  setName: string;
-  icon: string;
-  updatedOn: string;
-}
-
-export interface SetDynamoUpdateItem {
-  setName?: string;
-  icon?: string;
-}

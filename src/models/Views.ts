@@ -24,4 +24,5 @@ export interface SeasonView {
   isActive: boolean;
   startDate: string;
   endDate: string;
+  set: string;
 }

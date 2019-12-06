@@ -3,12 +3,7 @@ export interface PlayerQueryParameters {
   userName?: string;
 }
 
-export interface SetQueryParameters {
-  name?: string;
-}
-
 export interface PotentialQueryParameters
-  extends PlayerQueryParameters,
-    SetQueryParameters {
+  extends PlayerQueryParameters {
   [key: string]: string;
 }

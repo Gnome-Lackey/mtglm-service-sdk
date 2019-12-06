@@ -64,21 +64,13 @@ export interface RecordDetailsResponse extends RecordView {
 }
 
 export interface SeasonResponse extends SeasonView {
-  set: string;
   players: string[];
   matches: string[];
 }
 
 export interface SeasonDetailsResponse extends SeasonView {
-  set: SetResponse;
   players: PlayerView[];
   matches: MatchView[];
-}
-
-export interface SetResponse {
-  id: string;
-  name: string;
-  icon: string;
 }
 
 export interface SuccessResponse {

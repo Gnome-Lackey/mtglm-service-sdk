@@ -1,5 +1,5 @@
-import { PlayerQueryParameters, SetQueryParameters } from "../models/QueryParameters";
-import { PlayerFilters, SetFilters } from "../models/Filters";
+import { PlayerQueryParameters } from "../models/QueryParameters";
+import { PlayerFilters } from "../models/Filters";
 
 export const toPlayerFilters = (query: PlayerQueryParameters): PlayerFilters => {
   if (!query) {
@@ -16,22 +16,6 @@ export const toPlayerFilters = (query: PlayerQueryParameters): PlayerFilters => 
 
   if (query.userName) {
     filters.userName = userName;
-  }
-
-  return filters;
-};
-
-export const toSetFilters = (query: SetQueryParameters): SetFilters => {
-  if (!query) {
-    return null;
-  }
-
-  const { name } = query;
-
-  const filters = {} as SetFilters;
-
-  if (query.name) {
-    filters.setName = name;
   }
 
   return filters;

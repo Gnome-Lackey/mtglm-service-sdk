@@ -77,16 +77,6 @@ export interface SeasonUpdateRequest {
   matches?: string[];
 }
 
-export interface SetCreateRequest {
-  name: string;
-  icon: string;
-}
-
-export interface SetUpdateRequest {
-  name?: string;
-  icon?: string;
-}
-
 export interface SignUpBodyRequest {
   email: string;
   firstName?: string;
@@ -102,8 +92,6 @@ export type PotentialRequest =
   | MatchUpdateRequest
   | SeasonCreateRequest
   | SeasonUpdateRequest
-  | SetCreateRequest
-  | SetUpdateRequest
   | LoginBodyRequest
   | ConfirmRegistrationBodyRequest
   | ResendConfirmationCodeBodyRequest

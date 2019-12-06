@@ -14,14 +14,9 @@ export interface SeasonPathParameters {
   seasonId: string;
 }
 
-export interface SetPathParameters {
-  setId: string;
-}
-
 export interface PotentialPathParameters {
   matchId?: string;
   playerId?: string;
   seasonId?: string;
-  setId?: string;
   recordId?: string;
 }

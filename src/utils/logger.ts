@@ -6,7 +6,6 @@ import {
   MatchDetailsResponse,
   SeasonResponse,
   SeasonDetailsResponse,
-  SetResponse,
   SuccessResponse,
   LoginResponse,
   AuthResponse,
@@ -32,8 +31,6 @@ export function logSuccess(resource: string, event: string, data: SeasonResponse
 export function logSuccess(resource: string, event: string, data: SeasonResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonDetailsResponse): void;
 export function logSuccess(resource: string, event: string, data: SeasonDetailsResponse[]): void;
-export function logSuccess(resource: string, event: string, data: SetResponse): void;
-export function logSuccess(resource: string, event: string, data: SetResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SuccessResponse): void;
 export function logSuccess(resource: string, event: string, data: any): void {
   console.log(`Success: ${resource.toUpperCase()} ${event}`);

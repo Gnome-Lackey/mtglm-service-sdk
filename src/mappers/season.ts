@@ -38,6 +38,7 @@ export const toNode = (data: AttributeMap): SeasonNode => ({
 export const toView = (data: SeasonNode): SeasonView => ({
   id: data.seasonId,
   isActive: data.isActive,
+  set: data.setId,
   startDate: data.startDate,
   endDate: data.endDate
 });

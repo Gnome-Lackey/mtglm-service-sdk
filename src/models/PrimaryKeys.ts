@@ -15,14 +15,9 @@ export interface SeasonPrimaryKey {
   seasonId: string;
 }
 
-export interface SetPrimaryKey {
-  setId: string;
-}
-
 export interface PotentialPrimaryKey {
   matchId?: string;
   playerId?: string;
   seasonId?: string;
-  setId?: string;
   recordId?: string;
 }

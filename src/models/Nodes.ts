@@ -42,13 +42,6 @@ export interface SeasonNode {
   updatedOn: string;
 }
 
-export interface SetNode {
-  setId: string;
-  setName: string;
-  icon: string;
-  updatedOn: string;
-}
-
 export interface SignUpNode {
   email: string;
   firstName?: string;

@@ -6,7 +6,6 @@ import * as dynamoMapper from "../mappers/dynamo";
 import {
   MatchPrimaryKey,
   SeasonPrimaryKey,
-  SetPrimaryKey,
   RecordPrimaryKey,
   PotentialPrimaryKey,
   PlayerPrimaryKey
@@ -14,17 +13,15 @@ import {
 import {
   MatchDynamoCreateItem,
   SeasonDynamoCreateItem,
-  SetDynamoCreateItem,
   RecordDynamoCreateItem,
   PlayerDynamoCreateItem,
   MatchDynamoUpdateItem,
   SeasonDynamoUpdateItem,
-  SetDynamoUpdateItem,
   RecordDynamoUpdateItem,
   PlayerDynamoUpdateItem
 } from "../models/Items";
 
-import { PlayerFilters, SetFilters } from "../models/Filters";
+import { PlayerFilters } from "../models/Filters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
@@ -63,7 +60,6 @@ export class MTGLMDynamoClient {
   };
 
   async query(filters: PlayerFilters): Promise<AttributeMap[]>;
-  async query(filters: SetFilters): Promise<AttributeMap[]>;
   async query(filters: any): Promise<AttributeMap[]> {
     const result = await dynamoDB
       .scan({
@@ -91,7 +87,6 @@ export class MTGLMDynamoClient {
 
   async create(key: MatchPrimaryKey, item: MatchDynamoCreateItem): Promise<AttributeMap>;
   async create(key: SeasonPrimaryKey, item: SeasonDynamoCreateItem): Promise<AttributeMap>;
-  async create(key: SetPrimaryKey, item: SetDynamoCreateItem): Promise<AttributeMap>;
   async create(key: RecordPrimaryKey, item: RecordDynamoCreateItem): Promise<AttributeMap>;
   async create(key: PlayerPrimaryKey, item: PlayerDynamoCreateItem): Promise<AttributeMap>;
   async create(key: any, item: any): Promise<AttributeMap> {
@@ -107,7 +102,6 @@ export class MTGLMDynamoClient {
 
   async update(key: MatchPrimaryKey, item: MatchDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: SeasonPrimaryKey, item: SeasonDynamoUpdateItem): Promise<AttributeMap>;
-  async update(key: SetPrimaryKey, item: SetDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: RecordPrimaryKey, item: RecordDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: PlayerPrimaryKey, item: PlayerDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: any, item: any): Promise<AttributeMap> {

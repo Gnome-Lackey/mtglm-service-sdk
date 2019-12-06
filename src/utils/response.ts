@@ -7,7 +7,6 @@ import {
   MatchDetailsResponse,
   SeasonResponse,
   SeasonDetailsResponse,
-  SetResponse,
   SuccessResponse,
   AuthResponse,
   AuthHeaderResponse,
@@ -81,8 +80,6 @@ export function handleSuccess(body: SeasonResponse): LambdaResponse;
 export function handleSuccess(body: SeasonResponse[]): LambdaResponse;
 export function handleSuccess(body: SeasonDetailsResponse): LambdaResponse;
 export function handleSuccess(body: SeasonDetailsResponse[]): LambdaResponse;
-export function handleSuccess(body: SetResponse): LambdaResponse;
-export function handleSuccess(body: SetResponse[]): LambdaResponse;
 export function handleSuccess(body: SuccessResponse): LambdaResponse;
 export function handleSuccess(body: any, headers?: any): LambdaResponse {
   const statusCode = 200;
