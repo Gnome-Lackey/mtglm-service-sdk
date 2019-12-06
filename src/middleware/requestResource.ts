@@ -62,7 +62,7 @@ export default function requestResourceMiddleware(
     } else {
       return handleError({
         code: "InvalidIdTokenException",
-        message: "The ID token passed in is invalid and does not have a valid sub.",
+        message: "The ID token passed in is invalid or unauthorized to access this api.",
         content: headers
       });
     }
