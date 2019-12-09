@@ -1,13 +1,11 @@
 export interface MatchDynamoCreateItem {
   matchId: string;
-  playerARecordId: string;
-  playerBRecordId: string;
+  playerRecords: string[];
   updatedOn: string;
 }
 
 export interface MatchDynamoUpdateItem {
-  playerARecordId?: string;
-  playerBRecordId?: string;
+  playerRecords: string[];
 }
 
 export interface PlayerDynamoCreateItem {
@@ -44,7 +42,6 @@ export interface RecordDynamoCreateItem {
 
 export interface RecordDynamoUpdateItem {
   wins?: number;
-  losses?: number;
 }
 
 export interface SeasonDynamoCreateItem {

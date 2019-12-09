@@ -12,21 +12,18 @@ export function toCreateItem(): MatchDynamoCreateItem {
 
   return {
     matchId: uuid.v4(),
-    playerARecordId: "",
-    playerBRecordId: "",
+    playerRecords: [],
     updatedOn: date
   };
 }
 
 export const toUpdateItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem => ({
-  playerARecordId: data.playerA.id,
-  playerBRecordId: data.playerB.id
+  playerRecords: (data.players || []).map((player) => player.id)
 });
 
 export const toNode = (data: AttributeMap): MatchNode => ({
   matchId: data.matchId as string,
-  playerARecordId: data.playerARecordId as string,
-  playerBRecordId: data.playerBRecordId as string,
+  playerRecords: data.playerRecords as string[],
   updatedOn: data.updatedOn as string
 });
 

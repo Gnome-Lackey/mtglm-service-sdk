@@ -4,8 +4,7 @@ export interface AuthNode {
 
 export interface MatchNode {
   matchId: string;
-  playerARecordId: string;
-  playerBRecordId: string;
+  playerRecords: string[];
   updatedOn: string;
 }
 

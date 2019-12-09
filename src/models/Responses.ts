@@ -36,13 +36,11 @@ export interface LoginResponse {
 }
 
 export interface MatchResponse extends MatchView {
-  playerARecord: RecordResponse;
-  playerBRecord: RecordResponse;
+  players: RecordResponse[];
 }
 
 export interface MatchDetailsResponse extends MatchView {
-  playerARecord: RecordDetailsResponse;
-  playerBRecord: RecordDetailsResponse;
+  players: RecordDetailsResponse[];
 }
 
 export interface PlayerResponse extends PlayerView {

@@ -1,4 +1,4 @@
-export const PROPERTIES_MATCH = ["playerARecordId", "playerBRecordId"];
+export const PROPERTIES_MATCH = ["playerRecords"];
 export const PROPERTIES_PLAYER = [
   "playerName",
   "totalMatchWins",
