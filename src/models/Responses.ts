@@ -54,11 +54,13 @@ export interface PlayerDetailsResponse extends PlayerView {
 }
 
 export interface RecordResponse extends RecordView {
+  losses: number;
   player: string;
   match: string;
 }
 
 export interface RecordDetailsResponse extends RecordView {
+  losses: number;
   player: PlayerView;
   match: MatchView;
 }

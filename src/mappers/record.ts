@@ -14,21 +14,18 @@ export function toCreateItem(matchId: string, data: RecordCreateRequest): Record
     recordId: uuid.v4(),
     matchId,
     wins: data.wins,
-    losses: data.losses,
     playerId: data.player,
     updatedOn: date
   };
 }
 
 export const toUpdateItem = (data: RecordUpdateRequest): RecordDynamoUpdateItem => ({
-  wins: data.wins,
-  losses: data.losses
+  wins: data.wins
 });
 
 export const toNode = (data: AttributeMap): RecordNode => ({
   recordId: data.recordId as string,
   wins: data.wins as number,
-  losses: data.losses as number,
   playerId: data.playerId as string,
   matchId: data.matchId as string,
   updatedOn: data.updatedOn as string
@@ -36,6 +33,5 @@ export const toNode = (data: AttributeMap): RecordNode => ({
 
 export const toView = (data: RecordNode): RecordView => ({
   id: data.recordId,
-  wins: data.wins,
-  losses: data.losses
+  wins: data.wins
 });

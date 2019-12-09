@@ -25,7 +25,6 @@ export interface PlayerNode {
 export interface RecordNode {
   recordId: string;
   wins: number;
-  losses: number;
   playerId: string;
   matchId: string;
   updatedOn: string;

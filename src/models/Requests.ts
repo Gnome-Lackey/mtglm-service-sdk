@@ -44,14 +44,12 @@ export interface PlayerUpdateRequest {
 
 export interface RecordCreateRequest {
   wins: number;
-  losses: number;
   player: string;
 }
 
 export interface RecordUpdateRequest {
   id?: string;
   wins?: number;
-  losses?: number;
   player?: string;
 }
 

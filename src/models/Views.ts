@@ -16,7 +16,6 @@ export interface PlayerView {
 export interface RecordView {
   id: string;
   wins: number;
-  losses: number;
 }
 
 export interface SeasonView {

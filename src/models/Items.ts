@@ -37,7 +37,6 @@ export interface PlayerDynamoUpdateItem {
 export interface RecordDynamoCreateItem {
   recordId: string;
   wins: number;
-  losses: number;
   playerId: string;
   matchId: string;
   updatedOn: string;
