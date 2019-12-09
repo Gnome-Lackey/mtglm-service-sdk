@@ -17,7 +17,7 @@ type RequestResourceMiddlewareCallbackType = (
 
 type GetUserIdMiddlewareType = (event: LambdaEvent) => Promise<LambdaResponse>;
 
-const parseToken = (headers: LambdaHeaders, isAdminResource: boolean): LambdaToken => {
+const parseToken = (headers: LambdaHeaders, isAdminResource?: boolean): LambdaToken => {
   if (!headers) {
     return null;
   }
@@ -47,7 +47,7 @@ const parseData = (body: string): PotentialRequest => {
 
 export default function requestResourceMiddleware(
   callback: RequestResourceMiddlewareCallbackType,
-  isAdminResource: boolean
+  isAdminResource?: boolean
 ): GetUserIdMiddlewareType {
   return async (event: LambdaEvent): Promise<LambdaResponse> => {
     const { headers, body, pathParameters, queryStringParameters } = event;
