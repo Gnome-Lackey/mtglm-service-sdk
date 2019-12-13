@@ -1,5 +1,5 @@
-import { ScryfallSetView } from "src/models/Views";
-import { ScryfallSetNode } from "src/models/Nodes";
+import { ScryfallSetView } from "../models/Views";
+import { ScryfallSetNode } from "../models/Nodes";
 
 export const toSetView = (data: ScryfallSetNode): ScryfallSetView => ({
   id: data.id,
