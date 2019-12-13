@@ -29,6 +29,14 @@ export interface RecordNode {
   updatedOn: string;
 }
 
+export interface ScryfallSetNode {
+  id: string;
+  name: string;
+  released_at: string;
+  card_count: number;
+  code: string;
+}
+
 export interface SeasonNode {
   seasonId: string;
   isActive: boolean;
