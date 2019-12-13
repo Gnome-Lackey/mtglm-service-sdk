@@ -18,10 +18,17 @@ export interface RecordView {
   wins: number;
 }
 
+export interface ScryfallSetView {
+  id: string;
+  code: string;
+  name: string;
+  releasedOn: string;
+  cardCount: number;
+}
+
 export interface SeasonView {
   id: string;
   isActive: boolean;
   startedOn: string;
   endedOn: string;
-  set: string;
 }

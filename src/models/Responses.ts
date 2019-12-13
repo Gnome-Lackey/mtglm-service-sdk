@@ -1,4 +1,4 @@
-import { PlayerView, RecordView, MatchView, SeasonView } from "./Views";
+import { PlayerView, RecordView, MatchView, SeasonView, ScryfallSetView } from "./Views";
 
 export interface AuthHeaderResponse {
   "X-ID-Token": string;
@@ -64,13 +64,13 @@ export interface RecordDetailsResponse extends RecordView {
 }
 
 export interface SeasonResponse extends SeasonView {
+  set: string;
   players: string[];
-  matches: string[];
 }
 
 export interface SeasonDetailsResponse extends SeasonView {
+  set: ScryfallSetView;
   players: PlayerView[];
-  matches: MatchView[];
 }
 
 export interface SuccessResponse {

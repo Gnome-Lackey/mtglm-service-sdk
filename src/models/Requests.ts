@@ -61,7 +61,6 @@ export interface SeasonCreateRequest {
   endedOn: string;
   set: string;
   players: string[];
-  matches: string[];
 }
 
 export interface SeasonUpdateRequest {
@@ -70,7 +69,6 @@ export interface SeasonUpdateRequest {
   endedOn?: string;
   set?: string;
   players?: string[];
-  matches?: string[];
 }
 
 export interface SignUpBodyRequest {
