@@ -3,8 +3,19 @@ import * as https from "https";
 
 export const get = async (url: string): Promise<http.IncomingMessage> =>
   new Promise((resolve, reject) => {
-    const req = https.get(url);
+    const req = https.get(url, (response) => {
+      let data = "";
 
-    req.on("response", (res) => resolve(res));
-    req.on("error", (err) => reject(err));
+      response.on("data", (chunk) => {
+        data += chunk;
+      });
+
+      response.on("end", () => {
+        resolve(JSON.parse(data));
+      });
+    });
+
+    req.on("error", reject);
+
+    req.end();
   });
