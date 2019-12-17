@@ -33,7 +33,7 @@ export const toNode = (data: AttributeMap): SeasonNode => ({
   isActive: data.isActive as boolean,
   startDate: data.startDate as string,
   endDate: data.endDate as string,
-  setCode: data.setId as string,
+  setCode: data.setCode as string,
   playerIds: data.playerIds as string[],
   updatedOn: data.updatedOn as string
 });
