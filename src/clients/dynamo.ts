@@ -117,11 +117,11 @@ export class MTGLMDynamoClient {
     return await this.fetchByKey(key);
   }
 
-  updateList = async (
-    key: PotentialPrimaryKey,
-    field: string,
-    values: string[]
-  ): Promise<AttributeMap> => {
+  async updateList(key: MatchPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
+  async updateList(key: SeasonPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
+  async updateList(key: RecordPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
+  async updateList(key: PlayerPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
+  async updateList(key: any, field: string, values: string[]): Promise<AttributeMap> {
     if (!this.updatableAttributes.includes(field)) {
       throw new Error("Update List Error: Invalid or protected attribute supplied.");
     }
@@ -131,7 +131,7 @@ export class MTGLMDynamoClient {
     await dynamoDB.update(config).promise();
 
     return this.fetchByKey(key);
-  };
+  }
 
   updateSingleField = async (
     key: PotentialPrimaryKey,
