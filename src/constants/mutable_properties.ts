@@ -8,5 +8,4 @@ export const PROPERTIES_PLAYER = [
   "epithet"
 ];
 export const PROPERTIES_RECORD = ["wins"];
-export const PROPERTIES_SEASON = ["isActive", "startDate", "endDate"];
-export const PROPERTIES_SET = ["setName", "icon"];
+export const PROPERTIES_SEASON = ["isActive", "startDate", "endDate", "playerIds", "setCode"];
