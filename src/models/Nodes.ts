@@ -29,6 +29,33 @@ export interface RecordNode {
   updatedOn: string;
 }
 
+export interface ScryfallCardNode {
+  id: string;
+  name: string;
+  lang: string;
+  released_at: string;
+  image_uris: {
+    small: string;
+    normal: string;
+    large: string;
+    png: string;
+    art_crop: string;
+    border_crop: string;
+  };
+  mana_cost: string;
+  cmc: number;
+  type_line: string;
+  colors: string[];
+  color_identity: string[];
+  foil: boolean;
+  nonfoil: boolean;
+  set: string;
+  set_name: string;
+  collector_number: string;
+  rarity: string;
+  artist_ids: string[];
+}
+
 export interface ScryfallSetNode {
   id: string;
   name: string;

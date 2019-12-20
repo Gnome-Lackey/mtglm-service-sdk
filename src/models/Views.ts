@@ -18,6 +18,27 @@ export interface RecordView {
   wins: number;
 }
 
+export interface ScryfallCardView {
+  id: string;
+  name: string;
+  language: string;
+  releasedOn: string;
+  image: string;
+  costs: {
+    mana: string;
+    converted: number;
+  };
+  type: string;
+  subtype: string;
+  colors: string[];
+  identity: string[];
+  set: {
+    code: string;
+    name: string;
+  };
+  rarity: string;
+}
+
 export interface ScryfallSetView {
   id: string;
   code: string;

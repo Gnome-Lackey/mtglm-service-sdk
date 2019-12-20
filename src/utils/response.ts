@@ -11,7 +11,8 @@ import {
   AuthResponse,
   AuthHeaderResponse,
   PlayerResponse,
-  PlayerDetailsResponse
+  PlayerDetailsResponse,
+  ScryfallResponse
 } from "../models/Responses";
 
 import { DEFAULT_HEADERS } from "../constants/headers";
@@ -76,6 +77,8 @@ export function handleSuccess(body: RecordResponse): LambdaResponse;
 export function handleSuccess(body: RecordResponse[]): LambdaResponse;
 export function handleSuccess(body: RecordDetailsResponse): LambdaResponse;
 export function handleSuccess(body: RecordDetailsResponse[]): LambdaResponse;
+export function handleSuccess(body: ScryfallResponse): LambdaResponse;
+export function handleSuccess(body: ScryfallResponse[]): LambdaResponse;
 export function handleSuccess(body: SeasonResponse): LambdaResponse;
 export function handleSuccess(body: SeasonResponse[]): LambdaResponse;
 export function handleSuccess(body: SeasonDetailsResponse): LambdaResponse;
