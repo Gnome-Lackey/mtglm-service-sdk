@@ -10,10 +10,10 @@ import {
   LoginResponse,
   AuthResponse,
   PlayerResponse,
-  PlayerDetailsResponse,
-  ScryfallCardResponse,
-  ScryfallSetResponse,
+  PlayerDetailsResponse
 } from "../models/Responses";
+
+import { ScryfallCardView, ScryfallSetView } from "src/models/Views";
 
 export function logSuccess(resource: string, event: string, data: AuthResponse): void;
 export function logSuccess(resource: string, event: string, data: LoginResponse): void;
@@ -29,10 +29,10 @@ export function logSuccess(resource: string, event: string, data: RecordResponse
 export function logSuccess(resource: string, event: string, data: RecordResponse[]): void;
 export function logSuccess(resource: string, event: string, data: RecordDetailsResponse): void;
 export function logSuccess(resource: string, event: string, data: RecordDetailsResponse[]): void;
-export function logSuccess(resource: string, event: string, data: ScryfallCardResponse): void;
-export function logSuccess(resource: string, event: string, data: ScryfallCardResponse[]): void;
-export function logSuccess(resource: string, event: string, data: ScryfallSetResponse): void;
-export function logSuccess(resource: string, event: string, data: ScryfallSetResponse[]): void;
+export function logSuccess(resource: string, event: string, data: ScryfallCardView): void;
+export function logSuccess(resource: string, event: string, data: ScryfallCardView[]): void;
+export function logSuccess(resource: string, event: string, data: ScryfallSetView): void;
+export function logSuccess(resource: string, event: string, data: ScryfallSetView[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonDetailsResponse): void;

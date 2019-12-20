@@ -11,10 +11,10 @@ import {
   AuthResponse,
   AuthHeaderResponse,
   PlayerResponse,
-  PlayerDetailsResponse,
-  ScryfallCardResponse,
-  ScryfallSetResponse
+  PlayerDetailsResponse
 } from "../models/Responses";
+
+import { ScryfallCardView, ScryfallSetView } from "src/models/Views";
 
 import { DEFAULT_HEADERS } from "../constants/headers";
 import {
@@ -78,10 +78,10 @@ export function handleSuccess(body: RecordResponse): LambdaResponse;
 export function handleSuccess(body: RecordResponse[]): LambdaResponse;
 export function handleSuccess(body: RecordDetailsResponse): LambdaResponse;
 export function handleSuccess(body: RecordDetailsResponse[]): LambdaResponse;
-export function handleSuccess(body: ScryfallCardResponse): LambdaResponse;
-export function handleSuccess(body: ScryfallCardResponse[]): LambdaResponse;
-export function handleSuccess(body: ScryfallSetResponse): LambdaResponse;
-export function handleSuccess(body: ScryfallSetResponse[]): LambdaResponse;
+export function handleSuccess(body: ScryfallCardView): LambdaResponse;
+export function handleSuccess(body: ScryfallCardView[]): LambdaResponse;
+export function handleSuccess(body: ScryfallSetView): LambdaResponse;
+export function handleSuccess(body: ScryfallSetView[]): LambdaResponse;
 export function handleSuccess(body: SeasonResponse): LambdaResponse;
 export function handleSuccess(body: SeasonResponse[]): LambdaResponse;
 export function handleSuccess(body: SeasonDetailsResponse): LambdaResponse;
