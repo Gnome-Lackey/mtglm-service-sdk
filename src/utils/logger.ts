@@ -13,7 +13,7 @@ import {
   PlayerDetailsResponse
 } from "../models/Responses";
 
-import { ScryfallCardView, ScryfallSetView } from "src/models/Views";
+import { ScryfallCardView, ScryfallSetView } from "../models/Views";
 
 export function logSuccess(resource: string, event: string, data: AuthResponse): void;
 export function logSuccess(resource: string, event: string, data: LoginResponse): void;

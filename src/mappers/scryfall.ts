@@ -1,6 +1,6 @@
 import { ScryfallSetView, ScryfallCardView } from "../models/Views";
 import { ScryfallSetNode, ScryfallCardNode } from "../models/Nodes";
-import { ScryfallCardQueryParameters } from "src/models/QueryParameters";
+import { ScryfallCardQueryParameters } from "../models/QueryParameters";
 
 export const toCardView = (data: ScryfallCardNode): ScryfallCardView => {
   const [type, subtype] = data.type_line.includes("-")

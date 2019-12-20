@@ -14,7 +14,7 @@ import {
   PlayerDetailsResponse
 } from "../models/Responses";
 
-import { ScryfallCardView, ScryfallSetView } from "src/models/Views";
+import { ScryfallCardView, ScryfallSetView } from "../models/Views";
 
 import { DEFAULT_HEADERS } from "../constants/headers";
 import {
