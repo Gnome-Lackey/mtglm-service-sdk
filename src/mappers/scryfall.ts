@@ -50,8 +50,11 @@ export function toQueryString(map: any): string {
     const value: string = map[key];
 
     switch (key) {
-      case "color":
+      case "colors":
         query.push(`c=${value}`);
+        break;
+      case "language":
+        query.push(`lang=${value}`);
         break;
       case "subtype":
         query.push(`t=${value}`);
@@ -62,8 +65,11 @@ export function toQueryString(map: any): string {
       case "format":
         query.push(`f=${value}`);
         break;
+      case "border":
+        query.push(`border=${value}`);
+        break;
     }
   }
 
-  return query.join("+");
+  return `q=${query.join("+")}`;
 }
