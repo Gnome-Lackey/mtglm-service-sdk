@@ -3,7 +3,15 @@ export interface PlayerQueryParameters {
   userName?: string;
 }
 
+export interface ScryfallCardQueryParameters {
+  color: string[];
+  type: string[];
+  subtype: string;
+  format: string;
+}
+
 export interface PotentialQueryParameters
-  extends PlayerQueryParameters {
-  [key: string]: string;
+  extends PlayerQueryParameters,
+    ScryfallCardQueryParameters {
+  [key: string]: string | string[] | boolean | number;
 }
