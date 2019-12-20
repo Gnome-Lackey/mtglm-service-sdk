@@ -39,6 +39,10 @@ export const toSetView = (data: ScryfallSetNode): ScryfallSetView => ({
 
 export function toQueryString(map: ScryfallCardQueryParameters): string;
 export function toQueryString(map: any): string {
+  if (!map) {
+    return "";
+  }
+
   const query: string[] = [];
   const keys = Object.keys(map);
 
