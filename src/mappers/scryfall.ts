@@ -3,8 +3,8 @@ import { ScryfallSetNode, ScryfallCardNode } from "../models/Nodes";
 import { ScryfallCardQueryParameters } from "../models/QueryParameters";
 
 export const toCardView = (data: ScryfallCardNode): ScryfallCardView => {
-  const [type, subtype] = data.type_line.includes("-")
-    ? data.type_line.split(" - ")
+  const [type, subtype] = data.type_line.includes("—")
+    ? data.type_line.split(" — ")
     : [data.type_line];
 
   return {
