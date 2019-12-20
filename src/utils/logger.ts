@@ -11,7 +11,8 @@ import {
   AuthResponse,
   PlayerResponse,
   PlayerDetailsResponse,
-  ScryfallResponse
+  ScryfallCardResponse,
+  ScryfallSetResponse,
 } from "../models/Responses";
 
 export function logSuccess(resource: string, event: string, data: AuthResponse): void;
@@ -28,8 +29,10 @@ export function logSuccess(resource: string, event: string, data: RecordResponse
 export function logSuccess(resource: string, event: string, data: RecordResponse[]): void;
 export function logSuccess(resource: string, event: string, data: RecordDetailsResponse): void;
 export function logSuccess(resource: string, event: string, data: RecordDetailsResponse[]): void;
-export function logSuccess(resource: string, event: string, data: ScryfallResponse): void;
-export function logSuccess(resource: string, event: string, data: ScryfallResponse[]): void;
+export function logSuccess(resource: string, event: string, data: ScryfallCardResponse): void;
+export function logSuccess(resource: string, event: string, data: ScryfallCardResponse[]): void;
+export function logSuccess(resource: string, event: string, data: ScryfallSetResponse): void;
+export function logSuccess(resource: string, event: string, data: ScryfallSetResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonDetailsResponse): void;

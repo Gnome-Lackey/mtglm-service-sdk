@@ -70,7 +70,13 @@ export interface RecordDetailsResponse extends RecordView {
   match: MatchView;
 }
 
-export interface ScryfallResponse extends ScryfallCardView, ScryfallSetView {}
+export interface ScryfallCardResponse extends ScryfallCardView {
+  [key: string]: string | string[] | number | boolean | object;
+}
+
+export interface ScryfallSetResponse extends ScryfallSetView {
+  [key: string]: string | number | boolean;
+}
 
 export interface SeasonResponse extends SeasonView {
   set: string;
