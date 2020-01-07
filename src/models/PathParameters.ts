@@ -23,8 +23,8 @@ export interface SeasonPathParameters {
 }
 
 export interface PotentialPathParameters {
-  cardId: string;
-  code: string;
+  cardId?: string;
+  code?: string;
   matchId?: string;
   playerId?: string;
   seasonId?: string;
