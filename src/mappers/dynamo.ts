@@ -94,6 +94,7 @@ export const toUpdateListConfiguration = (
   tableName: string
 ): DynamoUpdateListConfig => {
   const UpdateListExpression = "#list = list_append(if_not_exists(#list, :empty_list), :listItem)";
+  const ConditionExpression = "not contains (#list, :listItem)";
   const UpdateExpression = `SET ${UpdateListExpression}, #updatedOn = :updatedOn`;
   const emptyList: string[] = [];
   const updatedOn = new Date().valueOf().toString();
@@ -110,6 +111,7 @@ export const toUpdateListConfiguration = (
     },
     Key: key,
     UpdateExpression,
+    ConditionExpression,
     TableName: tableName
   };
 };

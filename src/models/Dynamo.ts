@@ -40,6 +40,7 @@ export interface DynamoUpdateListConfig {
     ":updatedOn": string;
   };
   UpdateExpression: string;
+  ConditionExpression: string;
   TableName: string;
 }
 
