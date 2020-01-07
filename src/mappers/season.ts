@@ -24,7 +24,8 @@ export function toCreateItem(data: SeasonCreateRequest): SeasonDynamoCreateItem 
 export const toUpdateItem = (data: SeasonUpdateRequest): SeasonDynamoUpdateItem => ({
   isActive: data.isActive,
   endDate: data.endedOn,
-  setCode: data.set
+  setCode: data.set,
+  playerIds: data.players
 });
 
 export const toNode = (data: AttributeMap): SeasonNode => ({
