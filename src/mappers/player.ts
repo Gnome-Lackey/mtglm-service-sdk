@@ -12,8 +12,7 @@ export const toUpdateItem = (data: PlayerUpdateRequest): PlayerDynamoUpdateItem 
   totalMatchLosses: data.totalLosses,
   email: data.email,
   favoriteColors: data.favoriteColors,
-  epithet: data.epithet,
-  matchIds: data.matches
+  epithet: data.epithet
 });
 
 export const toCreateItem = (data: PlayerCreateRequest): PlayerDynamoCreateItem => {
