@@ -53,9 +53,9 @@ export function toQueryString(map: any): string {
       case "language":
         return `lang=${value}`;
       case "subtype":
-        return `t=${value}`;
-      case "type":
         return `-t=${value}`;
+      case "type":
+        return `t=${value}`;
       case "format":
         return `f=${value}`;
       case "border":
