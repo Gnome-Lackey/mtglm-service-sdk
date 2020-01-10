@@ -43,33 +43,29 @@ export function toQueryString(map: any): string {
     return "";
   }
 
-  const query: string[] = [];
   const keys = Object.keys(map);
-
-  for (const key in keys) {
+  const query = keys.map((key) => {
     const value: string = map[key];
 
     switch (key) {
       case "colors":
-        query.push(`c=${value}`);
-        break;
+        return `c=${value}`;
       case "language":
-        query.push(`lang=${value}`);
-        break;
+        return `lang=${value}`;
       case "subtype":
-        query.push(`t=${value}`);
-        break;
+        return `t=${value}`;
       case "type":
-        query.push(`-t=${value}`);
-        break;
+        return `-t=${value}`;
       case "format":
-        query.push(`f=${value}`);
-        break;
+        return `f=${value}`;
       case "border":
-        query.push(`border=${value}`);
-        break;
+        return `border=${value}`;
+      default:
+        return "";
     }
-  }
+  });
+
+  console.log(JSON.stringify(query));
 
   return `q=${query.join("+")}`;
 }
