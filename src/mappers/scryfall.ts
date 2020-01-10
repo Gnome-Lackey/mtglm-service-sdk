@@ -65,7 +65,5 @@ export function toQueryString(map: any): string {
     }
   });
 
-  console.log(JSON.stringify(query));
-
   return `q=${query.join("+")}`;
 }
