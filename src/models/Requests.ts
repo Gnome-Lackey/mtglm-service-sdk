@@ -9,12 +9,12 @@ export interface LoginBodyRequest {
 }
 
 export interface MatchCreateRequest {
-  players: RecordCreateRequest[];
+  records: RecordCreateRequest[];
 }
 
 export interface MatchUpdateRequest {
   id?: string;
-  players?: RecordUpdateRequest[];
+  records?: RecordUpdateRequest[];
 }
 
 export interface PlayerCreateRequest {

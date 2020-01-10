@@ -18,7 +18,7 @@ export function toCreateItem(): MatchDynamoCreateItem {
 }
 
 export const toUpdateItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem => ({
-  playerRecords: (data.players || []).map((player) => player.id)
+  playerRecords: (data.records || []).map((record) => record.id)
 });
 
 export const toNode = (data: AttributeMap): MatchNode => ({
