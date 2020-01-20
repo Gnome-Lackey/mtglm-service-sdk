@@ -37,10 +37,12 @@ export interface LoginResponse {
 
 export interface MatchResponse extends MatchView {
   players: RecordResponse[];
+  season: string;
 }
 
 export interface MatchDetailsResponse extends MatchView {
   players: RecordDetailsResponse[];
+  season: SeasonDetailsResponse;
 }
 
 export interface PlayerResponse extends PlayerView {

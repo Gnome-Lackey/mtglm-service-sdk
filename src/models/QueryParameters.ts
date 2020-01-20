@@ -10,6 +10,10 @@ export interface ScryfallCardQueryParameters {
   format: string;
 }
 
+export interface SeasonQueryParams {
+  active?: string;
+}
+
 export interface PotentialQueryParameters
   extends PlayerQueryParameters,
     ScryfallCardQueryParameters {

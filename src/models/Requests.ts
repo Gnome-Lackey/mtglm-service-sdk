@@ -10,11 +10,13 @@ export interface LoginBodyRequest {
 
 export interface MatchCreateRequest {
   records: RecordCreateRequest[];
+  season: string;
 }
 
 export interface MatchUpdateRequest {
   id?: string;
   records?: RecordUpdateRequest[];
+  season?: string;
 }
 
 export interface PlayerCreateRequest {

@@ -1,10 +1,12 @@
 export interface MatchDynamoCreateItem {
   matchId: string;
+  seasonId: string;
   playerRecords: string[];
   updatedOn: string;
 }
 
 export interface MatchDynamoUpdateItem {
+  seasonId: string;
   playerRecords: string[];
 }
 
