@@ -1,5 +1,5 @@
-import { PlayerQueryParameters } from "../models/QueryParameters";
-import { PlayerFilters } from "../models/Filters";
+import { PlayerQueryParameters, SeasonQueryParams } from "../models/QueryParameters";
+import { PlayerFilters, SeasonFilters } from "../models/Filters";
 
 export const toPlayerFilters = (query: PlayerQueryParameters): PlayerFilters => {
   if (!query) {
@@ -10,12 +10,28 @@ export const toPlayerFilters = (query: PlayerQueryParameters): PlayerFilters => 
 
   const filters = {} as PlayerFilters;
 
-  if (query.name) {
+  if (name) {
     filters.playerName = name;
   }
 
-  if (query.userName) {
+  if (userName) {
     filters.userName = userName;
+  }
+
+  return filters;
+};
+
+export const toSeasonFilters = (query: SeasonQueryParams): SeasonFilters => {
+  if (!query) {
+    return null;
+  }
+
+  const { active } = query;
+
+  const filters = {} as SeasonFilters;
+
+  if (active) {
+    filters.isActive = active.toLowerCase() === "true";
   }
 
   return filters;

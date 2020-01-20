@@ -25,6 +25,7 @@ export const toUpdateItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem =>
 
 export const toNode = (data: AttributeMap): MatchNode => ({
   matchId: data.matchId as string,
+  seasonId: data.seasonId as string,
   playerRecords: data.playerRecords as string[],
   updatedOn: data.updatedOn as string
 });

@@ -16,6 +16,7 @@ export interface SeasonQueryParams {
 
 export interface PotentialQueryParameters
   extends PlayerQueryParameters,
-    ScryfallCardQueryParameters {
+    ScryfallCardQueryParameters,
+    SeasonQueryParams {
   [key: string]: string | string[] | boolean | number;
 }
