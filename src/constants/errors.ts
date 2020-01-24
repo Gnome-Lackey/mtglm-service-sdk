@@ -162,5 +162,5 @@ export const ERROR_DISPLAY_CODES: {
 };
 
 export const DEFAULT_ERROR_DISPLAY_CODES = "serverError";
-export const DEFAULT_ERROR_MESSAGE = "An unexpected error occurred. Please try again later";
+export const DEFAULT_ERROR_MESSAGE = "An unexpected error occurred. Please try again later.";
 export const DEFAULT_ERROR_CODE = 500;
