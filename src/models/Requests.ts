@@ -86,6 +86,8 @@ export type PotentialRequest =
   | RecordUpdateRequest
   | MatchCreateRequest
   | MatchUpdateRequest
+  | PlayerCreateRequest
+  | PlayerUpdateRequest
   | SeasonCreateRequest
   | SeasonUpdateRequest
   | LoginBodyRequest
