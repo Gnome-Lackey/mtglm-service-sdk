@@ -33,8 +33,8 @@ export function requestAuthMiddleware(
 export function requestAuthMiddleware(callback: Function): GetUserIdMiddlewareType {
   return async (event: LambdaEvent): Promise<LambdaResponse> => {
     const { headers, body } = event;
-
     const { Authorization } = headers;
+
     const data = parseData(body);
 
     return await callback(Authorization || data);
