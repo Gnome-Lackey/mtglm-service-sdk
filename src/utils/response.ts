@@ -92,16 +92,15 @@ export function handleSuccess(body: SeasonDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: SuccessResponse): LambdaResponse;
 export function handleSuccess(body: any, headers?: any): LambdaResponse {
   const statusCode = 200;
-  const parsedBody = body || {};
 
-  console.log("[SUCCESS] Response:", statusCode, parsedBody);
+  console.log("[SUCCESS] Response:", statusCode, body);
 
   return {
     statusCode,
     headers: { ...DEFAULT_HEADERS, ...headers },
     body: JSON.stringify({
       status: statusCode,
-      data: parsedBody
+      data: body
     })
   };
 }
