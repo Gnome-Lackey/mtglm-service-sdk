@@ -10,7 +10,8 @@ import {
   LoginResponse,
   AuthResponse,
   PlayerResponse,
-  PlayerDetailsResponse
+  PlayerDetailsResponse,
+  PlayerRoleResponse
 } from "../models/Responses";
 
 import { ScryfallCardView, ScryfallSetView } from "../models/Views";
@@ -23,6 +24,8 @@ export function logSuccess(resource: string, event: string, data: MatchDetailsRe
 export function logSuccess(resource: string, event: string, data: MatchDetailsResponse[]): void;
 export function logSuccess(resource: string, event: string, data: PlayerResponse): void;
 export function logSuccess(resource: string, event: string, data: PlayerResponse[]): void;
+export function logSuccess(resource: string, event: string, data: PlayerRoleResponse): void;
+export function logSuccess(resource: string, event: string, data: PlayerRoleResponse[]): void;
 export function logSuccess(resource: string, event: string, data: PlayerDetailsResponse): void;
 export function logSuccess(resource: string, event: string, data: PlayerDetailsResponse[]): void;
 export function logSuccess(resource: string, event: string, data: RecordResponse): void;
