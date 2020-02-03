@@ -22,6 +22,14 @@ export interface PlayerNode {
   updatedOn: string;
 }
 
+export interface PlayerRoleNode {
+  playerId: string;
+  playerName: string;
+  userName: string;
+  email: string;
+  updatedOn: string;
+}
+
 export interface RecordNode {
   recordId: string;
   wins: number;

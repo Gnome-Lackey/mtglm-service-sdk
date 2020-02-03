@@ -1,7 +1,7 @@
 import { AttributeMap } from "aws-sdk/clients/dynamodb";
 
-import { PlayerView } from "../models/Views";
-import { PlayerNode } from "../models/Nodes";
+import { PlayerView, PlayerRoleView } from "../models/Views";
+import { PlayerNode, PlayerRoleNode } from "../models/Nodes";
 import { PlayerCreateRequest, PlayerUpdateRequest } from "../models/Requests";
 import { PlayerDynamoCreateItem, PlayerDynamoUpdateItem } from "../models/Items";
 
@@ -45,6 +45,14 @@ export const toNode = (data: AttributeMap): PlayerNode => ({
   updatedOn: data.updatedOn as string
 });
 
+export const toRoleNode = (data: AttributeMap): PlayerRoleNode => ({
+  playerId: data.playerId as string,
+  playerName: data.playerName as string,
+  userName: data.userName as string,
+  email: data.email as string,
+  updatedOn: data.updatedOn as string
+});
+
 export const toView = (data: PlayerNode): PlayerView => ({
   id: data.playerId,
   email: data.email,
@@ -54,4 +62,11 @@ export const toView = (data: PlayerNode): PlayerView => ({
   epithet: data.epithet,
   totalLosses: data.totalMatchLosses,
   totalWins: data.totalMatchWins
+});
+
+export const toRoleView = (data: PlayerRoleNode): PlayerRoleView => ({
+  id: data.playerId,
+  email: data.email,
+  userName: data.userName,
+  displayName: data.playerName
 });

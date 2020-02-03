@@ -13,6 +13,13 @@ export interface PlayerView {
   totalLosses: number;
 }
 
+export interface PlayerRoleView {
+  id: string;
+  email: string;
+  displayName?: string;
+  userName: string;
+}
+
 export interface RecordView {
   id: string;
   wins: number;

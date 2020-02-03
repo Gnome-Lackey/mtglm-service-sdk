@@ -42,6 +42,10 @@ export interface PlayerUpdateRequest {
   matches?: string[];
 }
 
+export interface PlayerUpdateRoleRequest {
+  role: string;
+}
+
 export interface RecordCreateRequest {
   wins: number;
   player: string;
@@ -88,6 +92,7 @@ export type PotentialRequest =
   | MatchUpdateRequest
   | PlayerCreateRequest
   | PlayerUpdateRequest
+  | PlayerUpdateRoleRequest
   | SeasonCreateRequest
   | SeasonUpdateRequest
   | LoginBodyRequest
