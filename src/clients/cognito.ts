@@ -2,7 +2,8 @@ import * as aws from "aws-sdk";
 import {
   GetUserResponse,
   AuthenticationResultType,
-  AdminCreateUserResponse
+  AdminCreateUserResponse,
+  AdminGetUserResponse
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 import * as cognitoMapper from "../mappers/cognito";
@@ -27,6 +28,14 @@ export const login = async (
   const result = await cognito.adminInitiateAuth(authConfig).promise();
 
   return result.AuthenticationResult;
+};
+
+export const adminGetUser = async (userName: string): Promise<AdminGetUserResponse> => {
+  const adminGetUserConfig = cognitoMapper.toAdminGetUserConfig(USER_POOL_ID, userName);
+
+  const result = await cognito.adminGetUser(adminGetUserConfig).promise();
+
+  return result;
 };
 
 export const getLoggedInUser = async (token: string): Promise<GetUserResponse> => {

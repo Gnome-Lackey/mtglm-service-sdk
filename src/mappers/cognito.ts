@@ -7,7 +7,8 @@ import {
   ListUsersRequest,
   SignUpRequest,
   AdminUpdateUserAttributesRequest,
-  AdminCreateUserRequest
+  AdminCreateUserRequest,
+  AdminGetUserRequest
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
 import { UserAttribute } from "../models/Cognito";
@@ -55,6 +56,11 @@ export const toConfirmSignUpConfig = (
 ): ConfirmSignUpRequest => ({
   ClientId: clientId,
   ConfirmationCode: code,
+  Username: userName
+});
+
+export const toAdminGetUserConfig = (poolId: string, userName: string): AdminGetUserRequest => ({
+  UserPoolId: poolId,
   Username: userName
 });
 
