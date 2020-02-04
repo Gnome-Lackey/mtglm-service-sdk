@@ -30,6 +30,18 @@ export interface PlayerRoleNode {
   updatedOn: string;
 }
 
+/*
+  points: Total number of points from the result of a match (win: 3, loss: 0, draw: 1)
+  omw: Opponent Match Win Percentage: Percentage of _matches_ a player's opponents won
+  TODO: add in gwp for last tiebreaker: Game Win Percentage: Percentage of _games_ a player won
+*/
+export interface PlayerStandingNode {
+  id: string;
+  points: number;
+  omw: number;
+  player: PlayerNode;
+}
+
 export interface RecordNode {
   recordId: string;
   wins: number;
