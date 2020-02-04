@@ -2,37 +2,34 @@ import * as uuid from "uuid";
 
 import { AttributeMap } from "aws-sdk/clients/dynamodb";
 
-import { RecordCreateRequest, RecordUpdateRequest } from "../models/Requests";
-import { RecordView } from "../models/Views";
-import { RecordNode } from "../models/Nodes";
-import { RecordDynamoItem } from "../models/Items";
+import { MatchUpdateRequest, MatchCreateRequest } from "../models/Requests";
+import { MatchView } from "../models/Views";
+import { MatchNode } from "../models/Nodes";
+import { MatchDynamoCreateItem, MatchDynamoUpdateItem } from "../models/Items";
 
-export function toItem(data: RecordCreateRequest): RecordDynamoItem;
-export function toItem(data: RecordUpdateRequest): RecordDynamoItem;
-export function toItem(data: any): RecordDynamoItem {
+export function toCreateItem(details: MatchCreateRequest): MatchDynamoCreateItem {
   const date = new Date().valueOf().toString();
 
   return {
-    recordId: uuid.v4(),
-    wins: data.wins,
-    losses: data.losses,
-    playerId: data.playerId,
-    matchId: data.matchId,
+    matchId: uuid.v4(),
+    seasonId: details.season,
+    playerRecords: [],
     updatedOn: date
   };
 }
 
-export const toNode = (data: AttributeMap): RecordNode => ({
-  recordId: data.recordId as string,
-  wins: data.wins as number,
-  losses: data.losses as number,
-  playerId: data.playerId as string,
+export const toUpdateItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem => ({
+  seasonId: data.season,
+  playerRecords: (data.records || []).map((record) => record.id)
+});
+
+export const toNode = (data: AttributeMap): MatchNode => ({
   matchId: data.matchId as string,
+  seasonId: data.seasonId as string,
+  playerRecords: data.playerRecords as string[],
   updatedOn: data.updatedOn as string
 });
 
-export const toView = (data: RecordNode): RecordView => ({
-  id: data.recordId,
-  wins: data.wins,
-  losses: data.losses
+export const toView = (data: MatchNode): MatchView => ({
+  id: data.matchId
 });

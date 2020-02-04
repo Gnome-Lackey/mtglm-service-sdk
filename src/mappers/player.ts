@@ -1,39 +1,72 @@
-import * as uuid from "uuid";
-
 import { AttributeMap } from "aws-sdk/clients/dynamodb";
 
+import { PlayerView, PlayerRoleView } from "../models/Views";
+import { PlayerNode, PlayerRoleNode } from "../models/Nodes";
 import { PlayerCreateRequest, PlayerUpdateRequest } from "../models/Requests";
-import { PlayerView } from "../models/Views";
-import { PlayerNode } from "../models/Nodes";
-import { PlayerDynamoItem } from "../models/Items";
+import { PlayerDynamoCreateItem, PlayerDynamoUpdateItem } from "../models/Items";
 
-export function toItem(data: PlayerCreateRequest): PlayerDynamoItem;
-export function toItem(data: PlayerUpdateRequest): PlayerDynamoItem;
-export function toItem(data: any): PlayerDynamoItem {
+export const toUpdateItem = (data: PlayerUpdateRequest): PlayerDynamoUpdateItem => ({
+  playerName: data.name,
+  userName: data.userName,
+  totalMatchWins: data.totalWins,
+  totalMatchLosses: data.totalLosses,
+  email: data.email,
+  favoriteColors: data.favoriteColors,
+  epithet: data.epithet
+});
+
+export const toCreateItem = (data: PlayerCreateRequest): PlayerDynamoCreateItem => {
   const date = new Date().valueOf().toString();
 
   return {
-    playerId: uuid.v4(),
+    playerId: data.id,
     playerName: data.name,
-    totalMatchLosses: data.totalMatchLosses,
-    totalMatchWins: data.totalMatchWins,
-    matchIds: data.matchIds,
+    userName: data.userName,
+    totalMatchWins: data.totalWins || 0,
+    totalMatchLosses: data.totalLosses || 0,
+    email: data.email,
+    favoriteColors: data.favoriteColors,
+    epithet: data.epithet,
+    matchIds: data.matches,
     updatedOn: date
   };
-}
+};
 
 export const toNode = (data: AttributeMap): PlayerNode => ({
   playerId: data.playerId as string,
   playerName: data.playerName as string,
-  totalMatchLosses: data.totalMatchLosses as number,
+  userName: data.userName as string,
   totalMatchWins: data.totalMatchWins as number,
+  totalMatchLosses: data.totalMatchLosses as number,
+  email: data.email as string,
+  favoriteColors: data.favoriteColors as string[],
+  epithet: data.epithet as string,
   matchIds: data.matchIds as string[],
+  updatedOn: data.updatedOn as string
+});
+
+export const toRoleNode = (data: AttributeMap): PlayerRoleNode => ({
+  playerId: data.playerId as string,
+  playerName: data.playerName as string,
+  userName: data.userName as string,
+  email: data.email as string,
   updatedOn: data.updatedOn as string
 });
 
 export const toView = (data: PlayerNode): PlayerView => ({
   id: data.playerId,
-  name: data.playerName,
-  totalWins: data.totalMatchWins,
-  totalLosses: data.totalMatchLosses
+  email: data.email,
+  userName: data.userName,
+  displayName: data.playerName,
+  colors: data.favoriteColors,
+  epithet: data.epithet,
+  totalLosses: data.totalMatchLosses,
+  totalWins: data.totalMatchWins
+});
+
+export const toRoleView = (data: PlayerRoleNode): PlayerRoleView => ({
+  id: data.playerId,
+  email: data.email,
+  userName: data.userName,
+  displayName: data.playerName
 });

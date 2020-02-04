@@ -1,7 +1,9 @@
 import { PotentialPathParameters } from "./PathParameters";
+import { PotentialQueryParameters } from "./QueryParameters";
 
 export interface LambdaToken {
   sub: string;
+  "custom:role": string;
 }
 
 export interface LambdaHeaders {
@@ -12,6 +14,7 @@ export interface LambdaEvent {
   headers: LambdaHeaders;
   body?: string;
   pathParameters?: PotentialPathParameters;
+  queryStringParameters?: PotentialQueryParameters;
 }
 
 export interface LambdaResponse {
