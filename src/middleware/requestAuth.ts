@@ -1,4 +1,4 @@
-import { LambdaResponse, LambdaEvent } from "../models/Lambda";
+import { LambdaResponse, LambdaEvent, LambdaHeaders } from "../models/Lambda";
 import {
   LoginBodyRequest,
   ConfirmRegistrationBodyRequest,
@@ -24,6 +24,14 @@ const parseData = (body: string): RequestBodyType => {
   return JSON.parse(body);
 };
 
+const parseAuth = (headers: LambdaHeaders): string => {
+  if (!headers) {
+    return null;
+  }
+
+  return headers.Authorization;
+};
+
 export function requestAuthMiddleware(
   callback: RequestAuthMiddlewareCallbackBodyType
 ): GetUserIdMiddlewareType;
@@ -33,10 +41,10 @@ export function requestAuthMiddleware(
 export function requestAuthMiddleware(callback: Function): GetUserIdMiddlewareType {
   return async (event: LambdaEvent): Promise<LambdaResponse> => {
     const { headers, body } = event;
-    const { Authorization } = headers;
-
+    
+    const authorization = parseAuth(headers);
     const data = parseData(body);
 
-    return await callback(Authorization || data);
+    return await callback(authorization || data);
   };
 }
