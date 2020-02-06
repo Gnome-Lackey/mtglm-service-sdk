@@ -21,7 +21,6 @@ import { DEFAULT_HEADERS } from "../constants/headers";
 import {
   ERROR_NAMES,
   ERROR_MESSAGES,
-  ERROR_CODES,
   ERROR_DISPLAY_CODES,
   DEFAULT_ERROR_CODE,
   DEFAULT_ERROR_DISPLAY_CODES,
@@ -45,9 +44,9 @@ export const handleError = (
   console.log("[ERROR] Original Error:", error);
 
   const name = ERROR_NAMES[error.code];
-  const code = ERROR_CODES[name] || DEFAULT_ERROR_CODE;
-  const displayCode = ERROR_DISPLAY_CODES[name] || DEFAULT_ERROR_DISPLAY_CODES;
-  const message = ERROR_MESSAGES[domain] ? ERROR_MESSAGES[domain][name] : DEFAULT_ERROR_MESSAGE;
+  const code = error.statusCode || DEFAULT_ERROR_CODE;
+  const displayCode = ERROR_DISPLAY_CODES[domain][name] || DEFAULT_ERROR_DISPLAY_CODES;
+  const message = ERROR_MESSAGES[domain][name] || DEFAULT_ERROR_MESSAGE;
 
   console.log("[ERROR] Response:", code, displayCode, message);
 

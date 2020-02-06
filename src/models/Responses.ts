@@ -35,6 +35,7 @@ export interface ErrorResponse {
     | "UserNotFoundException";
   message?: string;
   content?: object | string;
+  statusCode?: number;
 }
 
 export interface LoginResponse {
