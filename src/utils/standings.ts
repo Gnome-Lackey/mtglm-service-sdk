@@ -1,9 +1,16 @@
 import { PlayerNode, PlayerStandingNode } from "../models/Nodes";
 
 const getOpponents = (player: PlayerNode, players: PlayerNode[]): PlayerNode[] => {
+  if (!player.matchIds || !player.matchIds.length) {
+    return [];
+  }
+
   return player.matchIds.reduce((opponentList, matchId) => {
     const matchOpponents = players.filter(
-      (opponent) => opponent.playerId !== player.playerId && opponent.matchIds.includes(matchId)
+      (opponent) =>
+        opponent.playerId !== player.playerId &&
+        opponent.matchIds &&
+        opponent.matchIds.includes(matchId)
     );
 
     const newOpponents = matchOpponents.filter(
@@ -41,7 +48,7 @@ export const sort = (players: PlayerNode[]): PlayerNode[] => {
       player
     }))
     .sort((a: PlayerStandingNode, b: PlayerStandingNode) => {
-      return a.points - b.points || a.omw - b.omw;
+      return b.points - a.points || b.omw - a.omw;
     })
     .map((standing) => standing.player);
 };
