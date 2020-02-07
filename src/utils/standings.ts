@@ -26,12 +26,12 @@ const calculateOMW = (player: PlayerNode, players: PlayerNode[]): number => {
   const opponents = getOpponents(player, players);
 
   return (
-    opponents.reduce(
-      (percentage: number, opponent: PlayerNode) =>
-        percentage +
-        opponent.totalMatchWins / (opponent.totalMatchWins + opponent.totalMatchLosses),
-      0
-    ) / opponents.length
+    opponents.reduce((percentage: number, opponent: PlayerNode) => {
+      const omw = opponent.totalMatchWins / (opponent.totalMatchWins + opponent.totalMatchLosses);
+      const normalizedOMW = omw > 0.33 ? omw : 0.33;
+
+      return percentage + normalizedOMW;
+    }, 0) / opponents.length
   );
 };
 
