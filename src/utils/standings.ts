@@ -41,12 +41,19 @@ export const sort = (players: PlayerNode[]): PlayerNode[] => {
   }
 
   return players
-    .map((player: PlayerNode) => ({
-      id: player.playerId,
-      points: player.totalMatchWins * 3,
-      omw: calculateOMW(player, players),
-      player
-    }))
+    .map((player: PlayerNode) => {
+      const numberOfMatchesPlayed = player.totalMatchLosses + player.totalMatchWins;
+      const remainingMatches = players.length - numberOfMatchesPlayed;
+      const playedMatchValue = (1.25 * remainingMatches) / players.length;
+      const playedMatchWinValue = player.totalMatchWins * 3;
+
+      return {
+        id: player.playerId,
+        points: playedMatchWinValue + playedMatchValue,
+        omw: calculateOMW(player, players),
+        player
+      };
+    })
     .sort((a: PlayerStandingNode, b: PlayerStandingNode) => {
       return b.points - a.points || b.omw - a.omw;
     })
