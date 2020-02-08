@@ -19,7 +19,6 @@ export interface PlayerDynamoCreateItem {
   totalMatchLosses: number;
   epithet: string;
   favoriteColors: string[];
-  matchIds?: string[];
   updatedOn: string;
 }
 
@@ -31,7 +30,6 @@ export interface PlayerDynamoUpdateItem {
   totalMatchLosses?: number;
   epithet?: string;
   favoriteColors?: string[];
-  matchIds?: string[];
 }
 
 export interface RecordDynamoCreateItem {

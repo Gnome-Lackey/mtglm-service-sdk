@@ -18,7 +18,6 @@ export interface PlayerNode {
   email: string;
   epithet: string;
   favoriteColors: string[];
-  matchIds: string[];
   updatedOn: string;
 }
 
@@ -30,10 +29,21 @@ export interface PlayerRoleNode {
   updatedOn: string;
 }
 
+export interface PlayerSeasonMetadataNode {
+  playerSeasonMetaId: string;
+  playerId: string;
+  seasonId: string;
+  playedOpponentIds: string[];
+  seasonWins: number;
+  seasonLosses: number;
+  totalWins: number;
+  totalLosses: number;
+  matchIds: string[];
+}
+
 /*
   points: Total number of points from the result of a match (win: 3, loss: 0, draw: 1)
   omw: Opponent Match Win Percentage: Percentage of _matches_ a player's opponents won
-  TODO: add in gwp for last tiebreaker: Game Win Percentage: Percentage of _games_ a player won
 */
 export interface PlayerStandingNode {
   id: string;

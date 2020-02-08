@@ -11,8 +11,8 @@ import {
   AuthResponse,
   AuthHeaderResponse,
   PlayerResponse,
-  PlayerDetailsResponse,
-  PlayerRoleResponse
+  PlayerRoleResponse,
+  PlayerSeasonMetadataResponse
 } from "../models/Responses";
 
 import { ScryfallCardView, ScryfallSetView } from "../models/Views";
@@ -74,8 +74,8 @@ export function handleSuccess(body: PlayerResponse): LambdaResponse;
 export function handleSuccess(body: PlayerResponse[]): LambdaResponse;
 export function handleSuccess(body: PlayerRoleResponse): LambdaResponse;
 export function handleSuccess(body: PlayerRoleResponse[]): LambdaResponse;
-export function handleSuccess(body: PlayerDetailsResponse): LambdaResponse;
-export function handleSuccess(body: PlayerDetailsResponse[]): LambdaResponse;
+export function handleSuccess(body: PlayerSeasonMetadataResponse): LambdaResponse;
+export function handleSuccess(body: PlayerSeasonMetadataResponse[]): LambdaResponse;
 export function handleSuccess(body: RecordResponse): LambdaResponse;
 export function handleSuccess(body: RecordResponse[]): LambdaResponse;
 export function handleSuccess(body: RecordDetailsResponse): LambdaResponse;

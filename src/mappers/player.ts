@@ -1,7 +1,7 @@
 import { AttributeMap } from "aws-sdk/clients/dynamodb";
 
-import { PlayerView, PlayerRoleView } from "../models/Views";
-import { PlayerNode, PlayerRoleNode } from "../models/Nodes";
+import { PlayerView, PlayerRoleView, PlayerSeasonMetadataView } from "../models/Views";
+import { PlayerNode, PlayerRoleNode, PlayerSeasonMetadataNode } from "../models/Nodes";
 import { PlayerCreateRequest, PlayerUpdateRequest } from "../models/Requests";
 import { PlayerDynamoCreateItem, PlayerDynamoUpdateItem } from "../models/Items";
 
@@ -27,7 +27,6 @@ export const toCreateItem = (data: PlayerCreateRequest): PlayerDynamoCreateItem 
     email: data.email,
     favoriteColors: data.favoriteColors,
     epithet: data.epithet,
-    matchIds: data.matches,
     updatedOn: date
   };
 };
@@ -41,7 +40,6 @@ export const toNode = (data: AttributeMap): PlayerNode => ({
   email: data.email as string,
   favoriteColors: data.favoriteColors as string[],
   epithet: data.epithet as string,
-  matchIds: data.matchIds as string[],
   updatedOn: data.updatedOn as string
 });
 
@@ -51,6 +49,18 @@ export const toRoleNode = (data: AttributeMap): PlayerRoleNode => ({
   userName: data.userName as string,
   email: data.email as string,
   updatedOn: data.updatedOn as string
+});
+
+export const toSeasonMetadataNode = (data: AttributeMap): PlayerSeasonMetadataNode => ({
+  playerSeasonMetaId: data.playerSeasonMetaId as string,
+  playerId: data.playerId as string,
+  seasonId: data.seasonId as string,
+  playedOpponentIds: data.playedOpponentIds as string[],
+  seasonWins: data.seasonWins as number,
+  seasonLosses: data.seasonLosses as number,
+  totalWins: data.totalWins as number,
+  totalLosses: data.totalLosses as number,
+  matchIds: data.matchIds as string[]
 });
 
 export const toView = (data: PlayerNode): PlayerView => ({
@@ -69,4 +79,12 @@ export const toRoleView = (data: PlayerRoleNode): PlayerRoleView => ({
   email: data.email,
   userName: data.userName,
   displayName: data.playerName
+});
+
+export const toSeasonMetadataView = (data: PlayerSeasonMetadataNode): PlayerSeasonMetadataView => ({
+  id: data.playerSeasonMetaId,
+  seasonWins: data.seasonWins,
+  seasonLosses: data.seasonLosses,
+  totalWins: data.totalWins,
+  totalLosses: data.totalLosses
 });
