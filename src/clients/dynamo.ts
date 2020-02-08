@@ -8,7 +8,8 @@ import {
   SeasonPrimaryKey,
   RecordPrimaryKey,
   PotentialPrimaryKey,
-  PlayerPrimaryKey
+  PlayerPrimaryKey,
+  PlayerSeasonMetadataKey
 } from "../models/PrimaryKeys";
 import {
   MatchDynamoCreateItem,
@@ -18,10 +19,12 @@ import {
   MatchDynamoUpdateItem,
   SeasonDynamoUpdateItem,
   RecordDynamoUpdateItem,
-  PlayerDynamoUpdateItem
+  PlayerDynamoUpdateItem,
+  PlayerSeasonMetadataDynamoCreateItem,
+  PlayerSeasonMetadataDynamoUpdateItem
 } from "../models/Items";
 
-import { PlayerFilters, SeasonFilters } from "../models/Filters";
+import { PlayerFilters, SeasonFilters, PlayerSeasonMetadataFilters } from "../models/Filters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
@@ -59,6 +62,7 @@ export class MTGLMDynamoClient {
     return result.Item;
   };
 
+  async query(filters?: PlayerSeasonMetadataFilters): Promise<AttributeMap[]>;
   async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
   async query(filters?: SeasonFilters): Promise<AttributeMap[]>;
   async query(filters?: any): Promise<AttributeMap[]> {
@@ -91,6 +95,7 @@ export class MTGLMDynamoClient {
     await dynamoDB.delete(config).promise();
   };
 
+  async create(key: PlayerSeasonMetadataKey, item: PlayerSeasonMetadataDynamoCreateItem): Promise<AttributeMap>;
   async create(key: MatchPrimaryKey, item: MatchDynamoCreateItem): Promise<AttributeMap>;
   async create(key: SeasonPrimaryKey, item: SeasonDynamoCreateItem): Promise<AttributeMap>;
   async create(key: RecordPrimaryKey, item: RecordDynamoCreateItem): Promise<AttributeMap>;
@@ -106,6 +111,7 @@ export class MTGLMDynamoClient {
     return await this.fetchByKey(key);
   }
 
+  async update(key: PlayerSeasonMetadataKey, item: PlayerSeasonMetadataDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: MatchPrimaryKey, item: MatchDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: SeasonPrimaryKey, item: SeasonDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: RecordPrimaryKey, item: RecordDynamoUpdateItem): Promise<AttributeMap>;
@@ -123,6 +129,7 @@ export class MTGLMDynamoClient {
     return await this.fetchByKey(key);
   }
 
+  async updateList(key: PlayerSeasonMetadataKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: MatchPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: SeasonPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: RecordPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;

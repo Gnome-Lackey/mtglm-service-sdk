@@ -45,13 +45,13 @@ export interface LoginResponse {
 }
 
 export interface MatchResponse extends MatchView {
-  players: RecordResponse[];
+  players?: RecordResponse[];
   season: string;
 }
 
 export interface MatchDetailsResponse extends MatchView {
-  players: RecordDetailsResponse[];
-  season: SeasonDetailsResponse;
+  players?: RecordDetailsResponse[];
+  season?: SeasonDetailsResponse;
 }
 
 export interface PlayerResponse extends PlayerView {
@@ -70,10 +70,10 @@ export interface PlayerSeasonMetadataResponse extends PlayerSeasonMetadataView {
 }
 
 export interface PlayerSeasonMetadataDetailsResponse extends PlayerSeasonMetadataView {
-  player: PlayerView;
-  season: SeasonView;
-  playedOpponents: PlayerView[];
-  matches: MatchView[];
+  player?: PlayerView;
+  season?: SeasonView;
+  playedOpponents?: PlayerView[];
+  matches?: MatchView[];
 }
 
 export interface RecordResponse extends RecordView {
@@ -84,8 +84,8 @@ export interface RecordResponse extends RecordView {
 
 export interface RecordDetailsResponse extends RecordView {
   losses: number;
-  player: PlayerView;
-  match: MatchView;
+  player?: PlayerView;
+  match?: MatchView;
 }
 
 export interface SeasonResponse extends SeasonView {
@@ -94,8 +94,8 @@ export interface SeasonResponse extends SeasonView {
 }
 
 export interface SeasonDetailsResponse extends SeasonView {
-  set: ScryfallSetView;
-  players: PlayerView[];
+  set?: ScryfallSetView;
+  players?: PlayerView[];
 }
 
 export interface SuccessResponse {

@@ -9,6 +9,12 @@ export interface PlayerFilters {
   userName?: string;
 }
 
+export interface PlayerSeasonMetadataFilters {
+  playerSeasonMetaId?: string;
+  playerId?: string;
+  seasonId?: string;
+}
+
 export interface RecordFilters {
   recordId?: string;
   playerId?: string;
