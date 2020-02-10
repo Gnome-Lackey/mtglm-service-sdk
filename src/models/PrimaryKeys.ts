@@ -13,7 +13,6 @@ export interface RecordPrimaryKey {
 
 export interface SeasonPrimaryKey {
   seasonId: string;
-  startDate?: string;
 }
 
 export interface SeasonMetadataKey {
