@@ -70,6 +70,7 @@ export interface SeasonMetadataDynamoCreateItem {
   totalWins: number;
   totalLosses: number;
   matchIds?: string[];
+  updatedOn: string;
 }
 
 export interface SeasonMetadataDynamoUpdateItem {

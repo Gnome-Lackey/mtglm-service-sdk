@@ -5,7 +5,11 @@ import { AttributeMap } from "aws-sdk/clients/dynamodb";
 import { SeasonCreateRequest, SeasonUpdateRequest } from "../models/Requests";
 import { SeasonView, SeasonMetadataView } from "../models/Views";
 import { SeasonNode, SeasonMetadataNode } from "../models/Nodes";
-import { SeasonDynamoCreateItem, SeasonDynamoUpdateItem } from "../models/Items";
+import {
+  SeasonDynamoCreateItem,
+  SeasonDynamoUpdateItem,
+  SeasonMetadataDynamoCreateItem
+} from "../models/Items";
 
 export function toCreateItem(data: SeasonCreateRequest): SeasonDynamoCreateItem {
   const date = new Date().valueOf().toString();
@@ -17,6 +21,26 @@ export function toCreateItem(data: SeasonCreateRequest): SeasonDynamoCreateItem 
     endDate: data.endedOn,
     setCode: data.set,
     playerIds: data.players,
+    updatedOn: date
+  };
+}
+
+export function toMetadataCreateItem(
+  seasonId: string,
+  playerId: string,
+  players: string[]
+): SeasonMetadataDynamoCreateItem {
+  const date = new Date().valueOf().toString();
+
+  return {
+    seasonId,
+    playerId,
+    seasonLosses: 0,
+    seasonWins: 0,
+    totalLosses: 0,
+    totalWins: 0,
+    matchIds: [],
+    playedOpponentIds: players.filter((opponent) => opponent !== playerId),
     updatedOn: date
   };
 }
