@@ -94,9 +94,8 @@ export interface SeasonNode {
 }
 
 export interface SeasonMetadataNode {
- seasonMetadataId: string;
-  playerId: string;
   seasonId: string;
+  playerId: string;
   playedOpponentIds: string[];
   seasonWins: number;
   seasonLosses: number;

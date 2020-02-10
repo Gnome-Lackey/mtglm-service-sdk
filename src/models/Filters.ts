@@ -22,7 +22,6 @@ export interface SeasonFilters {
 }
 
 export interface SeasonMetadataFilters {
- seasonMetadataId?: string;
   playerId?: string;
   seasonId?: string;
 }

@@ -62,9 +62,8 @@ export interface SeasonDynamoUpdateItem {
 }
 
 export interface SeasonMetadataDynamoCreateItem {
- seasonMetadataId: string;
-  playerId: string;
   seasonId: string;
+  playerId: string;
   playedOpponentIds?: string[];
   seasonWins: number;
   seasonLosses: number;

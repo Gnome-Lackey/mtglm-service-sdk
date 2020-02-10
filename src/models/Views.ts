@@ -62,7 +62,6 @@ export interface SeasonView {
 }
 
 export interface SeasonMetadataView {
-  id: string;
   seasonWins: number;
   seasonLosses: number;
   totalWins: number;

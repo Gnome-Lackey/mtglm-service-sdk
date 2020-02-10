@@ -39,7 +39,6 @@ export const toNode = (data: AttributeMap): SeasonNode => ({
 });
 
 export const toMetadataNode = (data: AttributeMap): SeasonMetadataNode => ({
-  seasonMetadataId: data.seasonMetadataId as string,
   playerId: data.playerId as string,
   seasonId: data.seasonId as string,
   playedOpponentIds: data.playedOpponentIds as string[],
@@ -58,7 +57,6 @@ export const toView = (data: SeasonNode): SeasonView => ({
 });
 
 export const toMetadataView = (data: SeasonMetadataNode): SeasonMetadataView => ({
-  id: data.seasonMetadataId,
   seasonWins: data.seasonWins,
   seasonLosses: data.seasonLosses,
   totalWins: data.totalWins,

@@ -17,14 +17,13 @@ export interface SeasonPrimaryKey {
 }
 
 export interface SeasonMetadataKey {
-  seasonMetadataId: string;
   seasonId?: string;
+  playerId?: string;
 }
 
 export interface PotentialPrimaryKey {
   matchId?: string;
   playerId?: string;
-  seasonMetadataId?: string;
   seasonId?: string;
   recordId?: string;
 }
