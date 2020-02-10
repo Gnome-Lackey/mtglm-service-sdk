@@ -15,8 +15,6 @@ export interface PlayerDynamoCreateItem {
   playerName: string;
   userName: string;
   email: string;
-  totalMatchWins: number;
-  totalMatchLosses: number;
   epithet: string;
   favoriteColors: string[];
   updatedOn: string;
@@ -26,8 +24,6 @@ export interface PlayerDynamoUpdateItem {
   playerName?: string;
   userName?: string;
   email?: string;
-  totalMatchWins?: number;
-  totalMatchLosses?: number;
   epithet?: string;
   favoriteColors?: string[];
 }

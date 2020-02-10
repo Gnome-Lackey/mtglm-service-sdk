@@ -9,8 +9,6 @@ export interface PlayerView {
   userName: string;
   epithet: string;
   colors: string[];
-  totalWins: number;
-  totalLosses: number;
 }
 
 export interface PlayerRoleView {

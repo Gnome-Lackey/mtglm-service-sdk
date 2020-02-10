@@ -13,8 +13,6 @@ export interface PlayerNode {
   playerId: string;
   playerName: string;
   userName: string;
-  totalMatchWins: number;
-  totalMatchLosses: number;
   email: string;
   epithet: string;
   favoriteColors: string[];
