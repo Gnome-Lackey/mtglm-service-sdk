@@ -9,12 +9,6 @@ export interface PlayerFilters {
   userName?: string;
 }
 
-export interface PlayerSeasonMetadataFilters {
-  playerSeasonMetaId?: string;
-  playerId?: string;
-  seasonId?: string;
-}
-
 export interface RecordFilters {
   recordId?: string;
   playerId?: string;
@@ -25,4 +19,10 @@ export interface SeasonFilters {
   startDate?: string;
   seasonId?: string;
   isActive?: boolean;
+}
+
+export interface SeasonMetadataFilters {
+ seasonMetadataId?: string;
+  playerId?: string;
+  seasonId?: string;
 }

@@ -1,7 +1,6 @@
 export interface PlayerQueryParameters {
   name?: string;
   userName?: string;
-  season?: string;
 }
 
 export interface ScryfallCardQueryParameters {

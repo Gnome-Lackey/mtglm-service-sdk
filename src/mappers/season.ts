@@ -3,8 +3,8 @@ import * as uuid from "uuid";
 import { AttributeMap } from "aws-sdk/clients/dynamodb";
 
 import { SeasonCreateRequest, SeasonUpdateRequest } from "../models/Requests";
-import { SeasonView } from "../models/Views";
-import { SeasonNode } from "../models/Nodes";
+import { SeasonView, SeasonMetadataView } from "../models/Views";
+import { SeasonNode, SeasonMetadataNode } from "../models/Nodes";
 import { SeasonDynamoCreateItem, SeasonDynamoUpdateItem } from "../models/Items";
 
 export function toCreateItem(data: SeasonCreateRequest): SeasonDynamoCreateItem {
@@ -38,9 +38,29 @@ export const toNode = (data: AttributeMap): SeasonNode => ({
   updatedOn: data.updatedOn as string
 });
 
+export const toMetadataNode = (data: AttributeMap): SeasonMetadataNode => ({
+  seasonMetadataId: data.seasonMetadataId as string,
+  playerId: data.playerId as string,
+  seasonId: data.seasonId as string,
+  playedOpponentIds: data.playedOpponentIds as string[],
+  seasonWins: data.seasonWins as number,
+  seasonLosses: data.seasonLosses as number,
+  totalWins: data.totalWins as number,
+  totalLosses: data.totalLosses as number,
+  matchIds: data.matchIds as string[]
+});
+
 export const toView = (data: SeasonNode): SeasonView => ({
   id: data.seasonId,
   isActive: data.isActive,
   startedOn: data.startDate,
   endedOn: data.endDate
+});
+
+export const toMetadataView = (data: SeasonMetadataNode): SeasonMetadataView => ({
+  id: data.seasonMetadataId,
+  seasonWins: data.seasonWins,
+  seasonLosses: data.seasonLosses,
+  totalWins: data.totalWins,
+  totalLosses: data.totalLosses
 });

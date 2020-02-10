@@ -32,27 +32,6 @@ export interface PlayerDynamoUpdateItem {
   favoriteColors?: string[];
 }
 
-export interface PlayerSeasonMetadataDynamoCreateItem {
-  playerSeasonMetaId: string;
-  playerId: string;
-  seasonId: string;
-  playedOpponentIds?: string[];
-  seasonWins: number;
-  seasonLosses: number;
-  totalWins: number;
-  totalLosses: number;
-  matchIds?: string[];
-}
-
-export interface PlayerSeasonMetadataDynamoUpdateItem {
-  playedOpponentIds?: string[];
-  seasonWins?: number;
-  seasonLosses?: number;
-  totalWins?: number;
-  totalLosses?: number;
-  matchIds?: string[];
-}
-
 export interface RecordDynamoCreateItem {
   recordId: string;
   wins: number;
@@ -80,4 +59,25 @@ export interface SeasonDynamoUpdateItem {
   endDate?: string;
   setCode?: string;
   playerIds?: string[];
+}
+
+export interface SeasonMetadataDynamoCreateItem {
+ seasonMetadataId: string;
+  playerId: string;
+  seasonId: string;
+  playedOpponentIds?: string[];
+  seasonWins: number;
+  seasonLosses: number;
+  totalWins: number;
+  totalLosses: number;
+  matchIds?: string[];
+}
+
+export interface SeasonMetadataDynamoUpdateItem {
+  playedOpponentIds?: string[];
+  seasonWins?: number;
+  seasonLosses?: number;
+  totalWins?: number;
+  totalLosses?: number;
+  matchIds?: string[];
 }

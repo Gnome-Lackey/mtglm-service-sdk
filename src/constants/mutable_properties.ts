@@ -7,7 +7,7 @@ export const PROPERTIES_PLAYER = [
   "favoriteColors",
   "epithet"
 ];
-export const PROPERTIES_PLAYER_SEASON_METADATA = [
+export const PROPERTIES_SEASON_METADATA = [
   "playedOpponentIds",
   "seasonWins",
   "seasonLosses",

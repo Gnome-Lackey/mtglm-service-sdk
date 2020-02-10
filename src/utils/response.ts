@@ -12,7 +12,7 @@ import {
   AuthHeaderResponse,
   PlayerResponse,
   PlayerRoleResponse,
-  PlayerSeasonMetadataResponse
+  SeasonMetadataResponse
 } from "../models/Responses";
 
 import { ScryfallCardView, ScryfallSetView } from "../models/Views";
@@ -74,8 +74,6 @@ export function handleSuccess(body: PlayerResponse): LambdaResponse;
 export function handleSuccess(body: PlayerResponse[]): LambdaResponse;
 export function handleSuccess(body: PlayerRoleResponse): LambdaResponse;
 export function handleSuccess(body: PlayerRoleResponse[]): LambdaResponse;
-export function handleSuccess(body: PlayerSeasonMetadataResponse): LambdaResponse;
-export function handleSuccess(body: PlayerSeasonMetadataResponse[]): LambdaResponse;
 export function handleSuccess(body: RecordResponse): LambdaResponse;
 export function handleSuccess(body: RecordResponse[]): LambdaResponse;
 export function handleSuccess(body: RecordDetailsResponse): LambdaResponse;
@@ -88,6 +86,8 @@ export function handleSuccess(body: SeasonResponse): LambdaResponse;
 export function handleSuccess(body: SeasonResponse[]): LambdaResponse;
 export function handleSuccess(body: SeasonDetailsResponse): LambdaResponse;
 export function handleSuccess(body: SeasonDetailsResponse[]): LambdaResponse;
+export function handleSuccess(body: SeasonMetadataResponse): LambdaResponse;
+export function handleSuccess(body: SeasonMetadataResponse[]): LambdaResponse;
 export function handleSuccess(body: SuccessResponse): LambdaResponse;
 export function handleSuccess(body: any, headers?: any): LambdaResponse {
   const statusCode = 200;

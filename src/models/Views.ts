@@ -20,14 +20,6 @@ export interface PlayerRoleView {
   userName: string;
 }
 
-export interface PlayerSeasonMetadataView {
-  id: string;
-  seasonWins: number;
-  seasonLosses: number;
-  totalWins: number;
-  totalLosses: number;
-}
-
 export interface RecordView {
   id: string;
   wins: number;
@@ -67,4 +59,12 @@ export interface SeasonView {
   isActive: boolean;
   startedOn: string;
   endedOn: string;
+}
+
+export interface SeasonMetadataView {
+  id: string;
+  seasonWins: number;
+  seasonLosses: number;
+  totalWins: number;
+  totalLosses: number;
 }

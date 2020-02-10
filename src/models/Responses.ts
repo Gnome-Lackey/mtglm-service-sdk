@@ -5,7 +5,7 @@ import {
   SeasonView,
   ScryfallSetView,
   PlayerRoleView,
-  PlayerSeasonMetadataView
+  SeasonMetadataView
 } from "./Views";
 
 export interface AuthHeaderResponse {
@@ -62,20 +62,6 @@ export interface PlayerRoleResponse extends PlayerRoleView {
   role: string;
 }
 
-export interface PlayerSeasonMetadataResponse extends PlayerSeasonMetadataView {
-  player: string;
-  season: string;
-  playedOpponents: string[];
-  matches: string[];
-}
-
-export interface PlayerSeasonMetadataDetailsResponse extends PlayerSeasonMetadataView {
-  player?: PlayerView;
-  season?: SeasonView;
-  playedOpponents?: PlayerView[];
-  matches?: MatchView[];
-}
-
 export interface RecordResponse extends RecordView {
   losses: number;
   player: string;
@@ -96,6 +82,20 @@ export interface SeasonResponse extends SeasonView {
 export interface SeasonDetailsResponse extends SeasonView {
   set?: ScryfallSetView;
   players?: PlayerView[];
+}
+
+export interface SeasonMetadataResponse extends SeasonMetadataView {
+  player: string;
+  season: string;
+  playedOpponents: string[];
+  matches: string[];
+}
+
+export interface SeasonMetadataDetailsResponse extends SeasonMetadataView {
+  player?: PlayerView;
+  season?: SeasonView;
+  playedOpponents?: PlayerView[];
+  matches?: MatchView[];
 }
 
 export interface SuccessResponse {

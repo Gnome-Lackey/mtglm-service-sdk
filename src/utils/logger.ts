@@ -11,7 +11,7 @@ import {
   AuthResponse,
   PlayerResponse,
   PlayerRoleResponse,
-  PlayerSeasonMetadataResponse
+  SeasonMetadataResponse
 } from "../models/Responses";
 
 import { ScryfallCardView, ScryfallSetView } from "../models/Views";
@@ -26,8 +26,6 @@ export function logSuccess(resource: string, event: string, data: PlayerResponse
 export function logSuccess(resource: string, event: string, data: PlayerResponse[]): void;
 export function logSuccess(resource: string, event: string, data: PlayerRoleResponse): void;
 export function logSuccess(resource: string, event: string, data: PlayerRoleResponse[]): void;
-export function logSuccess(resource: string, event: string, data: PlayerSeasonMetadataResponse): void;
-export function logSuccess(resource: string, event: string, data: PlayerSeasonMetadataResponse[]): void;
 export function logSuccess(resource: string, event: string, data: RecordResponse): void;
 export function logSuccess(resource: string, event: string, data: RecordResponse[]): void;
 export function logSuccess(resource: string, event: string, data: RecordDetailsResponse): void;
@@ -40,6 +38,8 @@ export function logSuccess(resource: string, event: string, data: SeasonResponse
 export function logSuccess(resource: string, event: string, data: SeasonResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonDetailsResponse): void;
 export function logSuccess(resource: string, event: string, data: SeasonDetailsResponse[]): void;
+export function logSuccess(resource: string, event: string, data: SeasonMetadataResponse): void;
+export function logSuccess(resource: string, event: string, data: SeasonMetadataResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SuccessResponse): void;
 export function logSuccess(resource: string, event: string, data: any): void {
   console.log(`Success: ${resource.toUpperCase()} ${event}`);

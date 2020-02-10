@@ -4,7 +4,6 @@ export interface MatchPathParameters {
 
 export interface PlayerPathParameters {
   playerId?: string;
-  seasonId?: string;
 }
 
 export interface RecordPathParameters {
@@ -20,6 +19,7 @@ export interface ScryfallSetPathParameters {
 }
 
 export interface SeasonPathParameters {
+  playerId?: string;
   seasonId?: string;
 }
 
