@@ -12,12 +12,13 @@ import { PotentialPrimaryKey } from "../models/PrimaryKeys";
 
 const buildAttributeMapping = (
   attributes: string[],
-  item: DynamoAttributeValues
+  item: DynamoAttributeValues,
+  expressionValues?: object
 ): DynamoAttributeMapping => {
-  const ExpressionAttributeNames: DynamoAttributeNames = {};
-  const ExpressionAttributeValues: DynamoAttributeValues = {};
   const UpdateExpressions: string[] = [];
   const RemoveExpressions: string[] = [];
+  const ExpressionAttributeNames: DynamoAttributeNames = {};
+  let ExpressionAttributeValues: DynamoAttributeValues = {};
 
   attributes.forEach((attribute) => {
     if (item[attribute]) {
@@ -34,6 +35,10 @@ const buildAttributeMapping = (
     }
   });
 
+  if (expressionValues) {
+    ExpressionAttributeValues = { ...ExpressionAttributeValues, ...expressionValues };
+  }
+
   return {
     ExpressionAttributeNames,
     ExpressionAttributeValues,
@@ -46,14 +51,16 @@ export const toUpdateConfiguration = (
   key: PotentialPrimaryKey,
   item: DynamoAttributeValues,
   attributes: string[],
-  tableName: string
+  tableName: string,
+  expression?: string,
+  expressionValues?: object
 ): DynamoUpdateConfig => {
   const {
     ExpressionAttributeNames,
     ExpressionAttributeValues,
     UpdateExpressions,
     RemoveExpressions
-  } = buildAttributeMapping(attributes, item);
+  } = buildAttributeMapping(attributes, item, expressionValues);
 
   if (UpdateExpressions.length || RemoveExpressions.length) {
     ExpressionAttributeNames["#updatedOn"] = "updatedOn";
@@ -76,6 +83,7 @@ export const toUpdateConfiguration = (
     ExpressionAttributeNames,
     ExpressionAttributeValues,
     UpdateExpression: expressions.join(" "),
+    ConditionExpression: expression,
     TableName: tableName
   };
 };

@@ -6,6 +6,7 @@ export interface DynamoUpdateConfig {
   ExpressionAttributeValues: { [key: string]: string | number | boolean | string[] };
   UpdateExpression: string;
   TableName: string;
+  ConditionExpression: string;
 }
 
 export interface DynamoGetBatchConfig {

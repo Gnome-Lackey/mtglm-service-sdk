@@ -120,10 +120,7 @@ export class MTGLMDynamoClient {
   async create(key: SeasonPrimaryKey, item: SeasonDynamoCreateItem): Promise<AttributeMap>;
   async create(key: RecordPrimaryKey, item: RecordDynamoCreateItem): Promise<AttributeMap>;
   async create(key: PlayerPrimaryKey, item: PlayerDynamoCreateItem): Promise<AttributeMap>;
-  async create(
-    key: SeasonMetadataKey,
-    item: SeasonMetadataDynamoCreateItem
-  ): Promise<AttributeMap>;
+  async create(key: SeasonMetadataKey, item: SeasonMetadataDynamoCreateItem): Promise<AttributeMap>;
   async create(key: any, item: any): Promise<AttributeMap> {
     const config = {
       Item: item,
@@ -135,20 +132,49 @@ export class MTGLMDynamoClient {
     return await this.fetchByKey(key);
   }
 
-  async update(key: MatchPrimaryKey, item: MatchDynamoUpdateItem): Promise<AttributeMap>;
-  async update(key: SeasonPrimaryKey, item: SeasonDynamoUpdateItem): Promise<AttributeMap>;
-  async update(key: RecordPrimaryKey, item: RecordDynamoUpdateItem): Promise<AttributeMap>;
-  async update(key: PlayerPrimaryKey, item: PlayerDynamoUpdateItem): Promise<AttributeMap>;
+  async update(
+    key: MatchPrimaryKey,
+    item: MatchDynamoUpdateItem,
+    expression?: string,
+    expressionValues?: object
+  ): Promise<AttributeMap>;
+  async update(
+    key: SeasonPrimaryKey,
+    item: SeasonDynamoUpdateItem,
+    expression?: string,
+    expressionValues?: object
+  ): Promise<AttributeMap>;
+  async update(
+    key: RecordPrimaryKey,
+    item: RecordDynamoUpdateItem,
+    expression?: string,
+    expressionValues?: object
+  ): Promise<AttributeMap>;
+  async update(
+    key: PlayerPrimaryKey,
+    item: PlayerDynamoUpdateItem,
+    expression?: string,
+    expressionValues?: object
+  ): Promise<AttributeMap>;
   async update(
     key: SeasonMetadataKey,
-    item: SeasonMetadataDynamoUpdateItem
+    item: SeasonMetadataDynamoUpdateItem,
+    expression?: string,
+    expressionValues?: object
   ): Promise<AttributeMap>;
-  async update(key: any, item: any): Promise<AttributeMap> {
+  async update(
+    key: any,
+    item: any,
+    expression?: string,
+    expressionValues?: object
+  ): Promise<AttributeMap> {
     const config = dynamoMapper.toUpdateConfiguration(
       key,
       item,
       this.updatableAttributes,
-      this.tableName
+      this.tableName,
+      expression,
+      expressionValues
     );
 
     await dynamoDB.update(config).promise();
@@ -156,11 +182,7 @@ export class MTGLMDynamoClient {
     return await this.fetchByKey(key);
   }
 
-  async updateList(
-    key: SeasonMetadataKey,
-    field: string,
-    values: string[]
-  ): Promise<AttributeMap>;
+  async updateList(key: SeasonMetadataKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: MatchPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: SeasonPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: RecordPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
