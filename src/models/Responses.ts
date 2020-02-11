@@ -46,12 +46,7 @@ export interface LoginResponse {
 
 export interface MatchResponse extends MatchView {
   players?: RecordResponse[];
-  season: string;
-}
-
-export interface MatchDetailsResponse extends MatchView {
-  players?: RecordDetailsResponse[];
-  season?: SeasonDetailsResponse;
+  season: string | SeasonView;
 }
 
 export interface PlayerResponse extends PlayerView {
@@ -64,38 +59,20 @@ export interface PlayerRoleResponse extends PlayerRoleView {
 
 export interface RecordResponse extends RecordView {
   losses: number;
-  player: string;
-  match: string;
-}
-
-export interface RecordDetailsResponse extends RecordView {
-  losses: number;
-  player?: PlayerView;
-  match?: MatchView;
+  player: string | PlayerView;
+  match: string | MatchView;
 }
 
 export interface SeasonResponse extends SeasonView {
-  set: string;
-  players: string[];
-}
-
-export interface SeasonDetailsResponse extends SeasonView {
-  set?: ScryfallSetView;
-  players?: PlayerView[];
+  set: string | ScryfallSetView;
+  players: string[] | PlayerView[];
 }
 
 export interface SeasonMetadataResponse extends SeasonMetadataView {
-  player: string;
-  season: string;
-  playedOpponents: string[];
-  matches: string[];
-}
-
-export interface SeasonMetadataDetailsResponse extends SeasonMetadataView {
-  player?: PlayerView;
-  season?: SeasonView;
-  playedOpponents?: PlayerView[];
-  matches?: MatchView[];
+  player: string | PlayerView;
+  season: string | SeasonView;
+  playedOpponents: string[] | PlayerView[];
+  matches: string[] | MatchView[];
 }
 
 export interface SuccessResponse {
