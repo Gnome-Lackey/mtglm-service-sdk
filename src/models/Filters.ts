@@ -1,6 +1,8 @@
 export interface MatchFilters {
   matchId?: string;
   seasonId?: string;
+  isSeasonPoint?: boolean;
+  recordIds?: string[];
 }
 
 export interface PlayerFilters {

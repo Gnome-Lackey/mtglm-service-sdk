@@ -28,7 +28,12 @@ import {
   SeasonMetadataDynamoUpdateItem
 } from "../models/Items";
 
-import { PlayerFilters, SeasonFilters, SeasonMetadataFilters } from "../models/Filters";
+import {
+  PlayerFilters,
+  SeasonFilters,
+  SeasonMetadataFilters,
+  MatchFilters
+} from "../models/Filters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
@@ -86,6 +91,7 @@ export class MTGLMDynamoClient {
   async query(filters?: SeasonMetadataFilters): Promise<AttributeMap[]>;
   async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
   async query(filters?: SeasonFilters): Promise<AttributeMap[]>;
+  async query(filters?: MatchFilters): Promise<AttributeMap[]>;
   async query(filters?: any): Promise<AttributeMap[]> {
     const result = await dynamoDB
       .scan({

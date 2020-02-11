@@ -1,13 +1,14 @@
 export interface MatchDynamoCreateItem {
   matchId: string;
   seasonId: string;
+  isSeasonPoint?: boolean;
   playerRecords: string[];
   updatedOn: string;
 }
 
 export interface MatchDynamoUpdateItem {
-  seasonId: string;
-  playerRecords: string[];
+  isSeasonPoint?: boolean;
+  playerRecords?: string[];
 }
 
 export interface PlayerDynamoCreateItem {

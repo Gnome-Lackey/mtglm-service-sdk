@@ -19,17 +19,19 @@ export function toCreateItem(details: MatchCreateRequest): MatchDynamoCreateItem
 }
 
 export const toUpdateItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem => ({
-  seasonId: data.season,
+  isSeasonPoint: data.isSeasonPoint,
   playerRecords: (data.records || []).map((record) => record.id)
 });
 
 export const toNode = (data: AttributeMap): MatchNode => ({
   matchId: data.matchId as string,
+  isSeasonPoint: data.isSeasonPoint as boolean,
   seasonId: data.seasonId as string,
   playerRecords: data.playerRecords as string[],
   updatedOn: data.updatedOn as string
 });
 
 export const toView = (data: MatchNode): MatchView => ({
-  id: data.matchId
+  id: data.matchId,
+  isSeasonPoint: data.isSeasonPoint
 });

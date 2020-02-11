@@ -1,5 +1,6 @@
 export interface MatchView {
   id: string;
+  isSeasonPoint: boolean;
 }
 
 export interface PlayerView {

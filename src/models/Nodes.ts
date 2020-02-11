@@ -5,6 +5,7 @@ export interface AuthNode {
 export interface MatchNode {
   matchId: string;
   seasonId: string;
+  isSeasonPoint: boolean;
   playerRecords: string[];
   updatedOn: string;
 }

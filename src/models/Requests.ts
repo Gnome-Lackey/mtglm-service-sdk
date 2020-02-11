@@ -15,6 +15,7 @@ export interface MatchCreateRequest {
 
 export interface MatchUpdateRequest {
   id?: string;
+  isSeasonPoint?: boolean;
   records?: RecordUpdateRequest[];
   season?: string;
 }
