@@ -2,13 +2,18 @@ import * as uuid from "uuid";
 
 import { AttributeMap } from "aws-sdk/clients/dynamodb";
 
-import { SeasonCreateRequest, SeasonUpdateRequest } from "../models/Requests";
+import {
+  SeasonCreateRequest,
+  SeasonUpdateRequest,
+  SeasonMetadataDynamoUpdateRequest
+} from "../models/Requests";
 import { SeasonView, SeasonMetadataView } from "../models/Views";
 import { SeasonNode, SeasonMetadataNode } from "../models/Nodes";
 import {
   SeasonDynamoCreateItem,
   SeasonDynamoUpdateItem,
-  SeasonMetadataDynamoCreateItem
+  SeasonMetadataDynamoCreateItem,
+  SeasonMetadataDynamoUpdateItem
 } from "../models/Items";
 
 export function toCreateItem(data: SeasonCreateRequest): SeasonDynamoCreateItem {
@@ -27,8 +32,7 @@ export function toCreateItem(data: SeasonCreateRequest): SeasonDynamoCreateItem 
 
 export function toMetadataCreateItem(
   seasonId: string,
-  playerId: string,
-  players: string[]
+  playerId: string
 ): SeasonMetadataDynamoCreateItem {
   const date = new Date().valueOf().toString();
 
@@ -40,10 +44,20 @@ export function toMetadataCreateItem(
     totalLosses: 0,
     totalWins: 0,
     matchIds: [],
-    playedOpponentIds: players.filter((opponent) => opponent !== playerId),
+    playedOpponentIds: [],
     updatedOn: date
   };
 }
+
+export const toMetadataUpdateItem = (
+  data: SeasonMetadataDynamoUpdateRequest
+): SeasonMetadataDynamoUpdateItem => ({
+  seasonLosses: data.seasonLosses,
+  seasonWins: data.seasonWins,
+  totalLosses: data.totalLosses,
+  totalWins: data.totalWins,
+  playedOpponentIds: data.playedOpponentIds
+});
 
 export const toUpdateItem = (data: SeasonUpdateRequest): SeasonDynamoUpdateItem => ({
   isActive: data.isActive,

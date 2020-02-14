@@ -68,6 +68,14 @@ export interface SeasonUpdateRequest {
   players?: string[];
 }
 
+export interface SeasonMetadataDynamoUpdateRequest {
+  seasonLosses?: number;
+  seasonWins?: number;
+  totalLosses?: number;
+  totalWins?: number;
+  playedOpponentIds?: string[];
+}
+
 export interface SignUpBodyRequest {
   email: string;
   firstName?: string;
@@ -85,6 +93,7 @@ export type PotentialRequest =
   | SeasonCreateRequest
   | SeasonUpdateRequest
   | LoginBodyRequest
+  | SeasonMetadataDynamoUpdateRequest
   | ConfirmRegistrationBodyRequest
   | ResendConfirmationCodeBodyRequest
   | SignUpBodyRequest;
