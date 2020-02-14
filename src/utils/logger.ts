@@ -1,6 +1,5 @@
 import {
   ErrorResponse,
-  RecordResponse,
   MatchResponse,
   SeasonResponse,
   SuccessResponse,
@@ -21,8 +20,6 @@ export function logSuccess(resource: string, event: string, data: PlayerResponse
 export function logSuccess(resource: string, event: string, data: PlayerResponse[]): void;
 export function logSuccess(resource: string, event: string, data: PlayerRoleResponse): void;
 export function logSuccess(resource: string, event: string, data: PlayerRoleResponse[]): void;
-export function logSuccess(resource: string, event: string, data: RecordResponse): void;
-export function logSuccess(resource: string, event: string, data: RecordResponse[]): void;
 export function logSuccess(resource: string, event: string, data: ScryfallCardView): void;
 export function logSuccess(resource: string, event: string, data: ScryfallCardView[]): void;
 export function logSuccess(resource: string, event: string, data: ScryfallSetView): void;

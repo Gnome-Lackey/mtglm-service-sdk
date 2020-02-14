@@ -1,14 +1,20 @@
 export interface MatchDynamoCreateItem {
   matchId: string;
   seasonId: string;
-  isSeasonPoint?: boolean;
-  playerRecords: string[];
+  isSeasonPoint: boolean;
+  wins: number;
+  gamesPlayed: number;
+  winnerId: string;
+  loserIds: string[];
   updatedOn: string;
 }
 
 export interface MatchDynamoUpdateItem {
   isSeasonPoint?: boolean;
-  playerRecords?: string[];
+  wins?: number;
+  gamesPlayed?: number;
+  winnerId?: string;
+  loserIds?: string[];
 }
 
 export interface PlayerDynamoCreateItem {
@@ -27,18 +33,6 @@ export interface PlayerDynamoUpdateItem {
   email?: string;
   epithet?: string;
   favoriteColors?: string[];
-}
-
-export interface RecordDynamoCreateItem {
-  recordId: string;
-  wins: number;
-  playerId: string;
-  matchId: string;
-  updatedOn: string;
-}
-
-export interface RecordDynamoUpdateItem {
-  wins?: number;
 }
 
 export interface SeasonDynamoCreateItem {

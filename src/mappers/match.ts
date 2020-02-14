@@ -13,25 +13,37 @@ export function toCreateItem(details: MatchCreateRequest): MatchDynamoCreateItem
   return {
     matchId: uuid.v4(),
     seasonId: details.season,
-    playerRecords: [],
+    gamesPlayed: details.games,
+    isSeasonPoint: details.isSeasonPoint,
+    loserIds: details.losers,
+    winnerId: details.winner,
+    wins: details.wins,
     updatedOn: date
   };
 }
 
 export const toUpdateItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem => ({
   isSeasonPoint: data.isSeasonPoint,
-  playerRecords: (data.records || []).map((record) => record.id)
+  gamesPlayed: data.games,
+  loserIds: data.losers,
+  winnerId: data.winner,
+  wins: data.wins
 });
 
 export const toNode = (data: AttributeMap): MatchNode => ({
   matchId: data.matchId as string,
   isSeasonPoint: data.isSeasonPoint as boolean,
   seasonId: data.seasonId as string,
-  playerRecords: data.playerRecords as string[],
+  gamesPlayed: data.gamesPlayed as number,
+  loserIds: data.loserIds as string[],
+  winnerId: data.winnerId as string,
+  wins: data.wins as number,
   updatedOn: data.updatedOn as string
 });
 
 export const toView = (data: MatchNode): MatchView => ({
   id: data.matchId,
-  isSeasonPoint: data.isSeasonPoint
+  isSeasonPoint: data.isSeasonPoint,
+  games: data.gamesPlayed,
+  wins: data.wins
 });

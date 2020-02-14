@@ -10,7 +10,6 @@ import * as dynamoMapper from "../mappers/dynamo";
 import {
   MatchPrimaryKey,
   SeasonPrimaryKey,
-  RecordPrimaryKey,
   PotentialPrimaryKey,
   PlayerPrimaryKey,
   SeasonMetadataKey
@@ -18,11 +17,9 @@ import {
 import {
   MatchDynamoCreateItem,
   SeasonDynamoCreateItem,
-  RecordDynamoCreateItem,
   PlayerDynamoCreateItem,
   MatchDynamoUpdateItem,
   SeasonDynamoUpdateItem,
-  RecordDynamoUpdateItem,
   PlayerDynamoUpdateItem,
   SeasonMetadataDynamoCreateItem,
   SeasonMetadataDynamoUpdateItem
@@ -124,7 +121,6 @@ export class MTGLMDynamoClient {
 
   async create(key: MatchPrimaryKey, item: MatchDynamoCreateItem): Promise<AttributeMap>;
   async create(key: SeasonPrimaryKey, item: SeasonDynamoCreateItem): Promise<AttributeMap>;
-  async create(key: RecordPrimaryKey, item: RecordDynamoCreateItem): Promise<AttributeMap>;
   async create(key: PlayerPrimaryKey, item: PlayerDynamoCreateItem): Promise<AttributeMap>;
   async create(key: SeasonMetadataKey, item: SeasonMetadataDynamoCreateItem): Promise<AttributeMap>;
   async create(key: any, item: any): Promise<AttributeMap> {
@@ -140,7 +136,6 @@ export class MTGLMDynamoClient {
 
   async update(key: MatchPrimaryKey, item: MatchDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: SeasonPrimaryKey, item: SeasonDynamoUpdateItem): Promise<AttributeMap>;
-  async update(key: RecordPrimaryKey, item: RecordDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: PlayerPrimaryKey, item: PlayerDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: SeasonMetadataKey, item: SeasonMetadataDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: any, item: any): Promise<AttributeMap> {
@@ -159,7 +154,6 @@ export class MTGLMDynamoClient {
   async updateList(key: SeasonMetadataKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: MatchPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: SeasonPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
-  async updateList(key: RecordPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: PlayerPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: any, field: string, values: string[]): Promise<AttributeMap> {
     if (!this.updatableAttributes.includes(field)) {

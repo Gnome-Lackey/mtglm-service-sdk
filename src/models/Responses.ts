@@ -1,6 +1,5 @@
 import {
   PlayerView,
-  RecordView,
   MatchView,
   SeasonView,
   ScryfallSetView,
@@ -45,8 +44,9 @@ export interface LoginResponse {
 }
 
 export interface MatchResponse extends MatchView {
-  players?: RecordResponse[];
+  losers: string[] | PlayerView[];
   season: string | SeasonView;
+  winner: string | PlayerView;
 }
 
 export interface PlayerResponse extends PlayerView {
@@ -55,12 +55,6 @@ export interface PlayerResponse extends PlayerView {
 
 export interface PlayerRoleResponse extends PlayerRoleView {
   role: string;
-}
-
-export interface RecordResponse extends RecordView {
-  losses: number;
-  player: string | PlayerView;
-  match: string | MatchView;
 }
 
 export interface SeasonResponse extends SeasonView {

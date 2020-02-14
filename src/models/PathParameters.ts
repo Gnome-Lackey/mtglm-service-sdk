@@ -6,10 +6,6 @@ export interface PlayerPathParameters {
   playerId?: string;
 }
 
-export interface RecordPathParameters {
-  recordId?: string;
-}
-
 export interface ScryfallCardPathParameters {
   cardId?: string;
 }

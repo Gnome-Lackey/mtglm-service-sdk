@@ -2,19 +2,14 @@ export interface MatchFilters {
   matchId?: string;
   seasonId?: string;
   isSeasonPoint?: boolean;
-  recordIds?: string[];
+  winnerId?: string;
+  loserIds?: string[];
 }
 
 export interface PlayerFilters {
   playerId?: string;
   playerName?: string;
   userName?: string;
-}
-
-export interface RecordFilters {
-  recordId?: string;
-  playerId?: string;
-  matchId?: string;
 }
 
 export interface SeasonFilters {

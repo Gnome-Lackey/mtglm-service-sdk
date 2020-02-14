@@ -1,4 +1,4 @@
-export const PROPERTIES_MATCH = ["playerRecords", "isSeasonPoint"];
+export const PROPERTIES_MATCH = ["winnerId", "isSeasonPoint", "loserIds", "wins", "gamesPlayed"];
 export const PROPERTIES_PLAYER = ["playerName", "matchIds", "favoriteColors", "epithet"];
 export const PROPERTIES_SEASON_METADATA = [
   "playedOpponentIds",
@@ -8,5 +8,4 @@ export const PROPERTIES_SEASON_METADATA = [
   "totalLosses",
   "matchIds"
 ];
-export const PROPERTIES_RECORD = ["wins"];
 export const PROPERTIES_SEASON = ["isActive", "startDate", "endDate", "playerIds", "setCode"];

@@ -1,6 +1,8 @@
 export interface MatchView {
   id: string;
   isSeasonPoint: boolean;
+  wins: number;
+  games: number;
 }
 
 export interface PlayerView {
@@ -17,11 +19,6 @@ export interface PlayerRoleView {
   email: string;
   displayName?: string;
   userName: string;
-}
-
-export interface RecordView {
-  id: string;
-  wins: number;
 }
 
 export interface ScryfallCardView {

@@ -9,14 +9,21 @@ export interface LoginBodyRequest {
 }
 
 export interface MatchCreateRequest {
-  records: RecordCreateRequest[];
+  isSeasonPoint: boolean;
+  wins: number;
+  games: number;
+  winner: string;
+  losers: string[];
   season: string;
 }
 
 export interface MatchUpdateRequest {
   id?: string;
   isSeasonPoint?: boolean;
-  records?: RecordUpdateRequest[];
+  wins?: number;
+  games?: number;
+  winner?: string;
+  losers?: string[];
   season?: string;
 }
 
@@ -39,17 +46,6 @@ export interface PlayerUpdateRequest {
 
 export interface PlayerUpdateRoleRequest {
   role: string;
-}
-
-export interface RecordCreateRequest {
-  wins: number;
-  player: string;
-}
-
-export interface RecordUpdateRequest {
-  id?: string;
-  wins?: number;
-  player?: string;
 }
 
 export interface ResendConfirmationCodeBodyRequest {
@@ -81,8 +77,6 @@ export interface SignUpBodyRequest {
 }
 
 export type PotentialRequest =
-  | RecordCreateRequest
-  | RecordUpdateRequest
   | MatchCreateRequest
   | MatchUpdateRequest
   | PlayerCreateRequest

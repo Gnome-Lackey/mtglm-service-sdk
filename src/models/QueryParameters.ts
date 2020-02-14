@@ -1,3 +1,8 @@
+export interface MatchQueryParameters {
+  seasonId?: string;
+  winnerId?: string;
+}
+
 export interface PlayerQueryParameters {
   name?: string;
   userName?: string;
@@ -18,6 +23,7 @@ export interface SeasonQueryParams {
 export interface PotentialQueryParameters
   extends PlayerQueryParameters,
     ScryfallCardQueryParameters,
+    MatchQueryParameters,
     SeasonQueryParams {
   [key: string]: string | string[] | boolean | number;
 }

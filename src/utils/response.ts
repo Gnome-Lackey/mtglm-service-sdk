@@ -1,7 +1,6 @@
 import { LambdaResponse } from "../models/Lambda";
 import {
   ErrorResponse,
-  RecordResponse,
   MatchResponse,
   SeasonResponse,
   SuccessResponse,
@@ -69,8 +68,6 @@ export function handleSuccess(body: PlayerResponse): LambdaResponse;
 export function handleSuccess(body: PlayerResponse[]): LambdaResponse;
 export function handleSuccess(body: PlayerRoleResponse): LambdaResponse;
 export function handleSuccess(body: PlayerRoleResponse[]): LambdaResponse;
-export function handleSuccess(body: RecordResponse): LambdaResponse;
-export function handleSuccess(body: RecordResponse[]): LambdaResponse;
 export function handleSuccess(body: ScryfallCardView): LambdaResponse;
 export function handleSuccess(body: ScryfallCardView[]): LambdaResponse;
 export function handleSuccess(body: ScryfallSetView): LambdaResponse;
