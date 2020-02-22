@@ -1,9 +1,9 @@
 export interface MatchFilters {
+  isSeasonPoint?: boolean;
+  loserIds?: string[];
   matchId?: string;
   seasonId?: string;
-  isSeasonPoint?: boolean;
-  winnerId?: string;
-  loserIds?: string[];
+  winnerIds?: string[];
 }
 
 export interface PlayerFilters {
@@ -13,12 +13,7 @@ export interface PlayerFilters {
 }
 
 export interface SeasonFilters {
-  startDate?: string;
-  seasonId?: string;
   isActive?: boolean;
-}
-
-export interface SeasonMetadataFilters {
-  playerId?: string;
   seasonId?: string;
+  startDate?: string;
 }

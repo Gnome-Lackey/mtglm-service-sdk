@@ -16,7 +16,7 @@ export function toCreateItem(details: MatchCreateRequest): MatchDynamoCreateItem
     gamesPlayed: details.games,
     isSeasonPoint: details.isSeasonPoint,
     loserIds: details.losers,
-    winnerId: details.winner,
+    winnerIds: details.winners,
     wins: details.wins,
     updatedOn: date
   };
@@ -36,7 +36,7 @@ export const toNode = (data: AttributeMap): MatchNode => ({
   seasonId: data.seasonId as string,
   gamesPlayed: data.gamesPlayed as number,
   loserIds: data.loserIds as string[],
-  winnerId: data.winnerId as string,
+  winnerIds: data.winnerId as string[],
   wins: data.wins as number,
   updatedOn: data.updatedOn as string
 });

@@ -11,13 +11,13 @@ export interface SeasonPrimaryKey {
 }
 
 export interface SeasonMetadataKey {
-  seasonId?: string;
   playerId?: string;
+  seasonId?: string;
 }
 
 export interface PotentialPrimaryKey {
   matchId?: string;
   playerId?: string;
-  seasonId?: string;
   recordId?: string;
+  seasonId?: string;
 }

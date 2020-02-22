@@ -1,4 +1,5 @@
 import * as aws from "aws-sdk";
+
 import {
   AttributeMap,
   ExpressionAttributeNameMap,
@@ -14,21 +15,19 @@ import {
   PlayerPrimaryKey,
   SeasonMetadataKey
 } from "../models/PrimaryKeys";
+
 import {
   MatchDynamoCreateItem,
   SeasonDynamoCreateItem,
   PlayerDynamoCreateItem,
   MatchDynamoUpdateItem,
   SeasonDynamoUpdateItem,
-  PlayerDynamoUpdateItem,
-  SeasonMetadataDynamoCreateItem,
-  SeasonMetadataDynamoUpdateItem
+  PlayerDynamoUpdateItem
 } from "../models/Items";
 
 import {
   PlayerFilters,
   SeasonFilters,
-  SeasonMetadataFilters,
   MatchFilters
 } from "../models/Filters";
 
@@ -85,7 +84,6 @@ export class MTGLMDynamoClient {
     return result.Items;
   }
 
-  async query(filters?: SeasonMetadataFilters): Promise<AttributeMap[]>;
   async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
   async query(filters?: SeasonFilters): Promise<AttributeMap[]>;
   async query(filters?: MatchFilters): Promise<AttributeMap[]>;
@@ -98,14 +96,25 @@ export class MTGLMDynamoClient {
 
     return filters
       ? result.Items.filter((item) =>
-          Object.keys(filters).some((name) =>
-            item[name]
-              ? item[name]
-                  .toString()
-                  .toLowerCase()
-                  .includes(filters[name].toString().toLowerCase())
-              : false
-          )
+          Object.keys(filters).some((name) => {
+            if (!item[name]) {
+              return false;
+            }
+
+            switch (typeof filters[name]) {
+              case "object":
+                // Array filter type
+                return (filters[name] as
+                  | string[]
+                  | number[]
+                  | boolean[]).every((filter: string | number | boolean) =>
+                  item[name].includes(filter)
+                );
+              default:
+                // String, boolean, or number filter type
+                return filters[name] === item[name];
+            }
+          })
         )
       : result.Items;
   }
@@ -122,7 +131,6 @@ export class MTGLMDynamoClient {
   async create(key: MatchPrimaryKey, item: MatchDynamoCreateItem): Promise<AttributeMap>;
   async create(key: SeasonPrimaryKey, item: SeasonDynamoCreateItem): Promise<AttributeMap>;
   async create(key: PlayerPrimaryKey, item: PlayerDynamoCreateItem): Promise<AttributeMap>;
-  async create(key: SeasonMetadataKey, item: SeasonMetadataDynamoCreateItem): Promise<AttributeMap>;
   async create(key: any, item: any): Promise<AttributeMap> {
     const config = {
       Item: item,
@@ -137,7 +145,6 @@ export class MTGLMDynamoClient {
   async update(key: MatchPrimaryKey, item: MatchDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: SeasonPrimaryKey, item: SeasonDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: PlayerPrimaryKey, item: PlayerDynamoUpdateItem): Promise<AttributeMap>;
-  async update(key: SeasonMetadataKey, item: SeasonMetadataDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: any, item: any): Promise<AttributeMap> {
     const config = dynamoMapper.toUpdateConfiguration(
       key,

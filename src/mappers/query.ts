@@ -1,5 +1,31 @@
-import { PlayerQueryParameters, SeasonQueryParams } from "../models/QueryParameters";
-import { PlayerFilters, SeasonFilters } from "../models/Filters";
+import {
+  MatchQueryParameters,
+  PlayerQueryParameters,
+  SeasonQueryParams
+} from "../models/QueryParameters";
+
+import { PlayerFilters, SeasonFilters, MatchFilters } from "../models/Filters";
+
+export const toMatchFilters = (query: MatchQueryParameters): MatchFilters => {
+  if (!query) {
+    return null;
+  }
+
+  const { seasonId, playerId } = query;
+
+  const filters = {} as MatchFilters;
+
+  if (seasonId) {
+    filters.seasonId = seasonId;
+  }
+
+  if (playerId) {
+    filters.winnerIds = [playerId];
+    filters.loserIds = [playerId];
+  }
+
+  return filters;
+};
 
 export const toPlayerFilters = (query: PlayerQueryParameters): PlayerFilters => {
   if (!query) {

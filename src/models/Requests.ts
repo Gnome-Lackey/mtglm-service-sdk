@@ -4,44 +4,44 @@ export interface ConfirmRegistrationBodyRequest {
 }
 
 export interface LoginBodyRequest {
-  userName: string;
   password: string;
+  userName: string;
 }
 
 export interface MatchCreateRequest {
-  isSeasonPoint: boolean;
-  wins: number;
   games: number;
-  winner: string;
+  isSeasonPoint: boolean;
   losers: string[];
   season: string;
+  winners: string[];
+  wins: number;
 }
 
 export interface MatchUpdateRequest {
+  games?: number;
   id?: string;
   isSeasonPoint?: boolean;
-  wins?: number;
-  games?: number;
-  winner?: string;
   losers?: string[];
   season?: string;
+  winner?: string;
+  wins?: number;
 }
 
 export interface PlayerCreateRequest {
-  id: string;
-  name: string;
-  userName: string;
   email: string;
   epithet?: string;
   favoriteColors?: string[];
+  id: string;
+  name: string;
+  userName: string;
 }
 
 export interface PlayerUpdateRequest {
-  name?: string;
-  userName?: string;
   email?: string;
   epithet?: string;
   favoriteColors?: string[];
+  name?: string;
+  userName?: string;
 }
 
 export interface PlayerUpdateRoleRequest {
@@ -53,35 +53,27 @@ export interface ResendConfirmationCodeBodyRequest {
 }
 
 export interface SeasonCreateRequest {
-  isActive: boolean;
-  startedOn: string;
   endedOn: string;
-  set: string;
+  isActive: boolean;
   players: string[];
+  set: string;
+  startedOn: string;
 }
 
 export interface SeasonUpdateRequest {
-  isActive?: boolean;
-  startedOn?: string;
   endedOn?: string;
-  set?: string;
+  isActive?: boolean;
   players?: string[];
-}
-
-export interface SeasonMetadataDynamoUpdateRequest {
-  seasonLosses?: number;
-  seasonWins?: number;
-  totalLosses?: number;
-  totalWins?: number;
-  playedOpponentIds?: string[];
+  set?: string;
+  startedOn?: string;
 }
 
 export interface SignUpBodyRequest {
   email: string;
   firstName?: string;
   lastName?: string;
-  userName: string;
   password: string;
+  userName: string;
 }
 
 export type PotentialRequest =
@@ -93,7 +85,6 @@ export type PotentialRequest =
   | SeasonCreateRequest
   | SeasonUpdateRequest
   | LoginBodyRequest
-  | SeasonMetadataDynamoUpdateRequest
   | ConfirmRegistrationBodyRequest
   | ResendConfirmationCodeBodyRequest
   | SignUpBodyRequest;

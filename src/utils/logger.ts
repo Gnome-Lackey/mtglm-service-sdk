@@ -6,8 +6,7 @@ import {
   LoginResponse,
   AuthResponse,
   PlayerResponse,
-  PlayerRoleResponse,
-  SeasonMetadataResponse
+  PlayerRoleResponse
 } from "../models/Responses";
 
 import { ScryfallCardView, ScryfallSetView } from "../models/Views";
@@ -26,8 +25,6 @@ export function logSuccess(resource: string, event: string, data: ScryfallSetVie
 export function logSuccess(resource: string, event: string, data: ScryfallSetView[]): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse): void;
 export function logSuccess(resource: string, event: string, data: SeasonResponse[]): void;
-export function logSuccess(resource: string, event: string, data: SeasonMetadataResponse): void;
-export function logSuccess(resource: string, event: string, data: SeasonMetadataResponse[]): void;
 export function logSuccess(resource: string, event: string, data: SuccessResponse): void;
 export function logSuccess(resource: string, event: string, data: any): void {
   console.log(`Success: ${resource.toUpperCase()} ${event}`);

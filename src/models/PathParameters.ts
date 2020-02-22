@@ -25,5 +25,4 @@ export interface PotentialPathParameters {
   matchId?: string;
   playerId?: string;
   seasonId?: string;
-  recordId?: string;
 }

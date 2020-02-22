@@ -1,19 +1,19 @@
 export interface MatchQueryParameters {
+  playerId?: string;
   seasonId?: string;
-  winnerId?: string;
 }
 
 export interface PlayerQueryParameters {
   name?: string;
-  userName?: string;
   season?: string;
+  userName?: string;
 }
 
 export interface ScryfallCardQueryParameters {
   color: string[];
-  type: string[];
-  subtype: string;
   format: string;
+  subtype: string;
+  type: string[];
 }
 
 export interface SeasonQueryParams {

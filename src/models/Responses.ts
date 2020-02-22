@@ -1,11 +1,4 @@
-import {
-  PlayerView,
-  MatchView,
-  SeasonView,
-  ScryfallSetView,
-  PlayerRoleView,
-  SeasonMetadataView
-} from "./Views";
+import { PlayerView, MatchView, SeasonView, ScryfallSetView, PlayerRoleView } from "./Views";
 
 export interface AuthHeaderResponse {
   "X-ID-Token": string;
@@ -33,8 +26,8 @@ export interface ErrorResponse {
     | "UsernameExistsException"
     | "UserNotConfirmedException"
     | "UserNotFoundException";
-  message?: string;
   content?: object | string;
+  message?: string;
   statusCode?: number;
 }
 
@@ -46,7 +39,7 @@ export interface LoginResponse {
 export interface MatchResponse extends MatchView {
   losers: string[] | PlayerView[];
   season: string | SeasonView;
-  winner: string | PlayerView;
+  winners: string[] | PlayerView[];
 }
 
 export interface PlayerResponse extends PlayerView {
@@ -58,15 +51,8 @@ export interface PlayerRoleResponse extends PlayerRoleView {
 }
 
 export interface SeasonResponse extends SeasonView {
-  set: string | ScryfallSetView;
   players: string[] | PlayerView[];
-}
-
-export interface SeasonMetadataResponse extends SeasonMetadataView {
-  player: string | PlayerView;
-  season: string | SeasonView;
-  playedOpponents: string[] | PlayerView[];
-  matches: string[] | MatchView[];
+  set: string | ScryfallSetView;
 }
 
 export interface SuccessResponse {
@@ -74,12 +60,12 @@ export interface SuccessResponse {
 }
 
 export interface UserResponse {
-  id: string;
-  userName: string;
-  firstName?: string;
-  lastName?: string;
-  email: string;
-  displayName: string;
-  isFirstTimeLogin?: boolean;
   accountType: string;
+  displayName: string;
+  email: string;
+  firstName?: string;
+  id: string;
+  isFirstTimeLogin?: boolean;
+  lastName?: string;
+  userName: string;
 }
