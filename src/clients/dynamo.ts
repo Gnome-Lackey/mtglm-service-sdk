@@ -25,11 +25,7 @@ import {
   PlayerDynamoUpdateItem
 } from "../models/Items";
 
-import {
-  PlayerFilters,
-  SeasonFilters,
-  MatchFilters
-} from "../models/Filters";
+import { PlayerFilters, SeasonFilters, MatchFilters } from "../models/Filters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
@@ -84,19 +80,21 @@ export class MTGLMDynamoClient {
     return result.Items;
   }
 
-  async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
-  async query(filters?: SeasonFilters): Promise<AttributeMap[]>;
-  async query(filters?: MatchFilters): Promise<AttributeMap[]>;
-  async query(filters?: any): Promise<AttributeMap[]> {
+  async query(filters?: PlayerFilters, strict?: boolean): Promise<AttributeMap[]>;
+  async query(filters?: SeasonFilters, strict?: boolean): Promise<AttributeMap[]>;
+  async query(filters?: MatchFilters, strict?: boolean): Promise<AttributeMap[]>;
+  async query(filters?: any, strict?: boolean): Promise<AttributeMap[]> {
     const result = await dynamoDB
       .scan({
         TableName: this.tableName
       })
       .promise();
 
+    const evaluator = strict ? Object.keys(filters).every : Object.keys(filters).some;
+
     return filters
       ? result.Items.filter((item) =>
-          Object.keys(filters).every((name) => {
+          evaluator((name) => {
             if (!item[name]) {
               return false;
             }
