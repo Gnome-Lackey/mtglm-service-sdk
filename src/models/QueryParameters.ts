@@ -1,6 +1,8 @@
 export interface MatchQueryParameters {
-  playerId?: string;
+  winnerId?: string;
+  loserId?: string;
   seasonId?: string;
+  isSeasonPoint?: boolean;
 }
 
 export interface PlayerQueryParameters {

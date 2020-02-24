@@ -102,26 +102,20 @@ export class MTGLMDynamoClient {
     }
   }
 
-  async query(filters?: PlayerFilters, strict?: boolean): Promise<AttributeMap[]>;
-  async query(filters?: SeasonFilters, strict?: boolean): Promise<AttributeMap[]>;
-  async query(filters?: MatchFilters, strict?: boolean): Promise<AttributeMap[]>;
-  async query(filters?: any, strict?: boolean): Promise<AttributeMap[]> {
-    const result = await dynamoDB
-      .scan({
-        TableName: this.tableName
-      })
-      .promise();
+  async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
+  async query(filters?: SeasonFilters): Promise<AttributeMap[]>;
+  async query(filters?: MatchFilters): Promise<AttributeMap[]>;
+  async query(filters?: any): Promise<AttributeMap[]> {
+    const result = await dynamoDB.scan({ TableName: this.tableName }).promise();
 
     const filterKeys = Object.keys(filters);
 
     return filters
       ? result.Items.filter((item) =>
-          strict
-            ? filterKeys.every((name) => this.handleFilter(name, item, filters))
-            : filterKeys.some((name) => this.handleFilter(name, item, filters))
+          filterKeys.every((name) => this.handleFilter(name, item, filters))
         )
       : result.Items;
-  }
+  };
 
   remove = async (key: PotentialPrimaryKey): Promise<void> => {
     const config = {

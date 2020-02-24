@@ -11,7 +11,7 @@ export const toMatchFilters = (query: MatchQueryParameters): MatchFilters => {
     return null;
   }
 
-  const { seasonId, playerId } = query;
+  const { seasonId, winnerId, loserId, isSeasonPoint } = query;
 
   const filters = {} as MatchFilters;
 
@@ -19,9 +19,16 @@ export const toMatchFilters = (query: MatchQueryParameters): MatchFilters => {
     filters.seasonId = seasonId;
   }
 
-  if (playerId) {
-    filters.winnerIds = [playerId];
-    filters.loserIds = [playerId];
+  if (winnerId) {
+    filters.winnerIds = [winnerId];
+  }
+
+  if (loserId) {
+    filters.loserIds = [loserId];
+  }
+
+  if (isSeasonPoint !== undefined) {
+    filters.isSeasonPoint = isSeasonPoint;
   }
 
   return filters;
