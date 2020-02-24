@@ -80,6 +80,28 @@ export class MTGLMDynamoClient {
     return result.Items;
   }
 
+  handleFilter(name: string, item: AttributeMap, filters?: PlayerFilters): boolean;
+  handleFilter(name: string, item: AttributeMap, filters?: SeasonFilters): boolean;
+  handleFilter(name: string, item: AttributeMap, filters?: MatchFilters): boolean;
+  handleFilter(name: string, item: AttributeMap, filters: any): boolean {
+    if (!item[name]) {
+      return false;
+    }
+
+    if (typeof filters[name] === "object") {
+      // Array filter type
+      const filterArray = filters[name] as string[] | number[] | boolean[];
+
+      // TODO: figure out why I can't typecast this to string[] | number[] | boolean[]
+      const itemArray = item[name] as any;
+
+      return filterArray.every((filter: string | number | boolean) => itemArray.includes(filter));
+    } else {
+      // String, boolean, or number filter type
+      return filters[name] === item[name];
+    }
+  }
+
   async query(filters?: PlayerFilters, strict?: boolean): Promise<AttributeMap[]>;
   async query(filters?: SeasonFilters, strict?: boolean): Promise<AttributeMap[]>;
   async query(filters?: MatchFilters, strict?: boolean): Promise<AttributeMap[]>;
@@ -90,29 +112,13 @@ export class MTGLMDynamoClient {
       })
       .promise();
 
-    const evaluator = strict ? Object.keys(filters).every : Object.keys(filters).some;
+    const filterKeys = Object.keys(filters);
 
     return filters
       ? result.Items.filter((item) =>
-          evaluator((name) => {
-            if (!item[name]) {
-              return false;
-            }
-
-            switch (typeof filters[name]) {
-              case "object":
-                // Array filter type
-                return (filters[name] as
-                  | string[]
-                  | number[]
-                  | boolean[]).every((filter: string | number | boolean) =>
-                  item[name].includes(filter)
-                );
-              default:
-                // String, boolean, or number filter type
-                return filters[name] === item[name];
-            }
-          })
+          strict
+            ? filterKeys.every((name) => this.handleFilter(name, item, filters))
+            : filterKeys.some((name) => this.handleFilter(name, item, filters))
         )
       : result.Items;
   }
