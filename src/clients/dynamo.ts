@@ -96,7 +96,7 @@ export class MTGLMDynamoClient {
 
     return filters
       ? result.Items.filter((item) =>
-          Object.keys(filters).some((name) => {
+          Object.keys(filters).every((name) => {
             if (!item[name]) {
               return false;
             }
