@@ -1,8 +1,8 @@
 export interface MatchQueryParameters {
-  winnerId?: string;
-  "*winnerId"?: string;
-  loserId?: string;
-  "*loserId"?: string;
+  winnerIds?: string;
+  "*winnerIds"?: string;
+  loserIds?: string;
+  "*loserIds"?: string;
   seasonId?: string;
   "*seasonId"?: string;
   isSeasonPoint?: boolean;
@@ -12,7 +12,7 @@ export interface MatchQueryParameters {
 export interface PlayerQueryParameters {
   name?: string;
   "*name"?: string;
-  season?: string;
+  seasonId?: string;
   "*season"?: string;
   userName?: string;
   "*userName"?: string;

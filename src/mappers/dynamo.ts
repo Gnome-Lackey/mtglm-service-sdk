@@ -96,8 +96,7 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
         const name = `#${parsedFilter}`;
         const value = `:${parsedFilter}`;
 
-        const statement =
-          attributeType === "SS" ? `contains(${name}, ${value})` : `${name} = ${value}`;
+        const statement = attributeType === "SS" ? `contains(${name}, ${value})` : `${name} = ${value}`;
 
         input.ExpressionAttributeNames[name] = parsedFilter;
         input.ExpressionAttributeValues[value] = { [attributeType]: queryParams[parsedFilter] };
@@ -106,8 +105,7 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
         const name = `#${filter}`;
         const value = `:${filter}`;
 
-        const statement =
-          attributeType === "SS" ? `contains(${name}, ${value})` : `${name} = ${value}`;
+        const statement = attributeType === "SS" ? `contains(${name}, ${value})` : `${name} = ${value}`;
 
         input.ExpressionAttributeNames[name] = filter;
         input.ExpressionAttributeValues[value] = { [attributeType]: queryParams[filter] };
