@@ -30,7 +30,7 @@ import {
   MatchQueryParameters,
   PlayerQueryParameters,
   ScryfallCardQueryParameters
-} from "src/models/QueryParameters";
+} from "../models/QueryParameters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"

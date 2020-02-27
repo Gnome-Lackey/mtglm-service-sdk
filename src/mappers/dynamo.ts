@@ -1,3 +1,5 @@
+import { ScanInput } from "aws-sdk/clients/dynamodb";
+
 import {
   DynamoUpdateListConfig,
   DynamoGetBatchConfig,
@@ -9,13 +11,13 @@ import {
 } from "../models/Dynamo";
 
 import { PotentialPrimaryKey } from "../models/PrimaryKeys";
-import { ScanInput } from "aws-sdk/clients/dynamodb";
+
 import {
   MatchQueryParameters,
   PlayerQueryParameters,
   ScryfallCardQueryParameters,
   SeasonQueryParams
-} from "src/models/QueryParameters";
+} from "../models/QueryParameters";
 
 const buildAttributeMapping = (
   attributes: string[],
