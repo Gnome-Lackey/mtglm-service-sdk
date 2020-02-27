@@ -25,7 +25,12 @@ import {
   PlayerDynamoUpdateItem
 } from "../models/Items";
 
-import { PlayerFilters, SeasonFilters, MatchFilters } from "../models/Filters";
+import {
+  SeasonQueryParams,
+  MatchQueryParameters,
+  PlayerQueryParameters,
+  ScryfallCardQueryParameters
+} from "src/models/QueryParameters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
@@ -44,15 +49,15 @@ export class MTGLMDynamoClient {
     this.updatableAttributes = updatableAttributes;
   }
 
-  fetchByKeys = async (keys: PotentialPrimaryKey[]): Promise<AttributeMap[]> => {
+  async fetchByKeys(keys: PotentialPrimaryKey[]): Promise<AttributeMap[]> {
     const config = dynamoMapper.toGetBatchConfiguration(keys, this.tableName);
 
     const results = await dynamoDB.batchGet(config).promise();
 
     return results.Responses[this.tableName];
-  };
+  }
 
-  fetchByKey = async (key: PotentialPrimaryKey): Promise<AttributeMap> => {
+  async fetchByKey(key: PotentialPrimaryKey): Promise<AttributeMap> {
     const config = {
       Key: key,
       TableName: this.tableName
@@ -61,7 +66,7 @@ export class MTGLMDynamoClient {
     const result = await dynamoDB.get(config).promise();
 
     return result.Item;
-  };
+  }
 
   async custom(
     attributeNames: ExpressionAttributeNameMap,
@@ -80,51 +85,26 @@ export class MTGLMDynamoClient {
     return result.Items;
   }
 
-  handleFilter(name: string, item: AttributeMap, filters?: PlayerFilters): boolean;
-  handleFilter(name: string, item: AttributeMap, filters?: SeasonFilters): boolean;
-  handleFilter(name: string, item: AttributeMap, filters?: MatchFilters): boolean;
-  handleFilter(name: string, item: AttributeMap, filters: any): boolean {
-    if (!item[name]) {
-      return false;
-    }
+  async query(queryParams?: SeasonQueryParams): Promise<AttributeMap[]>;
+  async query(queryParams?: MatchQueryParameters): Promise<AttributeMap[]>;
+  async query(queryParams?: PlayerQueryParameters): Promise<AttributeMap[]>;
+  async query(queryParams?: ScryfallCardQueryParameters): Promise<AttributeMap[]>;
+  async query(queryParams?: any): Promise<AttributeMap[]> {
+    const config = dynamoMapper.toScanConfiguration(queryParams, this.tableName);
 
-    if (typeof filters[name] === "object") {
-      // Array filter type
-      const filterArray = filters[name] as string[] | number[] | boolean[];
+    const result = await dynamoDB.scan(config).promise();
 
-      // TODO: figure out why I can't typecast this to string[] | number[] | boolean[]
-      const itemArray = item[name] as any;
-
-      return filterArray.every((filter: string | number | boolean) => itemArray.includes(filter));
-    } else {
-      // String, boolean, or number filter type
-      return filters[name] === item[name];
-    }
+    return result.Items;
   }
 
-  async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
-  async query(filters?: SeasonFilters): Promise<AttributeMap[]>;
-  async query(filters?: MatchFilters): Promise<AttributeMap[]>;
-  async query(filters?: any): Promise<AttributeMap[]> {
-    const result = await dynamoDB.scan({ TableName: this.tableName }).promise();
-
-    const filterKeys = Object.keys(filters);
-
-    return filters
-      ? result.Items.filter((item) =>
-          filterKeys.every((name) => this.handleFilter(name, item, filters))
-        )
-      : result.Items;
-  };
-
-  remove = async (key: PotentialPrimaryKey): Promise<void> => {
+  async remove(key: PotentialPrimaryKey): Promise<void> {
     const config = {
       Key: key,
       TableName: this.tableName
     };
 
     await dynamoDB.delete(config).promise();
-  };
+  }
 
   async create(key: MatchPrimaryKey, item: MatchDynamoCreateItem): Promise<AttributeMap>;
   async create(key: SeasonPrimaryKey, item: SeasonDynamoCreateItem): Promise<AttributeMap>;
@@ -172,11 +152,11 @@ export class MTGLMDynamoClient {
     return this.fetchByKey(key);
   }
 
-  updateSingleField = async (
+  async updateSingleField(
     key: PotentialPrimaryKey,
     field: string,
     value: string | string[]
-  ): Promise<AttributeMap> => {
+  ): Promise<AttributeMap> {
     if (!this.updatableAttributes.includes(field)) {
       throw new Error("Update Field Error: Invalid or protected attribute supplied.");
     }
@@ -186,5 +166,5 @@ export class MTGLMDynamoClient {
     await dynamoDB.update(config).promise();
 
     return this.fetchByKey(key);
-  };
+  }
 }

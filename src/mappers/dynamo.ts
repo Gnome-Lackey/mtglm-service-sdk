@@ -9,6 +9,13 @@ import {
 } from "../models/Dynamo";
 
 import { PotentialPrimaryKey } from "../models/PrimaryKeys";
+import { ScanInput } from "aws-sdk/clients/dynamodb";
+import {
+  MatchQueryParameters,
+  PlayerQueryParameters,
+  ScryfallCardQueryParameters,
+  SeasonQueryParams
+} from "src/models/QueryParameters";
 
 const buildAttributeMapping = (
   attributes: string[],
@@ -41,6 +48,102 @@ const buildAttributeMapping = (
     RemoveExpressions
   };
 };
+
+export function toScanConfiguration(
+  queryParams: SeasonQueryParams,
+  tableName: string
+): ScanInput;
+export function toScanConfiguration(
+  queryParams: MatchQueryParameters,
+  tableName: string
+): ScanInput;
+export function toScanConfiguration(
+  queryParams: PlayerQueryParameters,
+  tableName: string
+): ScanInput;
+export function toScanConfiguration(
+  queryParams: ScryfallCardQueryParameters,
+  tableName: string
+): ScanInput;
+export function toScanConfiguration(queryParams: any, tableName: string): ScanInput {
+  if (!queryParams) {
+    return { TableName: tableName };
+  }
+
+  const scanInput = Object.keys(queryParams).reduce(
+    (input: any, filter: string) => {
+      const parts = filter.split("*");
+
+      let attributeType;
+
+      switch (typeof queryParams[filter]) {
+        case "object":
+          attributeType = "SS";
+          break;
+        case "number":
+          attributeType = "N";
+          break;
+        case "boolean":
+          attributeType = "BOOL";
+          break;
+        default:
+          attributeType = "S";
+          break;
+      }
+
+      if (parts.length > 1) {
+        const parsedFilter = parts[1];
+        const name = `#${parsedFilter}`;
+        const value = `:${parsedFilter}`;
+
+        const statement =
+          attributeType === "SS" ? `contains(${name}, ${value})` : `${name} = ${value}`;
+
+        input.ExpressionAttributeNames[name] = parsedFilter;
+        input.ExpressionAttributeValues[value] = { [attributeType]: queryParams[parsedFilter] };
+        input.FilterExpressionOr.push(statement);
+      } else {
+        const name = `#${filter}`;
+        const value = `:${filter}`;
+
+        const statement =
+          attributeType === "SS" ? `contains(${name}, ${value})` : `${name} = ${value}`;
+
+        input.ExpressionAttributeNames[name] = filter;
+        input.ExpressionAttributeValues[value] = { [attributeType]: queryParams[filter] };
+        input.FilterExpressionAnd.push(statement);
+      }
+
+      return input;
+    },
+    {
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {},
+      FilterExpressionOr: [],
+      FilterExpressionAnd: [],
+      TableName: tableName
+    }
+  );
+
+  let expression;
+  const andExpression = scanInput.FilterExpressionAnd.join(" AND ");
+  const orExpression = scanInput.FilterExpressionOr.join(" OR ");
+
+  if (andExpression.length && orExpression.length) {
+    expression = `${andExpression} OR ${orExpression}`;
+  } else if (andExpression.length) {
+    expression = andExpression;
+  } else {
+    expression = orExpression;
+  }
+
+  return {
+    TableName: scanInput.TableName,
+    ExpressionAttributeNames: scanInput.ExpressionAttributeNames,
+    ExpressionAttributeValues: scanInput.ExpressionAttributeValues,
+    FilterExpression: expression
+  };
+}
 
 export const toUpdateConfiguration = (
   key: PotentialPrimaryKey,
