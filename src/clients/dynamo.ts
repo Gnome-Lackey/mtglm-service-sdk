@@ -85,10 +85,10 @@ export class MTGLMDynamoClient {
     return result.Items;
   }
 
-  async query(queryParams?: SeasonQueryParams): Promise<AttributeMap[]>;
+  async query(queryParams?: ScryfallCardQueryParameters): Promise<AttributeMap[]>;
   async query(queryParams?: MatchQueryParameters): Promise<AttributeMap[]>;
   async query(queryParams?: PlayerQueryParameters): Promise<AttributeMap[]>;
-  async query(queryParams?: ScryfallCardQueryParameters): Promise<AttributeMap[]>;
+  async query(queryParams?: SeasonQueryParams): Promise<AttributeMap[]>;
   async query(queryParams?: any): Promise<AttributeMap[]> {
     const config = dynamoMapper.toScanConfiguration(queryParams, this.tableName);
 
