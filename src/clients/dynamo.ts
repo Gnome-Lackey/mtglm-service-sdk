@@ -92,6 +92,8 @@ export class MTGLMDynamoClient {
   async query(queryParams?: any): Promise<AttributeMap[]> {
     const config = dynamoMapper.toScanConfiguration(queryParams, this.tableName);
 
+    console.log(JSON.stringify(config));
+
     const result = await dynamoDB.scan(config).promise();
 
     return result.Items;

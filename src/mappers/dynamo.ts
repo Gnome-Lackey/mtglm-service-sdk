@@ -69,64 +69,42 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
     return { TableName: tableName };
   }
 
-  console.log(JSON.stringify(queryParams));
-
   const scanInput = Object.keys(queryParams).reduce(
-    (input: any, filter: string) => {
-      const parts = filter.split("*");
+    (input: any, queryParam: string) => {
+      const parts = queryParam.split("*");
 
-      let attributeType;
-
-      switch (typeof queryParams[filter]) {
-        case "object":
-          attributeType = "SS";
-          break;
-        case "number":
-          attributeType = "N";
-          break;
-        case "boolean":
-          attributeType = "BOOL";
-          break;
-        default:
-          attributeType = "S";
-          break;
-      }
+      const isArray = typeof queryParams[queryParam] === "object";
 
       if (parts.length > 1) {
         const parsedFilter = parts[1];
-        const name = `#${parsedFilter}`;
         const value = `:${parsedFilter}`;
 
-        const statement =
-          attributeType === "SS" ? `contains(${name}, ${value})` : `${name} = ${value}`;
+        const statement = isArray
+          ? `contains(${parsedFilter}, ${value})`
+          : `${parsedFilter} = ${value}`;
 
-        input.ExpressionAttributeNames[name] = parsedFilter;
-        input.ExpressionAttributeValues[value] = { [attributeType]: queryParams[parsedFilter] };
+        input.ExpressionAttributeValues[value] = queryParams[parsedFilter];
         input.FilterExpressionOr.push(statement);
       } else {
-        const name = `#${filter}`;
-        const value = `:${filter}`;
+        const value = `:${queryParam}`;
 
-        const statement =
-          attributeType === "SS" ? `contains(${name}, ${value})` : `${name} = ${value}`;
+        const statement = isArray
+          ? `contains(${queryParam}, ${value})`
+          : `${queryParam} = ${value}`;
 
-        input.ExpressionAttributeNames[name] = filter;
-        input.ExpressionAttributeValues[value] = { [attributeType]: queryParams[filter] };
+        input.ExpressionAttributeValues[value] = queryParams[queryParam];
         input.FilterExpressionAnd.push(statement);
       }
 
       return input;
     },
     {
-      ExpressionAttributeNames: {},
       ExpressionAttributeValues: {},
       FilterExpressionOr: [],
       FilterExpressionAnd: [],
       TableName: tableName
     }
   );
-
-  console.log(JSON.stringify(scanInput));
 
   let expression;
   const andExpression = scanInput.FilterExpressionAnd.join(" AND ");
@@ -139,8 +117,6 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
   } else {
     expression = orExpression;
   }
-
-  console.log(expression);
 
   return {
     TableName: scanInput.TableName,
