@@ -69,6 +69,8 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
     return { TableName: tableName };
   }
 
+  console.log(JSON.stringify(queryParams));
+
   const scanInput = Object.keys(queryParams).reduce(
     (input: any, filter: string) => {
       const parts = filter.split("*");
@@ -124,6 +126,8 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
     }
   );
 
+  console.log(JSON.stringify(scanInput));
+
   let expression;
   const andExpression = scanInput.FilterExpressionAnd.join(" AND ");
   const orExpression = scanInput.FilterExpressionOr.join(" OR ");
@@ -135,6 +139,8 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
   } else {
     expression = orExpression;
   }
+
+  console.log(expression);
 
   return {
     TableName: scanInput.TableName,
