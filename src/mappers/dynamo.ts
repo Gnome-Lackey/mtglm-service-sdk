@@ -71,26 +71,31 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
 
   const scanInput = Object.keys(queryParams).reduce(
     (input: any, queryParam: string) => {
-      const parts = queryParam.split("*");
+      const queryNameParts = queryParam.split("*");
+      const queryValueParts = queryParams[queryParam].split("[]");
+      const isArray = queryValueParts.length > 1;
+      const parsedFilter = queryNameParts.length > 1 ? queryNameParts[0] : queryParam;
 
-      const isArray = typeof queryParams[queryParam] === "object";
+      if (isArray) {
+        const queryValues = queryValueParts[1].split(",");
+        const queryNames = [];
 
-      if (parts.length > 1) {
-        const parsedFilter = parts[1];
-        const value = `:${parsedFilter}`;
+        for (let i = 0; i < queryValues.length; i += 1) {
+          const valueName = `:statement${i}`;
 
-        const statement = isArray
-          ? `contains(${parsedFilter}, ${value})`
-          : `${parsedFilter} = ${value}`;
+          queryNames.push(valueName);
 
-        input.ExpressionAttributeValues[value] = queryParams[parsedFilter];
+          input.ExpressionAttributeValues[valueName] = queryValues[i];
+        }
+
+        const statement = queryNames
+          .map((queryName) => `contains(${parsedFilter}, ${queryName})`)
+          .join(" OR ");
+
         input.FilterExpressionOr.push(statement);
       } else {
         const value = `:${queryParam}`;
-
-        const statement = isArray
-          ? `contains(${queryParam}, ${value})`
-          : `${queryParam} = ${value}`;
+        const statement = `${queryParam} = ${value}`;
 
         input.ExpressionAttributeValues[value] = queryParams[queryParam];
         input.FilterExpressionAnd.push(statement);
@@ -111,7 +116,7 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
   const orExpression = scanInput.FilterExpressionOr.join(" OR ");
 
   if (andExpression.length && orExpression.length) {
-    expression = `${andExpression} OR ${orExpression}`;
+    expression = `${andExpression} AND ${orExpression}`;
   } else if (andExpression.length) {
     expression = andExpression;
   } else {

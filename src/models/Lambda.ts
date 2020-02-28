@@ -15,6 +15,7 @@ export interface LambdaEvent {
   headers: LambdaHeaders;
   pathParameters?: PotentialPathParameters;
   queryStringParameters?: PotentialQueryParameters;
+  multiValueQueryStringParameters?: PotentialQueryParameters;
 }
 
 export interface LambdaResponse {
