@@ -19,9 +19,11 @@ export interface PlayerQueryParameters {
 }
 
 export interface ScryfallCardQueryParameters {
-  color?: string |string[];
+  colors?: string |string[];
   format?: string;
   subtype?: string;
+  language?: string;
+  border?: string;
   type?: string | string[];
 }
 
