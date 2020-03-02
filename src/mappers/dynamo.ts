@@ -59,11 +59,18 @@ export function toScanConfiguration(queryParams: any, tableName: string): ScanIn
       const queryNameParts = queryParam.split("*");
       const queryValueParts = queryParams[queryParam].split("[]");
       const isArray = queryValueParts.length > 1;
-      const parsedFilter = queryNameParts.length > 1 ? queryNameParts[0] : queryParam;
 
+      console.log("queryParam", queryParam);
+      console.log("queryNameParts", JSON.stringify(queryNameParts));
+      console.log("queryValueParts", JSON.stringify(queryValueParts));
+      console.log("isArray", isArray);
+      
       if (isArray) {
+        const parsedFilter = queryNameParts.length > 1 ? queryNameParts[0] : queryParam;
         const queryValues = queryValueParts[1].split(",");
         const queryNames = [];
+
+        console.log("queryValues", JSON.stringify(queryValues));
 
         for (let i = 0; i < queryValues.length; i += 1) {
           const valueName = `:statement${i}`;
