@@ -25,7 +25,7 @@ import {
   PlayerDynamoUpdateItem
 } from "../models/Items";
 
-import { MatchFilters, PlayerFilters, SeasonFilters } from "src/models/Filters";
+import { MatchFilters, PlayerFilters, SeasonFilters } from "../models/Filters";
 
 const dynamoDB = new aws.DynamoDB.DocumentClient({
   region: "us-east-1"
