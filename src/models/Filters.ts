@@ -12,14 +12,14 @@ export interface MatchFilters {
 export interface PlayerFilters {
   displayName?: string;
   "*displayName"?: string;
-  season?: string;
-  "*season"?: string;
+  seasonId?: string;
+  "*seasonId"?: string;
   userName?: string;
   "*userName"?: string;
 }
 
 export interface ScryfallCardFilters {
-  colors?: string |string[];
+  colors?: string | string[];
   format?: string;
   subtype?: string;
   language?: string;
@@ -28,6 +28,8 @@ export interface ScryfallCardFilters {
 }
 
 export interface SeasonFilters {
+  seasonId?: string;
+  "*seasonId"?: string;
   isActive?: boolean;
   "*isActive"?: boolean;
 }
