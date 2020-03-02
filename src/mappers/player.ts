@@ -4,6 +4,8 @@ import { PlayerView, PlayerRoleView } from "../models/Views";
 import { PlayerNode, PlayerRoleNode } from "../models/Nodes";
 import { PlayerCreateRequest, PlayerUpdateRequest } from "../models/Requests";
 import { PlayerDynamoCreateItem, PlayerDynamoUpdateItem } from "../models/Items";
+import { PlayerQueryParameters } from "../models/QueryParameters";
+import { PlayerFilters } from "../models/Filters";
 
 export const toUpdateItem = (data: PlayerUpdateRequest): PlayerDynamoUpdateItem => ({
   playerName: data.name,
@@ -59,4 +61,13 @@ export const toRoleView = (data: PlayerRoleNode): PlayerRoleView => ({
   email: data.email,
   userName: data.userName,
   displayName: data.playerName
+});
+
+export const toFilters = (queryParams: PlayerQueryParameters): PlayerFilters => ({
+  displayName: queryParams.name,
+  "*displayName": queryParams["*name"],
+  season: queryParams.season,
+  "*season": queryParams["*season"],
+  userName: queryParams.userName,
+  "*userName": queryParams["*userName"]
 });

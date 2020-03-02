@@ -6,6 +6,8 @@ import { SeasonCreateRequest, SeasonUpdateRequest } from "../models/Requests";
 import { SeasonView } from "../models/Views";
 import { SeasonNode } from "../models/Nodes";
 import { SeasonDynamoCreateItem, SeasonDynamoUpdateItem } from "../models/Items";
+import { SeasonQueryParams } from "../models/QueryParameters";
+import { SeasonFilters } from "../models/Filters";
 
 export function toCreateItem(data: SeasonCreateRequest): SeasonDynamoCreateItem {
   const date = new Date().valueOf().toString();
@@ -43,4 +45,9 @@ export const toView = (data: SeasonNode): SeasonView => ({
   isActive: data.isActive,
   startedOn: data.startDate,
   endedOn: data.endDate
+});
+
+export const toFilters = (queryParams: SeasonQueryParams): SeasonFilters => ({
+  isActive: queryParams.active,
+  "*isActive": queryParams["*active"]
 });

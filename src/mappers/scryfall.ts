@@ -37,25 +37,32 @@ export const toSetView = (data: ScryfallSetNode): ScryfallSetView => ({
   code: data.code
 });
 
-export function toQueryString(map: ScryfallCardQueryParameters): string;
-export function toQueryString(map: any): string {
+export function toQueryString(map: ScryfallCardQueryParameters): string {
   if (!map) {
     return "";
   }
 
   const keys = Object.keys(map);
   const query = keys.map((key) => {
-    const value: string = map[key];
+    const value = map[key] as string;
+
+    const valueParts = value.split("[]");
+    const isArray = valueParts.length > 1;
 
     switch (key) {
       case "colors":
-        return `c=${value}`;
+        return `c=${isArray ? valueParts[1].split(",").join("") : value}`;
+      case "type":
+        return isArray
+          ? valueParts[1]
+              .split(",")
+              .map((v) => `t=${v}`)
+              .join("+")
+          : `t=${value}`;
       case "language":
         return `lang=${value}`;
       case "subtype":
         return `-t=${value}`;
-      case "type":
-        return `t=${value}`;
       case "format":
         return `f=${value}`;
       case "border":

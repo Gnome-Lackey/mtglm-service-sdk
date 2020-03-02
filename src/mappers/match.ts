@@ -6,6 +6,8 @@ import { MatchUpdateRequest, MatchCreateRequest } from "../models/Requests";
 import { MatchView } from "../models/Views";
 import { MatchNode } from "../models/Nodes";
 import { MatchDynamoCreateItem, MatchDynamoUpdateItem } from "../models/Items";
+import { MatchQueryParameters } from "../models/QueryParameters";
+import { MatchFilters } from "../models/Filters";
 
 export function toCreateItem(details: MatchCreateRequest): MatchDynamoCreateItem {
   const date = new Date().valueOf().toString();
@@ -46,4 +48,15 @@ export const toView = (data: MatchNode): MatchView => ({
   isSeasonPoint: data.isSeasonPoint,
   games: data.gamesPlayed,
   wins: data.wins
+});
+
+export const toFilters = (queryParams: MatchQueryParameters): MatchFilters => ({
+  winnerIds: queryParams.winners,
+  "*winnerIds": queryParams["*winners"],
+  loserIds: queryParams.losers,
+  "*loserIds": queryParams["*losers"],
+  seasonId: queryParams.season,
+  "*seasonId": queryParams["*season"],
+  isSeasonPoint: queryParams.seasonPoint,
+  "*isSeasonPoint": queryParams["*seasonPoint"]
 });
