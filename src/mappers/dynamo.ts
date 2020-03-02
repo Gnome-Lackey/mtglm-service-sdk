@@ -12,12 +12,7 @@ import {
 
 import { PotentialPrimaryKey } from "../models/PrimaryKeys";
 
-import {
-  MatchQueryParameters,
-  PlayerQueryParameters,
-  ScryfallCardQueryParameters,
-  SeasonQueryParams
-} from "../models/QueryParameters";
+import { MatchFilters, PlayerFilters, SeasonFilters } from "src/models/Filters";
 
 const buildAttributeMapping = (
   attributes: string[],
@@ -51,19 +46,9 @@ const buildAttributeMapping = (
   };
 };
 
-export function toScanConfiguration(
-  queryParams: ScryfallCardQueryParameters,
-  tableName: string
-): ScanInput;
-export function toScanConfiguration(
-  queryParams: MatchQueryParameters,
-  tableName: string
-): ScanInput;
-export function toScanConfiguration(
-  queryParams: PlayerQueryParameters,
-  tableName: string
-): ScanInput;
-export function toScanConfiguration(queryParams: SeasonQueryParams, tableName: string): ScanInput;
+export function toScanConfiguration(queryParams: MatchFilters, tableName: string): ScanInput;
+export function toScanConfiguration(queryParams: PlayerFilters, tableName: string): ScanInput;
+export function toScanConfiguration(queryParams: SeasonFilters, tableName: string): ScanInput;
 export function toScanConfiguration(queryParams: any, tableName: string): ScanInput {
   if (!queryParams) {
     return { TableName: tableName };
