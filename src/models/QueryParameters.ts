@@ -1,21 +1,21 @@
 export interface MatchQueryParameters {
   winners?: string | string[];
-  "*winners"?: string | string[];
+  "winners|"?: string | string[];
   losers?: string | string[];
-  "*losers"?: string | string[];
+  "losers|"?: string | string[];
   season?: string;
-  "*season"?: string;
+  "season|"?: string;
   seasonPoint?: boolean;
-  "*seasonPoint"?: boolean;
+  "seasonPoint|"?: boolean;
 }
 
 export interface PlayerQueryParameters {
   name?: string;
-  "*name"?: string;
+  "name|"?: string;
   season?: string;
-  "*season"?: string;
+  "season|"?: string;
   userName?: string;
-  "*userName"?: string;
+  "userName|"?: string;
 }
 
 export interface ScryfallCardQueryParameters {
@@ -30,9 +30,9 @@ export interface ScryfallCardQueryParameters {
 
 export interface SeasonQueryParams {
   season?: string;
-  "*season"?: string;
+  "season|"?: string;
   active?: boolean;
-  "*active"?: boolean;
+  "active|"?: boolean;
 }
 
 export interface PotentialQueryParameters

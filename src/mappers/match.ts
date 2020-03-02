@@ -52,11 +52,11 @@ export const toView = (data: MatchNode): MatchView => ({
 
 export const toFilters = (queryParams: MatchQueryParameters): MatchFilters => ({
   winnerIds: queryParams.winners,
-  "*winnerIds": queryParams["*winners"],
+  "winnerIds|": queryParams["winners|"],
   loserIds: queryParams.losers,
-  "*loserIds": queryParams["*losers"],
+  "loserIds|": queryParams["losers|"],
   seasonId: queryParams.season,
-  "*seasonId": queryParams["*season"],
+  "seasonId|": queryParams["season|"],
   isSeasonPoint: queryParams.seasonPoint,
-  "*isSeasonPoint": queryParams["*seasonPoint"]
+  "isSeasonPoint|": queryParams["seasonPoint|"]
 });

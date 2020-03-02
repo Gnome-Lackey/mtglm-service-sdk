@@ -46,50 +46,52 @@ const buildAttributeMapping = (
   };
 };
 
-export function toScanConfiguration(queryParams: MatchFilters, tableName: string): ScanInput;
-export function toScanConfiguration(queryParams: PlayerFilters, tableName: string): ScanInput;
-export function toScanConfiguration(queryParams: SeasonFilters, tableName: string): ScanInput;
-export function toScanConfiguration(queryParams: any, tableName: string): ScanInput {
-  if (!queryParams) {
+export function toScanConfiguration(filters: MatchFilters, tableName: string): ScanInput;
+export function toScanConfiguration(filters: PlayerFilters, tableName: string): ScanInput;
+export function toScanConfiguration(filters: SeasonFilters, tableName: string): ScanInput;
+export function toScanConfiguration(filters: any, tableName: string): ScanInput {
+  if (!filters) {
     return { TableName: tableName };
   }
 
-  const scanInput = Object.keys(queryParams).reduce(
-    (input: any, queryParam: string) => {
-      const queryNameParts = queryParam.split("*");
-      const queryValueParts = queryParams[queryParam].split("[]");
-      const isArray = queryValueParts.length > 1;
+  const scanInput = Object.keys(filters).reduce(
+    (input: any, filterName: string) => {
+      console.log("filter", filterName);
+      console.log("filters", JSON.stringify(filters));
 
-      console.log("queryParam", queryParam);
-      console.log("queryNameParts", JSON.stringify(queryNameParts));
-      console.log("queryValueParts", JSON.stringify(queryValueParts));
+      const filterNameParts = filterName.split("|");
+      const filterValueParts = filters[filterName].split("[]");
+      const isArray = filterValueParts.length > 1;
+
+      console.log("filterNameParts", JSON.stringify(filterNameParts));
+      console.log("filterValueParts", JSON.stringify(filterValueParts));
       console.log("isArray", isArray);
       
       if (isArray) {
-        const parsedFilter = queryNameParts.length > 1 ? queryNameParts[0] : queryParam;
-        const queryValues = queryValueParts[1].split(",");
-        const queryNames = [];
+        const parsedFilterName = filterNameParts.length > 1 ? filterNameParts[0] : filterName;
+        const filterValues = filterValueParts[1].split(",");
+        const filterNames = [];
 
-        console.log("queryValues", JSON.stringify(queryValues));
+        console.log("filterValues", JSON.stringify(filterValues));
 
-        for (let i = 0; i < queryValues.length; i += 1) {
+        for (let i = 0; i < filterValues.length; i += 1) {
           const valueName = `:statement${i}`;
 
-          queryNames.push(valueName);
+          filterNames.push(valueName);
 
-          input.ExpressionAttributeValues[valueName] = queryValues[i];
+          input.ExpressionAttributeValues[valueName] = filterValues[i];
         }
 
-        const statement = queryNames
-          .map((queryName) => `contains(${parsedFilter}, ${queryName})`)
+        const statement = filterNames
+          .map((queryName) => `contains(${parsedFilterName}, ${queryName})`)
           .join(" OR ");
 
         input.FilterExpressionOr.push(statement);
       } else {
-        const value = `:${queryParam}`;
-        const statement = `${queryParam} = ${value}`;
+        const value = `:${filterName}`;
+        const statement = `${filterName} = ${value}`;
 
-        input.ExpressionAttributeValues[value] = queryParams[queryParam];
+        input.ExpressionAttributeValues[value] = filters[filterName];
         input.FilterExpressionAnd.push(statement);
       }
 
