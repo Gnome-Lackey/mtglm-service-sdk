@@ -55,47 +55,44 @@ export function toScanConfiguration(filters: any, tableName: string): ScanInput 
   }
 
   const scanInput = Object.keys(filters).reduce(
-    (input: any, filterName: string) => {
-      console.log("filter", filterName);
-      console.log("filters", JSON.stringify(filters));
-
+    (scanInputConfig: any, filterName: string) => {
       const filterNameParts = filterName.split("|");
-      const filterValueParts = filters[filterName].split("[]");
+      const filterValue = filters[filterName];
+
+      if (!filterValue) {
+        return scanInputConfig;
+      }
+
+      const filterValueParts = filterValue.split("[]");
       const isArray = filterValueParts.length > 1;
 
-      console.log("filterNameParts", JSON.stringify(filterNameParts));
-      console.log("filterValueParts", JSON.stringify(filterValueParts));
-      console.log("isArray", isArray);
-      
       if (isArray) {
         const parsedFilterName = filterNameParts.length > 1 ? filterNameParts[0] : filterName;
         const filterValues = filterValueParts[1].split(",");
         const filterNames = [];
-
-        console.log("filterValues", JSON.stringify(filterValues));
 
         for (let i = 0; i < filterValues.length; i += 1) {
           const valueName = `:statement${i}`;
 
           filterNames.push(valueName);
 
-          input.ExpressionAttributeValues[valueName] = filterValues[i];
+          scanInputConfig.ExpressionAttributeValues[valueName] = filterValues[i];
         }
 
         const statement = filterNames
           .map((queryName) => `contains(${parsedFilterName}, ${queryName})`)
           .join(" OR ");
 
-        input.FilterExpressionOr.push(statement);
+        scanInputConfig.FilterExpressionOr.push(statement);
       } else {
         const value = `:${filterName}`;
         const statement = `${filterName} = ${value}`;
 
-        input.ExpressionAttributeValues[value] = filters[filterName];
-        input.FilterExpressionAnd.push(statement);
+        scanInputConfig.ExpressionAttributeValues[value] = filters[filterName];
+        scanInputConfig.FilterExpressionAnd.push(statement);
       }
 
-      return input;
+      return scanInputConfig;
     },
     {
       ExpressionAttributeValues: {},
@@ -116,6 +113,8 @@ export function toScanConfiguration(filters: any, tableName: string): ScanInput 
   } else {
     expression = orExpression;
   }
+
+  console.log(expression);
 
   return {
     TableName: scanInput.TableName,
