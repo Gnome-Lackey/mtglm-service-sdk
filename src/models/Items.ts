@@ -13,7 +13,7 @@ export interface MatchDynamoUpdateItem {
   gamesPlayed?: number;
   isSeasonPoint?: boolean;
   loserIds?: string[];
-  winnerId?: string;
+  winnerIds?: string;
   wins?: number;
 }
 

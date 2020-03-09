@@ -28,7 +28,7 @@ export const toUpdateItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem =>
   isSeasonPoint: data.isSeasonPoint,
   gamesPlayed: data.games,
   loserIds: data.losers,
-  winnerId: data.winner,
+  winnerIds: data.winners,
   wins: data.wins
 });
 
@@ -38,7 +38,7 @@ export const toNode = (data: AttributeMap): MatchNode => ({
   seasonId: data.seasonId as string,
   gamesPlayed: data.gamesPlayed as number,
   loserIds: data.loserIds as string[],
-  winnerIds: data.winnerId as string[],
+  winnerIds: data.winnerIds as string[],
   wins: data.wins as number,
   updatedOn: data.updatedOn as string
 });

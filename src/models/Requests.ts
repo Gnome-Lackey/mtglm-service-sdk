@@ -23,7 +23,7 @@ export interface MatchUpdateRequest {
   isSeasonPoint?: boolean;
   losers?: string[];
   season?: string;
-  winner?: string;
+  winners?: string;
   wins?: number;
 }
 
