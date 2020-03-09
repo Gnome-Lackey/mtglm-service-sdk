@@ -57,6 +57,6 @@ export const toFilters = (queryParams: MatchQueryParameters): MatchFilters => ({
   "loserIds|": queryParams["losers|"],
   seasonId: queryParams.season,
   "seasonId|": queryParams["season|"],
-  isSeasonPoint: queryParams.seasonPoint,
-  "isSeasonPoint|": queryParams["seasonPoint|"]
+  isSeasonPoint: !!queryParams.seasonPoint,
+  "isSeasonPoint|": !!queryParams["seasonPoint|"]
 });

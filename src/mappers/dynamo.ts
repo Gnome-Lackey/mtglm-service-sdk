@@ -1,4 +1,4 @@
-import { ScanInput } from "aws-sdk/clients/dynamodb";
+import { AttributeMap } from "aws-sdk/clients/dynamodb";
 
 import {
   DynamoUpdateListConfig,
@@ -46,84 +46,44 @@ const buildAttributeMapping = (
   };
 };
 
-export function toScanConfiguration(filters: MatchFilters, tableName: string): ScanInput;
-export function toScanConfiguration(filters: PlayerFilters, tableName: string): ScanInput;
-export function toScanConfiguration(filters: SeasonFilters, tableName: string): ScanInput;
-export function toScanConfiguration(filters: any, tableName: string): ScanInput {
+export function toScanResults(filters: MatchFilters, items: AttributeMap[]): AttributeMap[];
+export function toScanResults(filters: PlayerFilters, items: AttributeMap[]): AttributeMap[];
+export function toScanResults(filters: SeasonFilters, items: AttributeMap[]): AttributeMap[];
+export function toScanResults(filters: any, items: AttributeMap[]): AttributeMap[] {
   if (!filters) {
-    return { TableName: tableName };
+    return items;
   }
 
-  const scanInput = Object.keys(filters).reduce(
-    (scanInputConfig: any, filterName: string) => {
-      const filterNameParts = filterName.split("|");
+  const filterNames = Object.keys(filters);
+
+  const isStringMatch = (itemValue: string, filterValue: string, isOrStatement: boolean): boolean =>
+    isOrStatement
+      ? itemValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1
+      : itemValue.toLowerCase() === filterValue.toLowerCase();
+
+  return items.filter((item: AttributeMap) => {
+    return filterNames.some((filterName) => {
       const filterValue = filters[filterName];
 
-      if (!filterValue) {
-        return scanInputConfig;
-      }
+      const isString = typeof filterValue === "string";
+      const isArray = /^\[\].*$/.test(filterValue);
+      const isOrStatement = /^.*|$/.test(filterName);
 
-      const filterValueParts = filterValue.split("[]");
-      const isArray = filterValueParts.length > 1;
+      const parsedFilterName = isOrStatement ? filterName.split("|")[0] : filterName;
+
+      const itemValue = item[parsedFilterName] as string;
 
       if (isArray) {
-        const parsedFilterName = filterNameParts.length > 1 ? filterNameParts[0] : filterName;
-        const filterValues = filterValueParts[1].split(",");
-        const filterNames = [];
+        const filterValues = filterValue.split("[]")[1].split(",") as string[];
 
-        for (let i = 0; i < filterValues.length; i += 1) {
-          const valueName = `:statement${i}`;
-
-          filterNames.push(valueName);
-
-          scanInputConfig.ExpressionAttributeValues[valueName] = filterValues[i];
-        }
-
-        const statement = filterNames
-          .map((queryName) => `contains(${parsedFilterName}, ${queryName})`)
-          .join(" OR ");
-
-        scanInputConfig.FilterExpressionOr.push(statement);
-      } else {
-        const value = `:${filterName}`;
-        const statement = `${filterName} = ${value}`;
-
-        scanInputConfig.ExpressionAttributeValues[value] = filters[filterName];
-        scanInputConfig.FilterExpressionAnd.push(statement);
+        return filterValues.some((value) => isStringMatch(itemValue, value, isOrStatement));
+      } else if (isString) {
+        return isStringMatch(itemValue, filterValue, isOrStatement);
       }
 
-      return scanInputConfig;
-    },
-    {
-      ExpressionAttributeValues: {},
-      FilterExpressionOr: [],
-      FilterExpressionAnd: [],
-      TableName: tableName
-    }
-  );
-
-  console.log(JSON.stringify(scanInput));
-
-  let expression;
-  const andExpression = scanInput.FilterExpressionAnd.join(" AND ");
-  const orExpression = scanInput.FilterExpressionOr.join(" OR ");
-
-  if (andExpression.length && orExpression.length) {
-    expression = `${andExpression} AND (${orExpression})`;
-  } else if (andExpression.length) {
-    expression = andExpression;
-  } else {
-    expression = orExpression;
-  }
-
-  console.log(expression);
-
-  return {
-    TableName: scanInput.TableName,
-    ExpressionAttributeNames: scanInput.ExpressionAttributeNames,
-    ExpressionAttributeValues: scanInput.ExpressionAttributeValues,
-    FilterExpression: expression
-  };
+      return itemValue === filterValue;
+    });
+  });
 }
 
 export const toUpdateConfiguration = (

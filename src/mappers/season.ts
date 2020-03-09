@@ -50,6 +50,6 @@ export const toView = (data: SeasonNode): SeasonView => ({
 export const toFilters = (queryParams: SeasonQueryParams): SeasonFilters => ({
   seasonId: queryParams.season,
   "seasonId|": queryParams["season|"],
-  isActive: queryParams.active,
-  "isActive|": queryParams["active|"]
+  isActive: !!queryParams.active,
+  "isActive|": !!queryParams["active|"]
 });

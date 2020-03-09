@@ -10,10 +10,8 @@ export interface MatchFilters {
 }
 
 export interface PlayerFilters {
-  displayName?: string;
-  "displayName|"?: string;
-  seasonId?: string;
-  "seasonId|"?: string;
+  playerName?: string;
+  "playerName|"?: string;
   userName?: string;
   "userName|"?: string;
 }

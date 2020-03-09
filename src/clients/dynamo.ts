@@ -84,11 +84,9 @@ export class MTGLMDynamoClient {
   async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
   async query(filters?: SeasonFilters): Promise<AttributeMap[]>;
   async query(filters?: any): Promise<AttributeMap[]> {
-    const config = dynamoMapper.toScanConfiguration(filters, this.tableName);
+    const result = await dynamoDB.scan({ TableName: this.tableName }).promise();
 
-    const result = await dynamoDB.scan(config).promise();
-
-    return result.Items;
+    return dynamoMapper.toScanResults(filters, result.Items);
   }
 
   async remove(key: PotentialPrimaryKey): Promise<void> {

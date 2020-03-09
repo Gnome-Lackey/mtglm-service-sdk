@@ -64,10 +64,8 @@ export const toRoleView = (data: PlayerRoleNode): PlayerRoleView => ({
 });
 
 export const toFilters = (queryParams: PlayerQueryParameters): PlayerFilters => ({
-  displayName: queryParams.name,
-  "displayName|": queryParams["name|"],
-  seasonId: queryParams.season,
-  "seasonId|": queryParams["season|"],
+  playerName: queryParams.name,
+  "playerName|": queryParams["name|"],
   userName: queryParams.userName,
   "userName|": queryParams["userName|"]
 });
