@@ -107,7 +107,7 @@ export function toScanConfiguration(filters: any, tableName: string): ScanInput 
   const orExpression = scanInput.FilterExpressionOr.join(" OR ");
 
   if (andExpression.length && orExpression.length) {
-    expression = `${andExpression} AND ${orExpression}`;
+    expression = `${andExpression} AND (${orExpression})`;
   } else if (andExpression.length) {
     expression = andExpression;
   } else {
