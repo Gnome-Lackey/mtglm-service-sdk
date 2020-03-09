@@ -102,6 +102,8 @@ export function toScanConfiguration(filters: any, tableName: string): ScanInput 
     }
   );
 
+  console.log(JSON.stringify(scanInput));
+
   let expression;
   const andExpression = scanInput.FilterExpressionAnd.join(" AND ");
   const orExpression = scanInput.FilterExpressionOr.join(" OR ");
