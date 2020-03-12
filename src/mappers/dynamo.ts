@@ -50,11 +50,11 @@ export function toScanResults(filters: MatchFilters, items: AttributeMap[]): Att
 export function toScanResults(filters: PlayerFilters, items: AttributeMap[]): AttributeMap[];
 export function toScanResults(filters: SeasonFilters, items: AttributeMap[]): AttributeMap[];
 export function toScanResults(filters: any, items: AttributeMap[]): AttributeMap[] {
-  if (!filters) {
+  const filterNames = Object.keys(filters);
+
+  if (!filterNames || !filterNames.length) {
     return items;
   }
-
-  const filterNames = Object.keys(filters);
 
   const isStringMatch = (itemValue: string, filterValue: string, isOrStatement: boolean): boolean =>
     isOrStatement
