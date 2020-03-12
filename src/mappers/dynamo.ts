@@ -61,6 +61,13 @@ export function toScanResults(filters: any, items: AttributeMap[]): AttributeMap
       ? itemValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1
       : itemValue.toLowerCase() === filterValue.toLowerCase();
 
+  const shouldFilterItem = (itemValue: any, filterValue: string, isOrStatement: boolean): boolean =>
+    typeof itemValue === "object"
+      ? itemValue.some((value: string | number | boolean) =>
+          isStringMatch(value.toString(), filterValue, isOrStatement)
+        )
+      : isStringMatch(itemValue as string, filterValue, isOrStatement);
+
   return items.filter((item: AttributeMap) => {
     return filterNames.some((filterName) => {
       const filterValue = filters[filterName];
@@ -71,14 +78,19 @@ export function toScanResults(filters: any, items: AttributeMap[]): AttributeMap
 
       const parsedFilterName = isOrStatement ? filterName.split("|")[0] : filterName;
 
-      const itemValue = item[parsedFilterName] as string;
+      console.log("Item", item);
+      console.log("filter name", parsedFilterName);
+
+      const itemValue = item[parsedFilterName];
 
       if (isArray) {
         const filterValues = filterValue.split("[]")[1].split(",") as string[];
 
-        return filterValues.some((value) => isStringMatch(itemValue, value, isOrStatement));
+        return filterValues.some((value) =>
+          shouldFilterItem(itemValue as any[], value, isOrStatement)
+        );
       } else if (isString) {
-        return isStringMatch(itemValue, filterValue, isOrStatement);
+        return shouldFilterItem(itemValue as any[], filterValue, isOrStatement);
       }
 
       return itemValue === filterValue;
