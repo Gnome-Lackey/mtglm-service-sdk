@@ -63,9 +63,20 @@ export const toRoleView = (data: PlayerRoleNode): PlayerRoleView => ({
   displayName: data.playerName
 });
 
-export const toFilters = (queryParams: PlayerQueryParameters): PlayerFilters => ({
-  playerName: queryParams.name,
-  "playerName|": queryParams["name|"],
-  userName: queryParams.userName,
-  "userName|": queryParams["userName|"]
-});
+export const toFilters = (queryParams: PlayerQueryParameters): PlayerFilters => {
+  const filters: PlayerFilters = {};
+
+  if (queryParams.name) {
+    filters.playerName = queryParams.name;
+  } else if (queryParams["name|"]) {
+    filters["playerName|"] = queryParams["name|"];
+  }
+
+  if (queryParams.userName) {
+    filters.userName = queryParams.userName;
+  } else if (queryParams["userName|"]) {
+    filters["userName|"] = queryParams["userName|"];
+  }
+
+  return filters;
+};

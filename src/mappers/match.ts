@@ -50,13 +50,32 @@ export const toView = (data: MatchNode): MatchView => ({
   wins: data.wins
 });
 
-export const toFilters = (queryParams: MatchQueryParameters): MatchFilters => ({
-  winnerIds: queryParams.winners,
-  "winnerIds|": queryParams["winners|"],
-  loserIds: queryParams.losers,
-  "loserIds|": queryParams["losers|"],
-  seasonId: queryParams.season,
-  "seasonId|": queryParams["season|"],
-  isSeasonPoint: !!queryParams.seasonPoint,
-  "isSeasonPoint|": !!queryParams["seasonPoint|"]
-});
+export const toFilters = (queryParams: MatchQueryParameters): MatchFilters => {
+  const filters: MatchFilters = {};
+
+  if (queryParams.seasonPoint === "true" || queryParams.seasonPoint === "false") {
+    filters.isSeasonPoint = queryParams.seasonPoint === "true";
+  } else if (queryParams["seasonPoint|"] === "true" || queryParams["seasonPoint|"] === "false") {
+    filters["isSeasonPoint|"] = queryParams["seasonPoint|"] === "true";
+  }
+
+  if (queryParams.winners) {
+    filters.winnerIds = queryParams.winners;
+  } else if (queryParams["winners|"]) {
+    filters["winnerIds|"] = queryParams["winners|"];
+  }
+
+  if (queryParams.losers) {
+    filters.loserIds = queryParams.losers;
+  } else if (queryParams["losers|"]) {
+    filters["loserIds|"] = queryParams["losers|"];
+  }
+
+  if (queryParams.season) {
+    filters.seasonId = queryParams.season;
+  } else if (queryParams["season|"]) {
+    filters["seasonId|"] = queryParams["season|"];
+  }
+
+  return filters;
+};

@@ -56,6 +56,10 @@ export function toScanResults(filters: any, items: AttributeMap[]): AttributeMap
     return items;
   }
 
+  console.log("Filters", JSON.stringify(filters));
+
+  const hasOrStatement = filterNames.some((filterName) => /^.*[|]$/.test(filterName));
+
   const isStringMatch = (itemValue: string, filterValue: string, isOrStatement: boolean): boolean =>
     isOrStatement
       ? itemValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1
@@ -63,38 +67,65 @@ export function toScanResults(filters: any, items: AttributeMap[]): AttributeMap
 
   const shouldFilterItem = (itemValue: any, filterValue: string, isOrStatement: boolean): boolean =>
     typeof itemValue === "object"
-      ? itemValue.some((value: string | number | boolean) =>
-          isStringMatch(value.toString(), filterValue, isOrStatement)
-        )
-      : isStringMatch(itemValue as string, filterValue, isOrStatement);
+      ? itemValue.some((value: string | number | boolean) => isStringMatch(value.toString(), filterValue, isOrStatement))
+      : isStringMatch(itemValue.toString(), filterValue, isOrStatement);
+
+  const handleFilter = (filterName: string, item: AttributeMap): boolean => {
+    const filterValue = filters[filterName];
+
+    const isString = typeof filterValue === "string";
+    const isArray = /^\[\].*$/.test(filterValue);
+    const isOrStatement = /^.*[|]$/.test(filterName);
+
+    const parsedFilterName = isOrStatement ? filterName.split("|")[0] : filterName;
+    
+    const itemValue = item[parsedFilterName];
+    
+    console.log("Item", item);
+    console.log("Item Value", itemValue);
+
+    console.log("filter Name", parsedFilterName);
+    console.log("Filter Value", filterValue);
+
+    if (isArray) {
+      console.log("Is Array!");
+
+      const filterValues = filterValue.split("[]")[1].split(",") as string[];
+
+      const shouldFilter = filterValues.some((value) => shouldFilterItem(itemValue as any[], value, isOrStatement));
+
+      console.log("Should Filter", shouldFilter);
+
+      return shouldFilter;
+    } else if (isString) {
+      console.log("Is String!");
+
+      const shouldFilter = shouldFilterItem(itemValue as any, filterValue, isOrStatement);
+
+      console.log("Should Filter", shouldFilter);
+
+      return shouldFilter;
+    }
+
+    console.log("Is something else!");
+
+    const shouldFilter = itemValue === filterValue;
+
+    console.log("Should Filter", shouldFilter);
+
+    return shouldFilter;
+  };
 
   return items.filter((item: AttributeMap) => {
-    return filterNames.some((filterName) => {
-      const filterValue = filters[filterName];
+    if (hasOrStatement) {
+      console.log("Some!");
 
-      const isString = typeof filterValue === "string";
-      const isArray = /^\[\].*$/.test(filterValue);
-      const isOrStatement = /^.*|$/.test(filterName);
+      return filterNames.some((filterName) => handleFilter(filterName, item));
+    } else {
+      console.log("Every!");
 
-      const parsedFilterName = isOrStatement ? filterName.split("|")[0] : filterName;
-
-      console.log("Item", item);
-      console.log("filter name", parsedFilterName);
-
-      const itemValue = item[parsedFilterName];
-
-      if (isArray) {
-        const filterValues = filterValue.split("[]")[1].split(",") as string[];
-
-        return filterValues.some((value) =>
-          shouldFilterItem(itemValue as any[], value, isOrStatement)
-        );
-      } else if (isString) {
-        return shouldFilterItem(itemValue as any[], filterValue, isOrStatement);
-      }
-
-      return itemValue === filterValue;
-    });
+      return filterNames.every((filterName) => handleFilter(filterName, item));
+    }
   });
 }
 

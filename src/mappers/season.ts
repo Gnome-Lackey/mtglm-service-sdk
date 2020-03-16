@@ -47,9 +47,20 @@ export const toView = (data: SeasonNode): SeasonView => ({
   endedOn: data.endDate
 });
 
-export const toFilters = (queryParams: SeasonQueryParams): SeasonFilters => ({
-  seasonId: queryParams.season,
-  "seasonId|": queryParams["season|"],
-  isActive: !!queryParams.active,
-  "isActive|": !!queryParams["active|"]
-});
+export const toFilters = (queryParams: SeasonQueryParams): SeasonFilters => {
+  const filters: SeasonFilters = {};
+
+  if (queryParams.active === "true" || queryParams.active === "false") {
+    filters.isActive = queryParams.active === "true";
+  } else if (queryParams["active|"] === "true" || queryParams["active|"] === "false") {
+    filters["isActive|"] = queryParams["active|"] === "true";
+  }
+
+  if (queryParams.season) {
+    filters.seasonId = queryParams.season;
+  } else if (queryParams["season|"]) {
+    filters["seasonId|"] = queryParams["season|"];
+  }
+
+  return filters;
+};

@@ -58,6 +58,8 @@ export default function requestResourceMiddleware(
     if (hasValidToken) {
       const data = parseData(body);
 
+      console.log("query string params", JSON.stringify(queryStringParameters));
+
       return await callback(pathParameters, data, queryStringParameters);
     } else {
       return handleError({

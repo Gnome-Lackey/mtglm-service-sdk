@@ -5,8 +5,8 @@ export interface MatchQueryParameters {
   "losers|"?: string | string[];
   season?: string;
   "season|"?: string;
-  seasonPoint?: boolean;
-  "seasonPoint|"?: boolean;
+  seasonPoint?: string;
+  "seasonPoint|"?: string;
 }
 
 export interface PlayerQueryParameters {
@@ -19,7 +19,7 @@ export interface PlayerQueryParameters {
 }
 
 export interface ScryfallCardQueryParameters {
-  [key: string]: number | boolean | string | string[];
+  [key: string]: number | string | string[];
   colors?: string | string[];
   format?: string;
   subtype?: string;
@@ -31,8 +31,8 @@ export interface ScryfallCardQueryParameters {
 export interface SeasonQueryParams {
   season?: string;
   "season|"?: string;
-  active?: boolean;
-  "active|"?: boolean;
+  active?: string;
+  "active|"?: string;
 }
 
 export interface PotentialQueryParameters
@@ -40,5 +40,5 @@ export interface PotentialQueryParameters
     ScryfallCardQueryParameters,
     MatchQueryParameters,
     SeasonQueryParams {
-  [key: string]: string | string[] | boolean | number;
+  [key: string]: string | string[] | number;
 }
