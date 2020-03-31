@@ -56,10 +56,6 @@ export function toScanResults(filters: any, items: AttributeMap[]): AttributeMap
     return items;
   }
 
-  console.log("Filters", JSON.stringify(filters));
-
-  const hasOrStatement = filterNames.some((filterName) => /^.*[|]$/.test(filterName));
-
   const isStringMatch = (itemValue: string, filterValue: string, isOrStatement: boolean): boolean =>
     isOrStatement
       ? itemValue.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1
@@ -81,52 +77,23 @@ export function toScanResults(filters: any, items: AttributeMap[]): AttributeMap
     
     const itemValue = item[parsedFilterName];
     
-    console.log("Item", item);
-    console.log("Item Value", itemValue);
-
-    console.log("filter Name", parsedFilterName);
-    console.log("Filter Value", filterValue);
-
     if (isArray) {
-      console.log("Is Array!");
-
       const filterValues = filterValue.split("[]")[1].split(",") as string[];
 
-      const shouldFilter = filterValues.some((value) => shouldFilterItem(itemValue as any[], value, isOrStatement));
+      return filterValues.some((value) => shouldFilterItem(itemValue as any[], value, isOrStatement));
 
-      console.log("Should Filter", shouldFilter);
-
-      return shouldFilter;
     } else if (isString) {
-      console.log("Is String!");
-
-      const shouldFilter = shouldFilterItem(itemValue as any, filterValue, isOrStatement);
-
-      console.log("Should Filter", shouldFilter);
-
-      return shouldFilter;
+      return shouldFilterItem(itemValue as any, filterValue, isOrStatement);
     }
 
-    console.log("Is something else!");
-
-    const shouldFilter = itemValue === filterValue;
-
-    console.log("Should Filter", shouldFilter);
-
-    return shouldFilter;
+    return itemValue === filterValue;
   };
 
-  return items.filter((item: AttributeMap) => {
-    if (hasOrStatement) {
-      console.log("Some!");
+  const hasOrStatement = filterNames.some((filterName) => /^.*[|]$/.test(filterName));
 
-      return filterNames.some((filterName) => handleFilter(filterName, item));
-    } else {
-      console.log("Every!");
-
-      return filterNames.every((filterName) => handleFilter(filterName, item));
-    }
-  });
+  return hasOrStatement 
+    ? items.filter((item: AttributeMap) => filterNames.some((filterName) => handleFilter(filterName, item))) 
+    : items.filter((item: AttributeMap) => filterNames.every((filterName) => handleFilter(filterName, item)));
 }
 
 export const toUpdateConfiguration = (
