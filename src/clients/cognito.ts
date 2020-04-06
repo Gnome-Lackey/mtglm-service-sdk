@@ -1,4 +1,5 @@
-import * as aws from "aws-sdk";
+import { CognitoIdentityServiceProvider } from "aws-sdk";
+
 import {
   GetUserResponse,
   AuthenticationResultType,
@@ -6,7 +7,7 @@ import {
   AdminGetUserResponse
 } from "aws-sdk/clients/cognitoidentityserviceprovider";
 
-import * as cognitoMapper from "../mappers/cognito";
+import CognitoMapper from "../mappers/cognito";
 
 import AccountConflictException from "../exceptions/AccountConflictException";
 import InvalidTokenException from "../exceptions/InvalidTokenException";
@@ -17,149 +18,148 @@ import { UserAttribute } from "../models/Cognito";
 
 const { ADMIN_PASS, ADMIN_EMAIL, USER_POOL_ID, CLIENT_ID } = process.env;
 
-const cognito = new aws.CognitoIdentityServiceProvider({ region: "us-east-1" });
+export default class CognitoClient {
+  private provider = new CognitoIdentityServiceProvider({ region: "us-east-1" });
+  private mapper = new CognitoMapper();
 
-export const login = async (
-  userName: string,
-  password: string
-): Promise<AuthenticationResultType> => {
-  const authConfig = cognitoMapper.toAuthConfig(CLIENT_ID, USER_POOL_ID, userName, password);
+  login = async (userName: string, password: string): Promise<AuthenticationResultType> => {
+    const authConfig = this.mapper.toAuthConfig(CLIENT_ID, USER_POOL_ID, userName, password);
 
-  const result = await cognito.adminInitiateAuth(authConfig).promise();
+    const result = await this.provider.adminInitiateAuth(authConfig).promise();
 
-  return result.AuthenticationResult;
-};
+    return result.AuthenticationResult;
+  };
 
-export const adminGetUser = async (userName: string): Promise<AdminGetUserResponse> => {
-  const adminGetUserConfig = cognitoMapper.toAdminGetUserConfig(USER_POOL_ID, userName);
+  adminGetUser = async (userName: string): Promise<AdminGetUserResponse> => {
+    const adminGetUserConfig = this.mapper.toAdminGetUserConfig(USER_POOL_ID, userName);
 
-  const result = await cognito.adminGetUser(adminGetUserConfig).promise();
+    const result = await this.provider.adminGetUser(adminGetUserConfig).promise();
 
-  return result;
-};
+    return result;
+  };
 
-export const getLoggedInUser = async (token: string): Promise<GetUserResponse> => {
-  const getUserConfig = cognitoMapper.toGetUserConfig(token);
+  getLoggedInUser = async (token: string): Promise<GetUserResponse> => {
+    const getUserConfig = this.mapper.toGetUserConfig(token);
 
-  const result = await cognito.getUser(getUserConfig).promise();
+    const result = await this.provider.getUser(getUserConfig).promise();
 
-  const isTokenInvalid = !result || !result.UserAttributes;
+    const isTokenInvalid = !result || !result.UserAttributes;
 
-  if (isTokenInvalid) {
-    throw new InvalidTokenException();
-  }
+    if (isTokenInvalid) {
+      throw new InvalidTokenException();
+    }
 
-  return result;
-};
+    return result;
+  };
 
-export const adminUpdateUserAttribute = async (
-  userName: string,
-  attributes: UserAttribute[]
-): Promise<SuccessResponse> => {
-  const adminUpdateAttributeConfig = cognitoMapper.toAdminUpdateAttributeConfig(
-    USER_POOL_ID,
-    userName,
-    attributes
-  );
+  adminUpdateUserAttribute = async (
+    userName: string,
+    attributes: UserAttribute[]
+  ): Promise<SuccessResponse> => {
+    const adminUpdateAttributeConfig = this.mapper.toAdminUpdateAttributeConfig(
+      USER_POOL_ID,
+      userName,
+      attributes
+    );
 
-  await cognito.adminUpdateUserAttributes(adminUpdateAttributeConfig).promise();
+    await this.provider.adminUpdateUserAttributes(adminUpdateAttributeConfig).promise();
 
-  return { message: "successfully updated attribute." };
-};
+    return { message: "successfully updated attribute." };
+  };
 
-export const updateUserAttribute = async (
-  token: string,
-  attributes: UserAttribute[]
-): Promise<SuccessResponse> => {
-  const updateAttributeConfig = cognitoMapper.toUpdateAttributeConfig(token, attributes);
+  updateUserAttribute = async (
+    token: string,
+    attributes: UserAttribute[]
+  ): Promise<SuccessResponse> => {
+    const updateAttributeConfig = this.mapper.toUpdateAttributeConfig(token, attributes);
 
-  await cognito.updateUserAttributes(updateAttributeConfig).promise();
+    await this.provider.updateUserAttributes(updateAttributeConfig).promise();
 
-  return { message: "successfully updated attribute." };
-};
+    return { message: "successfully updated attribute." };
+  };
 
-export const logout = async (AccessToken: string): Promise<SuccessResponse> => {
-  await cognito.globalSignOut({ AccessToken }).promise();
+  logout = async (AccessToken: string): Promise<SuccessResponse> => {
+    await this.provider.globalSignOut({ AccessToken }).promise();
 
-  return { message: "successfully logged out." };
-};
+    return { message: "successfully logged out." };
+  };
 
-export const confirmRegistration = async (
-  code: string,
-  userName: string
-): Promise<SuccessResponse> => {
-  const config = cognitoMapper.toConfirmSignUpConfig(CLIENT_ID, code, userName);
+  confirmRegistration = async (code: string, userName: string): Promise<SuccessResponse> => {
+    const config = this.mapper.toConfirmSignUpConfig(CLIENT_ID, code, userName);
 
-  await cognito.confirmSignUp(config).promise();
+    await this.provider.confirmSignUp(config).promise();
 
-  return { message: "successfully logged out." };
-};
+    return { message: "successfully logged out." };
+  };
 
-export const resendConfirmationCode = async (userName: string): Promise<SuccessResponse> => {
-  const config = cognitoMapper.toResendConfirmationCodeConfig(CLIENT_ID, userName);
+  resendConfirmationCode = async (userName: string): Promise<SuccessResponse> => {
+    const config = this.mapper.toResendConfirmationCodeConfig(CLIENT_ID, userName);
 
-  await cognito.resendConfirmationCode(config).promise();
+    await this.provider.resendConfirmationCode(config).promise();
 
-  return { message: "successfully resent confirmation code." };
-};
+    return { message: "successfully resent confirmation code." };
+  };
 
-export const initAdminAccount = async (): Promise<AdminCreateUserResponse> => {
-  const listUsersConfig = cognitoMapper.toListUsersConfig(USER_POOL_ID, ADMIN_EMAIL);
+  initAdminAccount = async (): Promise<AdminCreateUserResponse> => {
+    const listUsersConfig = this.mapper.toListUsersConfig(USER_POOL_ID, ADMIN_EMAIL);
 
-  const listUsersResult = await cognito.listUsers(listUsersConfig).promise();
+    const listUsersResult = await this.provider.listUsers(listUsersConfig).promise();
 
-  const accountWithEmailExists = listUsersResult && listUsersResult.Users.length;
+    const accountWithEmailExists = listUsersResult && listUsersResult.Users.length;
 
-  if (accountWithEmailExists) { 
-    return null;
-  }
+    if (accountWithEmailExists) {
+      return null;
+    }
 
-  const userName =  "admin";
+    const userName = "admin";
 
-  const config = cognitoMapper.toAdminCreateUser(userName, USER_POOL_ID, ADMIN_PASS, ADMIN_EMAIL);
-    
-  const adminCreateUserResult = await cognito.adminCreateUser(config).promise();
+    const config = this.mapper.toAdminCreateUser(userName, USER_POOL_ID, ADMIN_PASS, ADMIN_EMAIL);
 
-  await cognito.adminSetUserPassword({
-    Password: ADMIN_PASS,
-    UserPoolId: USER_POOL_ID,
-    Username: userName,
-    Permanent: true
-  }).promise();
+    const adminCreateUserResult = await this.provider.adminCreateUser(config).promise();
 
-  return adminCreateUserResult;
-};
+    await this.provider
+      .adminSetUserPassword({
+        Password: ADMIN_PASS,
+        UserPoolId: USER_POOL_ID,
+        Username: userName,
+        Permanent: true
+      })
+      .promise();
 
-export const signUp = async (node: SignUpNode): Promise<string> => {
-  const { email } = node;
+    return adminCreateUserResult;
+  };
 
-  const listUsersConfig = cognitoMapper.toListUsersConfig(USER_POOL_ID, email);
+  signUp = async (node: SignUpNode): Promise<string> => {
+    const { email } = node;
 
-  const listUsersResult = await cognito.listUsers(listUsersConfig).promise();
+    const listUsersConfig = this.mapper.toListUsersConfig(USER_POOL_ID, email);
 
-  const accountWithEmailExists = listUsersResult && listUsersResult.Users.length;
+    const listUsersResult = await this.provider.listUsers(listUsersConfig).promise();
 
-  if (accountWithEmailExists) {
-    throw new AccountConflictException();
-  }
+    const accountWithEmailExists = listUsersResult && listUsersResult.Users.length;
 
-  const signUpConfig = cognitoMapper.toSignUpConfig(CLIENT_ID, node);
+    if (accountWithEmailExists) {
+      throw new AccountConflictException();
+    }
 
-  const signUpResult = await cognito.signUp(signUpConfig).promise();
+    const signUpConfig = this.mapper.toSignUpConfig(CLIENT_ID, node);
 
-  return signUpResult.UserSub;
-};
+    const signUpResult = await this.provider.signUp(signUpConfig).promise();
 
-export const validate = async (token: string): Promise<GetUserResponse> => {
-  const config = cognitoMapper.toGetUserConfig(token);
+    return signUpResult.UserSub;
+  };
 
-  const result = await cognito.getUser(config).promise();
+  validate = async (token: string): Promise<GetUserResponse> => {
+    const config = this.mapper.toGetUserConfig(token);
 
-  const isTokenInvalid = !result || !result.UserAttributes;
+    const result = await this.provider.getUser(config).promise();
 
-  if (isTokenInvalid) {
-    throw new InvalidTokenException();
-  }
+    const isTokenInvalid = !result || !result.UserAttributes;
 
-  return result;
-};
+    if (isTokenInvalid) {
+      throw new InvalidTokenException();
+    }
+
+    return result;
+  };
+}
