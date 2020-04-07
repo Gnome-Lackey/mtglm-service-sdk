@@ -1,11 +1,4 @@
-import {
-  PlayerView,
-  RecordView,
-  MatchView,
-  SeasonView,
-  ScryfallSetView,
-  PlayerRoleView
-} from "./Views";
+import { PlayerView, MatchView, SeasonView, ScryfallSetView, PlayerRoleView } from "./Views";
 
 export interface AuthHeaderResponse {
   "X-ID-Token": string;
@@ -33,8 +26,9 @@ export interface ErrorResponse {
     | "UsernameExistsException"
     | "UserNotConfirmedException"
     | "UserNotFoundException";
-  message?: string;
   content?: object | string;
+  message?: string;
+  statusCode?: number;
 }
 
 export interface LoginResponse {
@@ -43,47 +37,22 @@ export interface LoginResponse {
 }
 
 export interface MatchResponse extends MatchView {
-  players: RecordResponse[];
-  season: string;
+  losers: string[] | PlayerView[];
+  season: string | SeasonView;
+  winners: string[] | PlayerView[];
 }
 
-export interface MatchDetailsResponse extends MatchView {
-  players: RecordDetailsResponse[];
-  season: SeasonDetailsResponse;
+export interface PlayerResponse extends PlayerView {
+  [key: string]: string | string[] | number;
 }
 
 export interface PlayerRoleResponse extends PlayerRoleView {
   role: string;
 }
 
-export interface PlayerResponse extends PlayerView {
-  matches: string[];
-}
-
-export interface PlayerDetailsResponse extends PlayerView {
-  matches: MatchView[];
-}
-
-export interface RecordResponse extends RecordView {
-  losses: number;
-  player: string;
-  match: string;
-}
-
-export interface RecordDetailsResponse extends RecordView {
-  losses: number;
-  player: PlayerView;
-  match: MatchView;
-}
-
 export interface SeasonResponse extends SeasonView {
-  set: string;
-  players: string[];
-}
-
-export interface SeasonDetailsResponse extends SeasonView {
-  set: ScryfallSetView;
-  players: PlayerView[];
+  players: string[] | PlayerView[];
+  set: string | ScryfallSetView;
 }
 
 export interface SuccessResponse {
@@ -91,12 +60,12 @@ export interface SuccessResponse {
 }
 
 export interface UserResponse {
-  id: string;
-  userName: string;
-  firstName?: string;
-  lastName?: string;
-  email: string;
-  displayName: string;
-  isFirstTimeLogin?: boolean;
   accountType: string;
+  displayName: string;
+  email: string;
+  firstName?: string;
+  id: string;
+  isFirstTimeLogin?: boolean;
+  lastName?: string;
+  userName: string;
 }

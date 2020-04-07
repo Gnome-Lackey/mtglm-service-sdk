@@ -1,11 +1,3 @@
-export const PROPERTIES_MATCH = ["playerRecords"];
-export const PROPERTIES_PLAYER = [
-  "playerName",
-  "totalMatchWins",
-  "totalMatchLosses",
-  "matchIds",
-  "favoriteColors",
-  "epithet"
-];
-export const PROPERTIES_RECORD = ["wins"];
-export const PROPERTIES_SEASON = ["isActive", "startDate", "endDate", "playerIds", "setCode"];
+export const PROPERTIES_MATCH = ["gamesPlayed", "isSeasonPoint", "loserIds", "winnerId", "wins"];
+export const PROPERTIES_PLAYER = ["epithet", "favoriteColors", "matchIds", "playerName"];
+export const PROPERTIES_SEASON = ["endDate", "isActive", "playerIds", "setCode", "startDate"];

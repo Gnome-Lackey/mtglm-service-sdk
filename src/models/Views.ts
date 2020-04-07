@@ -1,62 +1,58 @@
 export interface MatchView {
   id: string;
-}
-
-export interface PlayerView {
-  id: string;
-  email: string;
-  displayName?: string;
-  userName: string;
-  epithet: string;
-  colors: string[];
-  totalWins: number;
-  totalLosses: number;
-}
-
-export interface PlayerRoleView {
-  id: string;
-  email: string;
-  displayName?: string;
-  userName: string;
-}
-
-export interface RecordView {
-  id: string;
+  isSeasonPoint: boolean;
+  games: number;
   wins: number;
 }
 
-export interface ScryfallCardView {
+export interface PlayerView {
+  colors: string[];
+  displayName?: string;
+  email: string;
+  epithet: string;
   id: string;
-  name: string;
-  language: string;
-  releasedOn: string;
-  image: string;
+  userName: string;
+}
+
+export interface PlayerRoleView {
+  displayName?: string;
+  email: string;
+  id: string;
+  userName: string;
+}
+
+export interface ScryfallCardView {
+  colors: string[];
   costs: {
     mana: string;
     converted: number;
   };
-  type: string;
-  subtype: string;
-  colors: string[];
+  id: string;
   identity: string[];
+  image: string;
+  language: string;
+  name: string;
+  rarity: string;
+  releasedOn: string;
   set: {
     code: string;
     name: string;
   };
-  rarity: string;
+  subtype: string;
+  type: string;
 }
 
 export interface ScryfallSetView {
-  id: string;
+  cardCount: number;
   code: string;
+  id: string;
   name: string;
   releasedOn: string;
-  cardCount: number;
 }
 
 export interface SeasonView {
+  endedOn: string;
   id: string;
   isActive: boolean;
   startedOn: string;
-  endedOn: string;
 }

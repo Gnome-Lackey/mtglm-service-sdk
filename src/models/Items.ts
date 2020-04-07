@@ -1,64 +1,53 @@
 export interface MatchDynamoCreateItem {
+  gamesPlayed: number;
+  isSeasonPoint: boolean;
+  loserIds: string[];
   matchId: string;
   seasonId: string;
-  playerRecords: string[];
   updatedOn: string;
+  winnerIds: string[];
+  wins: number;
 }
 
 export interface MatchDynamoUpdateItem {
-  seasonId: string;
-  playerRecords: string[];
-}
-
-export interface PlayerDynamoCreateItem {
-  playerId: string;
-  playerName: string;
-  userName: string;
-  email: string;
-  totalMatchWins: number;
-  totalMatchLosses: number;
-  epithet: string;
-  favoriteColors: string[];
-  matchIds?: string[];
-  updatedOn: string;
-}
-
-export interface PlayerDynamoUpdateItem {
-  playerName?: string;
-  userName?: string;
-  email?: string;
-  totalMatchWins?: number;
-  totalMatchLosses?: number;
-  epithet?: string;
-  favoriteColors?: string[];
-  matchIds?: string[];
-}
-
-export interface RecordDynamoCreateItem {
-  recordId: string;
-  wins: number;
-  playerId: string;
-  matchId: string;
-  updatedOn: string;
-}
-
-export interface RecordDynamoUpdateItem {
+  gamesPlayed?: number;
+  isSeasonPoint?: boolean;
+  loserIds?: string[];
+  winnerIds?: string;
   wins?: number;
 }
 
+export interface PlayerDynamoCreateItem {
+  email: string;
+  epithet: string;
+  favoriteColors: string[];
+  playerId: string;
+  playerName: string;
+  updatedOn: string;
+  userName: string;
+}
+
+export interface PlayerDynamoUpdateItem {
+  email?: string;
+  epithet?: string;
+  favoriteColors?: string[];
+  playerName?: string;
+  userName?: string;
+}
+
 export interface SeasonDynamoCreateItem {
-  seasonId: string;
-  isActive: boolean;
-  startDate: string;
   endDate: string;
-  setCode: string;
+  isActive: boolean;
   playerIds: string[];
+  seasonId: string;
+  setCode: string;
+  startDate: string;
   updatedOn: string;
 }
 
 export interface SeasonDynamoUpdateItem {
-  isActive?: boolean;
   endDate?: string;
-  setCode?: string;
+  isActive?: boolean;
   playerIds?: string[];
+  setCode?: string;
 }

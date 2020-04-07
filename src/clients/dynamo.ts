@@ -1,35 +1,36 @@
-import * as aws from "aws-sdk";
-import { AttributeMap } from "aws-sdk/clients/dynamodb";
+import { DynamoDB } from "aws-sdk";
 
-import * as dynamoMapper from "../mappers/dynamo";
+import {
+  AttributeMap,
+  ExpressionAttributeNameMap,
+  ExpressionAttributeValueMap
+} from "aws-sdk/clients/dynamodb";
+
+import DynamoMapper from "../mappers/dynamo";
 
 import {
   MatchPrimaryKey,
   SeasonPrimaryKey,
-  RecordPrimaryKey,
   PotentialPrimaryKey,
-  PlayerPrimaryKey
+  PlayerPrimaryKey,
+  SeasonMetadataKey
 } from "../models/PrimaryKeys";
 import {
   MatchDynamoCreateItem,
   SeasonDynamoCreateItem,
-  RecordDynamoCreateItem,
   PlayerDynamoCreateItem,
   MatchDynamoUpdateItem,
   SeasonDynamoUpdateItem,
-  RecordDynamoUpdateItem,
   PlayerDynamoUpdateItem
 } from "../models/Items";
+import { MatchFilters, PlayerFilters, SeasonFilters } from "../models/Filters";
 
-import { PlayerFilters, SeasonFilters } from "../models/Filters";
+export default class MTGLMDynamoClient {
+  private tableName: string;
+  private updatableAttributes: string[];
 
-const dynamoDB = new aws.DynamoDB.DocumentClient({
-  region: "us-east-1"
-});
-
-export class MTGLMDynamoClient {
-  tableName: string;
-  updatableAttributes: string[];
+  private database = new DynamoDB.DocumentClient({ region: "us-east-1" });
+  private mapper = new DynamoMapper();
 
   constructor(tableName: string, updatableAttributes: string[] = []) {
     if (!tableName) {
@@ -40,60 +41,62 @@ export class MTGLMDynamoClient {
     this.updatableAttributes = updatableAttributes;
   }
 
-  fetchByKeys = async (keys: PotentialPrimaryKey[]): Promise<AttributeMap[]> => {
-    const config = dynamoMapper.toGetBatchConfiguration(keys, this.tableName);
+  async fetchByKeys(keys: PotentialPrimaryKey[]): Promise<AttributeMap[]> {
+    const config = this.mapper.toGetBatchConfiguration(keys, this.tableName);
 
-    const results = await dynamoDB.batchGet(config).promise();
+    const results = await this.database.batchGet(config).promise();
 
     return results.Responses[this.tableName];
-  };
+  }
 
-  fetchByKey = async (key: PotentialPrimaryKey): Promise<AttributeMap> => {
+  async fetchByKey(key: PotentialPrimaryKey): Promise<AttributeMap> {
     const config = {
       Key: key,
       TableName: this.tableName
     };
 
-    const result = await dynamoDB.get(config).promise();
+    const result = await this.database.get(config).promise();
 
     return result.Item;
-  };
+  }
 
-  async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
-  async query(filters?: SeasonFilters): Promise<AttributeMap[]>;
-  async query(filters?: any): Promise<AttributeMap[]> {
-    const result = await dynamoDB
-      .scan({
-        TableName: this.tableName
+  async custom(
+    attributeNames: ExpressionAttributeNameMap,
+    attributeValues: ExpressionAttributeValueMap,
+    expression: string
+  ): Promise<AttributeMap[]> {
+    const result = await this.database
+      .query({
+        TableName: this.tableName,
+        ExpressionAttributeNames: attributeNames,
+        ExpressionAttributeValues: attributeValues,
+        FilterExpression: expression
       })
       .promise();
 
-    return filters
-      ? result.Items.filter((item) =>
-          Object.keys(filters).some((name) =>
-            item[name]
-              ? item[name]
-                  .toString()
-                  .toLowerCase()
-                  .includes(filters[name].toString().toLowerCase())
-              : false
-          )
-        )
-      : result.Items;
+    return result.Items;
   }
 
-  remove = async (key: PotentialPrimaryKey): Promise<void> => {
+  async query(filters?: MatchFilters): Promise<AttributeMap[]>;
+  async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
+  async query(filters?: SeasonFilters): Promise<AttributeMap[]>;
+  async query(filters?: any): Promise<AttributeMap[]> {
+    const result = await this.database.scan({ TableName: this.tableName }).promise();
+
+    return this.mapper.toScanResults(filters, result.Items);
+  }
+
+  async remove(key: PotentialPrimaryKey): Promise<void> {
     const config = {
       Key: key,
       TableName: this.tableName
     };
 
-    await dynamoDB.delete(config).promise();
-  };
+    await this.database.delete(config).promise();
+  }
 
   async create(key: MatchPrimaryKey, item: MatchDynamoCreateItem): Promise<AttributeMap>;
   async create(key: SeasonPrimaryKey, item: SeasonDynamoCreateItem): Promise<AttributeMap>;
-  async create(key: RecordPrimaryKey, item: RecordDynamoCreateItem): Promise<AttributeMap>;
   async create(key: PlayerPrimaryKey, item: PlayerDynamoCreateItem): Promise<AttributeMap>;
   async create(key: any, item: any): Promise<AttributeMap> {
     const config = {
@@ -101,57 +104,56 @@ export class MTGLMDynamoClient {
       TableName: this.tableName
     };
 
-    await dynamoDB.put(config).promise();
+    await this.database.put(config).promise();
 
     return await this.fetchByKey(key);
   }
 
   async update(key: MatchPrimaryKey, item: MatchDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: SeasonPrimaryKey, item: SeasonDynamoUpdateItem): Promise<AttributeMap>;
-  async update(key: RecordPrimaryKey, item: RecordDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: PlayerPrimaryKey, item: PlayerDynamoUpdateItem): Promise<AttributeMap>;
   async update(key: any, item: any): Promise<AttributeMap> {
-    const config = dynamoMapper.toUpdateConfiguration(
+    const config = this.mapper.toUpdateConfiguration(
       key,
       item,
       this.updatableAttributes,
       this.tableName
     );
 
-    await dynamoDB.update(config).promise();
+    await this.database.update(config).promise();
 
     return await this.fetchByKey(key);
   }
 
+  async updateList(key: SeasonMetadataKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: MatchPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: SeasonPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
-  async updateList(key: RecordPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: PlayerPrimaryKey, field: string, values: string[]): Promise<AttributeMap>;
   async updateList(key: any, field: string, values: string[]): Promise<AttributeMap> {
     if (!this.updatableAttributes.includes(field)) {
       throw new Error("Update List Error: Invalid or protected attribute supplied.");
     }
 
-    const config = dynamoMapper.toUpdateListConfiguration(key, field, values, this.tableName);
+    const config = this.mapper.toUpdateListConfiguration(key, field, values, this.tableName);
 
-    await dynamoDB.update(config).promise();
+    await this.database.update(config).promise();
 
     return this.fetchByKey(key);
   }
 
-  updateSingleField = async (
+  async updateSingleField(
     key: PotentialPrimaryKey,
     field: string,
     value: string | string[]
-  ): Promise<AttributeMap> => {
+  ): Promise<AttributeMap> {
     if (!this.updatableAttributes.includes(field)) {
       throw new Error("Update Field Error: Invalid or protected attribute supplied.");
     }
 
-    const config = dynamoMapper.toUpdateSingleFieldConfiguration(key, field, value, this.tableName);
+    const config = this.mapper.toUpdateSingleFieldConfiguration(key, field, value, this.tableName);
 
-    await dynamoDB.update(config).promise();
+    await this.database.update(config).promise();
 
     return this.fetchByKey(key);
-  };
+  }
 }

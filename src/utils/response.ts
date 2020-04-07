@@ -1,17 +1,12 @@
 import { LambdaResponse } from "../models/Lambda";
 import {
   ErrorResponse,
-  RecordResponse,
-  RecordDetailsResponse,
   MatchResponse,
-  MatchDetailsResponse,
   SeasonResponse,
-  SeasonDetailsResponse,
   SuccessResponse,
   AuthResponse,
   AuthHeaderResponse,
   PlayerResponse,
-  PlayerDetailsResponse,
   PlayerRoleResponse
 } from "../models/Responses";
 
@@ -21,7 +16,6 @@ import { DEFAULT_HEADERS } from "../constants/headers";
 import {
   ERROR_NAMES,
   ERROR_MESSAGES,
-  ERROR_CODES,
   ERROR_DISPLAY_CODES,
   DEFAULT_ERROR_CODE,
   DEFAULT_ERROR_DISPLAY_CODES,
@@ -45,9 +39,9 @@ export const handleError = (
   console.log("[ERROR] Original Error:", error);
 
   const name = ERROR_NAMES[error.code];
-  const code = ERROR_CODES[name] || DEFAULT_ERROR_CODE;
-  const displayCode = ERROR_DISPLAY_CODES[name] || DEFAULT_ERROR_DISPLAY_CODES;
-  const message = ERROR_MESSAGES[domain] ? ERROR_MESSAGES[domain][name] : DEFAULT_ERROR_MESSAGE;
+  const code = error.statusCode || DEFAULT_ERROR_CODE;
+  const displayCode = ERROR_DISPLAY_CODES[domain][name] || DEFAULT_ERROR_DISPLAY_CODES;
+  const message = ERROR_MESSAGES[domain][name] || DEFAULT_ERROR_MESSAGE;
 
   console.log("[ERROR] Response:", code, displayCode, message);
 
@@ -69,26 +63,16 @@ export const handleError = (
 export function handleSuccess(body: AuthResponse, headers?: AuthHeaderResponse): LambdaResponse;
 export function handleSuccess(body: MatchResponse): LambdaResponse;
 export function handleSuccess(body: MatchResponse[]): LambdaResponse;
-export function handleSuccess(body: MatchDetailsResponse): LambdaResponse;
-export function handleSuccess(body: MatchDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: PlayerResponse): LambdaResponse;
 export function handleSuccess(body: PlayerResponse[]): LambdaResponse;
 export function handleSuccess(body: PlayerRoleResponse): LambdaResponse;
 export function handleSuccess(body: PlayerRoleResponse[]): LambdaResponse;
-export function handleSuccess(body: PlayerDetailsResponse): LambdaResponse;
-export function handleSuccess(body: PlayerDetailsResponse[]): LambdaResponse;
-export function handleSuccess(body: RecordResponse): LambdaResponse;
-export function handleSuccess(body: RecordResponse[]): LambdaResponse;
-export function handleSuccess(body: RecordDetailsResponse): LambdaResponse;
-export function handleSuccess(body: RecordDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: ScryfallCardView): LambdaResponse;
 export function handleSuccess(body: ScryfallCardView[]): LambdaResponse;
 export function handleSuccess(body: ScryfallSetView): LambdaResponse;
 export function handleSuccess(body: ScryfallSetView[]): LambdaResponse;
 export function handleSuccess(body: SeasonResponse): LambdaResponse;
 export function handleSuccess(body: SeasonResponse[]): LambdaResponse;
-export function handleSuccess(body: SeasonDetailsResponse): LambdaResponse;
-export function handleSuccess(body: SeasonDetailsResponse[]): LambdaResponse;
 export function handleSuccess(body: SuccessResponse): LambdaResponse;
 export function handleSuccess(body: any, headers?: any): LambdaResponse {
   const statusCode = 200;
