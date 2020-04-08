@@ -29,6 +29,7 @@ export interface ErrorDomains {
   };
   INIT_ADMIN_ACCOUNT?: {
     [key: string]: string;
+    USER_EXISTS: string;
   };
   LOGIN: {
     [key: string]: string;
