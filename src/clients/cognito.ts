@@ -104,7 +104,13 @@ export default class CognitoClient {
   };
 
   initAdminAccount = async (): Promise<AdminCreateUserResponse> => {
-    const listUsersConfig = this.mapper.toListUsersConfig(this.userPoolId, this.adminEmail);
+    const userName = "admin";
+
+    const listUsersConfig = this.mapper.toListUsersConfig(
+      this.userPoolId,
+      userName,
+      this.adminEmail
+    );
 
     const listUsersResult = await this.provider.listUsers(listUsersConfig).promise();
 
@@ -113,8 +119,6 @@ export default class CognitoClient {
     if (accountWithEmailExists) {
       return null;
     }
-
-    const userName = "admin";
 
     const config = this.mapper.toAdminCreateUser(
       userName,
@@ -138,9 +142,9 @@ export default class CognitoClient {
   };
 
   signUp = async (node: SignUpNode): Promise<string> => {
-    const { email } = node;
+    const { email, userName } = node;
 
-    const listUsersConfig = this.mapper.toListUsersConfig(this.userPoolId, email);
+    const listUsersConfig = this.mapper.toListUsersConfig(this.userPoolId, userName, email);
 
     const listUsersResult = await this.provider.listUsers(listUsersConfig).promise();
 

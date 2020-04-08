@@ -77,10 +77,10 @@ export default class CognitoMapper {
     Username: userName
   });
 
-  toListUsersConfig = (poolId: string, email: string): ListUsersRequest => ({
+  toListUsersConfig = (poolId: string, username: string, email: string): ListUsersRequest => ({
     UserPoolId: poolId,
-    AttributesToGet: ["email"],
-    Filter: `email="${email}"`
+    AttributesToGet: ["email", "username"],
+    Filter: `email="${email}" OR username="${username}"`
   });
 
   toAdminCreateUser = (
