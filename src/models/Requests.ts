@@ -1,74 +1,90 @@
-export interface RecordCreateRequest {
-  wins: number;
-  losses: number;
-  player: string;
-  match: string;
+export interface ConfirmRegistrationBodyRequest {
+  userName: string;
+  verificationCode: string;
 }
 
-export interface RecordUpdateRequest {
-  wins?: number;
-  losses?: number;
-  player?: string;
+export interface LoginBodyRequest {
+  password: string;
+  userName: string;
 }
 
 export interface MatchCreateRequest {
-  playerA: RecordCreateRequest;
-  playerB: RecordCreateRequest;
+  games: number;
+  isSeasonPoint: boolean;
+  losers: string[];
+  season: string;
+  winners: string[];
+  wins: number;
 }
 
 export interface MatchUpdateRequest {
-  playerA?: RecordUpdateRequest;
-  playerB?: RecordUpdateRequest;
+  games?: number;
+  id?: string;
+  isSeasonPoint?: boolean;
+  losers?: string[];
+  season?: string;
+  winners?: string;
+  wins?: number;
 }
 
 export interface PlayerCreateRequest {
+  email: string;
+  epithet?: string;
+  favoriteColors?: string[];
+  id: string;
   name: string;
-  totalWins: number;
-  totalLosses: number;
+  userName: string;
 }
 
 export interface PlayerUpdateRequest {
+  email?: string;
+  epithet?: string;
+  favoriteColors?: string[];
   name?: string;
-  totalWins?: number;
-  totalLosses?: number;
+  userName?: string;
+}
+
+export interface PlayerUpdateRoleRequest {
+  role: string;
+}
+
+export interface ResendConfirmationCodeBodyRequest {
+  userName: string;
 }
 
 export interface SeasonCreateRequest {
+  endedOn: string;
   isActive: boolean;
-  startDate: string;
-  endDate: string;
-  set: string;
   players: string[];
-  matches: string[];
+  set: string;
+  startedOn: string;
 }
 
 export interface SeasonUpdateRequest {
+  endedOn?: string;
   isActive?: boolean;
-  startDate?: string;
-  endDate?: string;
-  set?: string;
   players?: string[];
-  matches?: string[];
+  set?: string;
+  startedOn?: string;
 }
 
-export interface SetCreateRequest {
-  name: string;
-  icon: string;
-}
-
-export interface SetUpdateRequest {
-  name?: string;
-  icon?: string;
+export interface SignUpBodyRequest {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+  password: string;
+  userName: string;
 }
 
 export type PotentialRequest =
-  | RecordCreateRequest
-  | RecordUpdateRequest
   | MatchCreateRequest
   | MatchUpdateRequest
   | PlayerCreateRequest
   | PlayerUpdateRequest
+  | PlayerUpdateRoleRequest
   | SeasonCreateRequest
   | SeasonUpdateRequest
-  | SetCreateRequest
-  | SetUpdateRequest;
+  | LoginBodyRequest
+  | ConfirmRegistrationBodyRequest
+  | ResendConfirmationCodeBodyRequest
+  | SignUpBodyRequest;

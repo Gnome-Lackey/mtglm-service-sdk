@@ -1,2 +1,11 @@
+# Build
 build/
+
+# Dependencies
 node_modules/
+
+# Logs
+yarn-error.log
+
+# IDE
+.vscode/

@@ -1,27 +1,28 @@
 export interface MatchPathParameters {
-  matchId: string;
+  matchId?: string;
 }
 
 export interface PlayerPathParameters {
-  playerId: string;
+  playerId?: string;
+}
+
+export interface ScryfallCardPathParameters {
+  cardId?: string;
+}
+
+export interface ScryfallSetPathParameters {
+  code?: string;
 }
 
 export interface SeasonPathParameters {
-  seasonId: string;
-}
-
-export interface SetPathParameters {
-  setId: string;
-}
-
-export interface RecordPathParameters {
-  recordId: string;
+  playerId?: string;
+  seasonId?: string;
 }
 
 export interface PotentialPathParameters {
+  cardId?: string;
+  code?: string;
   matchId?: string;
   playerId?: string;
   seasonId?: string;
-  setId?: string;
-  recordId?: string;
 }

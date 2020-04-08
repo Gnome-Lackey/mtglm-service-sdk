@@ -1,11 +1,11 @@
 import { PotentialPrimaryKey } from "./PrimaryKeys";
 
 export interface DynamoUpdateConfig {
-  Key: PotentialPrimaryKey;
   ExpressionAttributeNames: { [key: string]: string };
   ExpressionAttributeValues: { [key: string]: string | number | boolean | string[] };
-  UpdateExpression: string;
+  Key: PotentialPrimaryKey;
   TableName: string;
+  UpdateExpression: string;
 }
 
 export interface DynamoGetBatchConfig {
@@ -17,19 +17,15 @@ export interface DynamoGetBatchConfig {
 }
 
 export interface DynamoIndexConfig {
-  ExpressionAttributeNames: {
-    [index: string]: string;
-  };
-  ExpressionAttributeValues: {
-    [iid: string]: string;
-  };
-  KeyConditionExpression: string;
+  ExpressionAttributeNames: { [index: string]: string; };
+  ExpressionAttributeValues: { [iid: string]: string; };
   IndexName: string;
+  KeyConditionExpression: string;
   TableName: string;
 }
 
 export interface DynamoUpdateListConfig {
-  Key: PotentialPrimaryKey;
+  ConditionExpression: string;
   ExpressionAttributeNames: {
     "#list": string;
     "#updatedOn": string;
@@ -39,8 +35,9 @@ export interface DynamoUpdateListConfig {
     ":listItem": string[];
     ":updatedOn": string;
   };
-  UpdateExpression: string;
+  Key: PotentialPrimaryKey;
   TableName: string;
+  UpdateExpression: string;
 }
 
 export interface DynamoAttributeNames {
@@ -54,6 +51,6 @@ export interface DynamoAttributeValues {
 export interface DynamoAttributeMapping {
   ExpressionAttributeNames: DynamoAttributeNames;
   ExpressionAttributeValues: DynamoAttributeValues;
-  UpdateExpressions: string[];
   RemoveExpressions: string[];
+  UpdateExpressions: string[];
 }
