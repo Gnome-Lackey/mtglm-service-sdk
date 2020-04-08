@@ -24,7 +24,10 @@ export const ERROR_MESSAGES: ErrorDomains = {
     UNAUTHORIZED: "We're sorry, but you are not authorized to access this page."
   },
   DEFAULT: {
-    UNAUTHORIZED: "We're sorry, but you are not authorized to access this page."
+    UNAUTHORIZED: "We're sorry, but you are not authorized to access this page.",
+  },
+  INIT_ADMIN_ACCOUNT: {
+    USER_EXISTS: "An account exists with the given username. Please use a different username to continue."
   },
   LOGIN: {
     INVALID_PASSWORD: "The username or password you have entered does not match our records, please try again.",
@@ -55,7 +58,10 @@ export const ERROR_DISPLAY_CODES: ErrorDomains = {
     UNAUTHORIZED: "unauthorized"
   },
   DEFAULT: {
-    UNAUTHORIZED: "unauthorized"
+    UNAUTHORIZED: "unauthorized",
+  },
+  INIT_ADMIN_ACCOUNT: {
+    USER_EXISTS: "collision"
   },
   LOGIN: {
     INVALID_PASSWORD: "invalidCredentials",
