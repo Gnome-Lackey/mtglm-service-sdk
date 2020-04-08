@@ -3,7 +3,7 @@ import { ScryfallSetNode, ScryfallCardNode } from "../models/Nodes";
 import { ScryfallCardQueryParameters } from "../models/QueryParameters";
 
 export default class ScryfallMapper {
-  toCardView(data: ScryfallCardNode): ScryfallCardView {
+  toCardView = (data: ScryfallCardNode): ScryfallCardView => {
     const [type, subtype] = data.type_line.includes("—")
       ? data.type_line.split(" — ")
       : [data.type_line];
@@ -28,7 +28,7 @@ export default class ScryfallMapper {
       },
       rarity: data.rarity
     };
-  }
+  };
 
   toSetView = (data: ScryfallSetNode): ScryfallSetView => ({
     id: data.id,
@@ -38,7 +38,7 @@ export default class ScryfallMapper {
     code: data.code
   });
 
-  toQueryString(map: ScryfallCardQueryParameters): string {
+  toQueryString = (map: ScryfallCardQueryParameters): string => {
     if (!map) {
       return "";
     }
@@ -74,5 +74,5 @@ export default class ScryfallMapper {
     });
 
     return `q=${query.join("+")}`;
-  }
+  };
 }

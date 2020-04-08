@@ -1,6 +1,6 @@
 import * as decodeToken from "jwt-decode";
 
-import { handleError } from "../utils/response";
+import ResponseHandler from "../utils/response";
 
 import { LambdaResponse, LambdaEvent, LambdaHeaders, LambdaToken } from "../models/Lambda";
 import { PotentialPathParameters } from "../models/PathParameters";
@@ -8,6 +8,8 @@ import { PotentialQueryParameters } from "../models/QueryParameters";
 import { PotentialRequest } from "../models/Requests";
 
 import { ADMIN_ROLE } from "../constants/roles";
+
+const responseHandler = new ResponseHandler();
 
 type RequestResourceMiddlewareCallbackType = (
   pathParameters?: PotentialPathParameters,
@@ -60,7 +62,7 @@ export default function requestResourceMiddleware(
 
       return await callback(pathParameters, data, queryStringParameters);
     } else {
-      return handleError({
+      return responseHandler.error({
         code: "InvalidIdTokenException",
         message: "The ID token passed in is invalid or unauthorized to access this api.",
         content: headers

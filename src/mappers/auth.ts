@@ -12,11 +12,15 @@ import { AuthResponse, AuthHeaderResponse } from "../models/Responses";
 import { USER_ROLE } from "../constants/roles";
 
 export default class AuthMapper {
-  private getAttributeByName(name: string, attrs: AttributeType[]): string {
+  constructor() {
+    Function.prototype.bind(this.toUserNode, this);
+  }
+
+  private getAttributeByName = (name: string, attrs: AttributeType[]): string => {
     const attribute = attrs.find((attr) => attr.Name === name);
 
     return attribute ? attribute.Value : "";
-  }
+  };
 
   private toUserNode(data: GetUserResponse): UserNode;
   private toUserNode(data: AdminCreateUserResponse): UserNode;
@@ -79,7 +83,7 @@ export default class AuthMapper {
     }
   });
 
-  toResponseInitAdmin(data: AdminCreateUserResponse): AuthResponse {
+  toResponseInitAdmin = (data: AdminCreateUserResponse): AuthResponse => {
     const extractedAttributes = this.toUserNode(data);
 
     return {
@@ -93,7 +97,7 @@ export default class AuthMapper {
         accountType: extractedAttributes.role
       }
     };
-  }
+  };
 
   toResponseSignUp = (uid: string, data: SignUpNode): AuthResponse => ({
     user: {
@@ -105,7 +109,7 @@ export default class AuthMapper {
     }
   });
 
-  toResponseValidate(data: GetUserResponse): AuthResponse {
+  toResponseValidate = (data: GetUserResponse): AuthResponse => {
     const extractedAttributes = this.toUserNode(data);
 
     return {
@@ -119,5 +123,5 @@ export default class AuthMapper {
         accountType: extractedAttributes.role
       }
     };
-  }
+  };
 }

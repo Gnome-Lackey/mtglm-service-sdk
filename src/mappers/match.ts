@@ -10,7 +10,7 @@ import { MatchQueryParameters } from "../models/QueryParameters";
 import { MatchFilters } from "../models/Filters";
 
 export default class MatchMapper {
-  toCreateItem(details: MatchCreateRequest): MatchDynamoCreateItem {
+  toCreateItem = (details: MatchCreateRequest): MatchDynamoCreateItem => {
     const date = new Date().valueOf().toString();
 
     return {
@@ -23,7 +23,7 @@ export default class MatchMapper {
       wins: details.wins,
       updatedOn: date
     };
-  }
+  };
 
   toUpdateItem = (data: MatchUpdateRequest): MatchDynamoUpdateItem => ({
     isSeasonPoint: data.isSeasonPoint,
@@ -51,7 +51,7 @@ export default class MatchMapper {
     wins: data.wins
   });
 
-  toFilters(queryParams: MatchQueryParameters): MatchFilters {
+  toFilters = (queryParams: MatchQueryParameters): MatchFilters => {
     const filters: MatchFilters = {};
 
     if (queryParams.seasonPoint === "true" || queryParams.seasonPoint === "false") {
@@ -79,5 +79,5 @@ export default class MatchMapper {
     }
 
     return filters;
-  }
+  };
 }
