@@ -8,6 +8,7 @@ import {
 
 import DynamoMapper from "../mappers/dynamo";
 
+import { MatchFilters, PlayerFilters, SeasonFilters } from "../models/Filters";
 import {
   MatchPrimaryKey,
   SeasonPrimaryKey,
@@ -23,7 +24,6 @@ import {
   SeasonDynamoUpdateItem,
   PlayerDynamoUpdateItem
 } from "../models/Items";
-import { MatchFilters, PlayerFilters, SeasonFilters } from "../models/Filters";
 
 export default class MTGLMDynamoClient {
   private tableName: string;
@@ -39,17 +39,22 @@ export default class MTGLMDynamoClient {
 
     this.tableName = tableName;
     this.updatableAttributes = updatableAttributes;
+
+    Function.prototype.bind(this.query, this);
+    Function.prototype.bind(this.create, this);
+    Function.prototype.bind(this.update, this);
+    Function.prototype.bind(this.updateList, this);
   }
 
-  async fetchByKeys(keys: PotentialPrimaryKey[]): Promise<AttributeMap[]> {
+  fetchByKeys = async (keys: PotentialPrimaryKey[]): Promise<AttributeMap[]> => {
     const config = this.mapper.toGetBatchConfiguration(keys, this.tableName);
 
     const results = await this.database.batchGet(config).promise();
 
     return results.Responses[this.tableName];
-  }
+  };
 
-  async fetchByKey(key: PotentialPrimaryKey): Promise<AttributeMap> {
+  fetchByKey = async (key: PotentialPrimaryKey): Promise<AttributeMap> => {
     const config = {
       Key: key,
       TableName: this.tableName
@@ -58,13 +63,13 @@ export default class MTGLMDynamoClient {
     const result = await this.database.get(config).promise();
 
     return result.Item;
-  }
+  };
 
-  async custom(
+  custom = async (
     attributeNames: ExpressionAttributeNameMap,
     attributeValues: ExpressionAttributeValueMap,
     expression: string
-  ): Promise<AttributeMap[]> {
+  ): Promise<AttributeMap[]> => {
     const result = await this.database
       .query({
         TableName: this.tableName,
@@ -75,7 +80,7 @@ export default class MTGLMDynamoClient {
       .promise();
 
     return result.Items;
-  }
+  };
 
   async query(filters?: MatchFilters): Promise<AttributeMap[]>;
   async query(filters?: PlayerFilters): Promise<AttributeMap[]>;
@@ -86,14 +91,14 @@ export default class MTGLMDynamoClient {
     return this.mapper.toScanResults(filters, result.Items);
   }
 
-  async remove(key: PotentialPrimaryKey): Promise<void> {
+  remove = async (key: PotentialPrimaryKey): Promise<void> => {
     const config = {
       Key: key,
       TableName: this.tableName
     };
 
     await this.database.delete(config).promise();
-  }
+  };
 
   async create(key: MatchPrimaryKey, item: MatchDynamoCreateItem): Promise<AttributeMap>;
   async create(key: SeasonPrimaryKey, item: SeasonDynamoCreateItem): Promise<AttributeMap>;
@@ -141,11 +146,11 @@ export default class MTGLMDynamoClient {
     return this.fetchByKey(key);
   }
 
-  async updateSingleField(
+  updateSingleField = async (
     key: PotentialPrimaryKey,
     field: string,
     value: string | string[]
-  ): Promise<AttributeMap> {
+  ): Promise<AttributeMap> => {
     if (!this.updatableAttributes.includes(field)) {
       throw new Error("Update Field Error: Invalid or protected attribute supplied.");
     }
@@ -155,5 +160,5 @@ export default class MTGLMDynamoClient {
     await this.database.update(config).promise();
 
     return this.fetchByKey(key);
-  }
+  };
 }

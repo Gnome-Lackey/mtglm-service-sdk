@@ -13,6 +13,10 @@ import { PotentialPrimaryKey } from "../models/PrimaryKeys";
 import { MatchFilters, PlayerFilters, SeasonFilters } from "../models/Filters";
 
 export default class DynamoMapper {
+  constructor() {
+    Function.prototype.bind(this.toScanResults, this);
+  }
+
   buildAttributeMapping = (
     attributes: string[],
     item: DynamoAttributeValues

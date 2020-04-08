@@ -1,3 +1,4 @@
+import { ScryfallCardView, ScryfallSetView } from "../models/Views";
 import {
   ErrorResponse,
   MatchResponse,
@@ -9,29 +10,33 @@ import {
   PlayerRoleResponse
 } from "../models/Responses";
 
-import { ScryfallCardView, ScryfallSetView } from "../models/Views";
+export default class MTGLMLogger {
+  constructor() {
+    Function.prototype.bind(this.success, this);
+  }
 
-export function logSuccess(resource: string, event: string, data: AuthResponse): void;
-export function logSuccess(resource: string, event: string, data: LoginResponse): void;
-export function logSuccess(resource: string, event: string, data: MatchResponse): void;
-export function logSuccess(resource: string, event: string, data: MatchResponse[]): void;
-export function logSuccess(resource: string, event: string, data: PlayerResponse): void;
-export function logSuccess(resource: string, event: string, data: PlayerResponse[]): void;
-export function logSuccess(resource: string, event: string, data: PlayerRoleResponse): void;
-export function logSuccess(resource: string, event: string, data: PlayerRoleResponse[]): void;
-export function logSuccess(resource: string, event: string, data: ScryfallCardView): void;
-export function logSuccess(resource: string, event: string, data: ScryfallCardView[]): void;
-export function logSuccess(resource: string, event: string, data: ScryfallSetView): void;
-export function logSuccess(resource: string, event: string, data: ScryfallSetView[]): void;
-export function logSuccess(resource: string, event: string, data: SeasonResponse): void;
-export function logSuccess(resource: string, event: string, data: SeasonResponse[]): void;
-export function logSuccess(resource: string, event: string, data: SuccessResponse): void;
-export function logSuccess(resource: string, event: string, data: any): void {
-  console.log(`Success: ${resource.toUpperCase()} ${event}`);
-  console.log(`\t> ${data ? JSON.stringify(data) : "Passed"}`);
+  success(resource: string, event: string, data: AuthResponse): void;
+  success(resource: string, event: string, data: LoginResponse): void;
+  success(resource: string, event: string, data: MatchResponse): void;
+  success(resource: string, event: string, data: MatchResponse[]): void;
+  success(resource: string, event: string, data: PlayerResponse): void;
+  success(resource: string, event: string, data: PlayerResponse[]): void;
+  success(resource: string, event: string, data: PlayerRoleResponse): void;
+  success(resource: string, event: string, data: PlayerRoleResponse[]): void;
+  success(resource: string, event: string, data: ScryfallCardView): void;
+  success(resource: string, event: string, data: ScryfallCardView[]): void;
+  success(resource: string, event: string, data: ScryfallSetView): void;
+  success(resource: string, event: string, data: ScryfallSetView[]): void;
+  success(resource: string, event: string, data: SeasonResponse): void;
+  success(resource: string, event: string, data: SeasonResponse[]): void;
+  success(resource: string, event: string, data: SuccessResponse): void;
+  success(resource: string, event: string, data: any): void {
+    console.log(`Success: ${resource.toUpperCase()} ${event}`);
+    console.log(`\t> ${data ? JSON.stringify(data) : "Passed"}`);
+  }
+
+  failure = (resource: string, event: string, reason: ErrorResponse): void => {
+    console.log(`Failure: ${resource.toUpperCase()} ${event}`);
+    console.log(`\t> ${reason ? JSON.stringify(reason) : "Failed"}`);
+  };
 }
-
-export const logFailure = (resource: string, event: string, reason: ErrorResponse): void => {
-  console.log(`Failure: ${resource.toUpperCase()} ${event}`);
-  console.log(`\t> ${reason ? JSON.stringify(reason) : "Failed"}`);
-};

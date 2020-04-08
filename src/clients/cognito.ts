@@ -16,14 +16,17 @@ import { SignUpNode } from "../models/Nodes";
 import { SuccessResponse } from "../models/Responses";
 import { UserAttribute } from "../models/Cognito";
 
-const { ADMIN_PASS, ADMIN_EMAIL, USER_POOL_ID, CLIENT_ID } = process.env;
-
 export default class CognitoClient {
   private provider = new CognitoIdentityServiceProvider({ region: "us-east-1" });
   private mapper = new CognitoMapper();
 
+  private adminPassword = process.env.ADMIN_PASS;
+  private adminEmail = process.env.ADMIN_EMAIL;
+  private userPoolId = process.env.USER_POOL_ID;
+  private clientId = process.env.CLIENT_ID;
+
   login = async (userName: string, password: string): Promise<AuthenticationResultType> => {
-    const authConfig = this.mapper.toAuthConfig(CLIENT_ID, USER_POOL_ID, userName, password);
+    const authConfig = this.mapper.toAuthConfig(this.clientId, this.userPoolId, userName, password);
 
     const result = await this.provider.adminInitiateAuth(authConfig).promise();
 
@@ -31,7 +34,7 @@ export default class CognitoClient {
   };
 
   adminGetUser = async (userName: string): Promise<AdminGetUserResponse> => {
-    const adminGetUserConfig = this.mapper.toAdminGetUserConfig(USER_POOL_ID, userName);
+    const adminGetUserConfig = this.mapper.toAdminGetUserConfig(this.userPoolId, userName);
 
     const result = await this.provider.adminGetUser(adminGetUserConfig).promise();
 
@@ -57,7 +60,7 @@ export default class CognitoClient {
     attributes: UserAttribute[]
   ): Promise<SuccessResponse> => {
     const adminUpdateAttributeConfig = this.mapper.toAdminUpdateAttributeConfig(
-      USER_POOL_ID,
+      this.userPoolId,
       userName,
       attributes
     );
@@ -85,7 +88,7 @@ export default class CognitoClient {
   };
 
   confirmRegistration = async (code: string, userName: string): Promise<SuccessResponse> => {
-    const config = this.mapper.toConfirmSignUpConfig(CLIENT_ID, code, userName);
+    const config = this.mapper.toConfirmSignUpConfig(this.clientId, code, userName);
 
     await this.provider.confirmSignUp(config).promise();
 
@@ -93,7 +96,7 @@ export default class CognitoClient {
   };
 
   resendConfirmationCode = async (userName: string): Promise<SuccessResponse> => {
-    const config = this.mapper.toResendConfirmationCodeConfig(CLIENT_ID, userName);
+    const config = this.mapper.toResendConfirmationCodeConfig(this.clientId, userName);
 
     await this.provider.resendConfirmationCode(config).promise();
 
@@ -101,7 +104,7 @@ export default class CognitoClient {
   };
 
   initAdminAccount = async (): Promise<AdminCreateUserResponse> => {
-    const listUsersConfig = this.mapper.toListUsersConfig(USER_POOL_ID, ADMIN_EMAIL);
+    const listUsersConfig = this.mapper.toListUsersConfig(this.userPoolId, this.adminEmail);
 
     const listUsersResult = await this.provider.listUsers(listUsersConfig).promise();
 
@@ -113,14 +116,19 @@ export default class CognitoClient {
 
     const userName = "admin";
 
-    const config = this.mapper.toAdminCreateUser(userName, USER_POOL_ID, ADMIN_PASS, ADMIN_EMAIL);
+    const config = this.mapper.toAdminCreateUser(
+      userName,
+      this.userPoolId,
+      this.adminPassword,
+      this.adminEmail
+    );
 
     const adminCreateUserResult = await this.provider.adminCreateUser(config).promise();
 
     await this.provider
       .adminSetUserPassword({
-        Password: ADMIN_PASS,
-        UserPoolId: USER_POOL_ID,
+        Password: this.adminPassword,
+        UserPoolId: this.userPoolId,
         Username: userName,
         Permanent: true
       })
@@ -132,7 +140,7 @@ export default class CognitoClient {
   signUp = async (node: SignUpNode): Promise<string> => {
     const { email } = node;
 
-    const listUsersConfig = this.mapper.toListUsersConfig(USER_POOL_ID, email);
+    const listUsersConfig = this.mapper.toListUsersConfig(this.userPoolId, email);
 
     const listUsersResult = await this.provider.listUsers(listUsersConfig).promise();
 
@@ -142,7 +150,7 @@ export default class CognitoClient {
       throw new AccountConflictException();
     }
 
-    const signUpConfig = this.mapper.toSignUpConfig(CLIENT_ID, node);
+    const signUpConfig = this.mapper.toSignUpConfig(this.clientId, node);
 
     const signUpResult = await this.provider.signUp(signUpConfig).promise();
 

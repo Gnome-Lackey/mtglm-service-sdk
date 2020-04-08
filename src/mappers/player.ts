@@ -16,7 +16,7 @@ export default class PlayerMapper {
     epithet: data.epithet
   });
 
-  toCreateItem(data: PlayerCreateRequest): PlayerDynamoCreateItem {
+  toCreateItem = (data: PlayerCreateRequest): PlayerDynamoCreateItem => {
     const date = new Date().valueOf().toString();
 
     return {
@@ -28,7 +28,7 @@ export default class PlayerMapper {
       epithet: data.epithet,
       updatedOn: date
     };
-  }
+  };
 
   toNode = (data: AttributeMap): PlayerNode => ({
     playerId: data.playerId as string,
@@ -64,7 +64,7 @@ export default class PlayerMapper {
     displayName: data.playerName
   });
 
-  toFilters(queryParams: PlayerQueryParameters): PlayerFilters {
+  toFilters = (queryParams: PlayerQueryParameters): PlayerFilters => {
     const filters: PlayerFilters = {};
 
     if (queryParams.name) {
@@ -80,5 +80,5 @@ export default class PlayerMapper {
     }
 
     return filters;
-  }
+  };
 }

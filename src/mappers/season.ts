@@ -10,7 +10,7 @@ import { SeasonQueryParams } from "../models/QueryParameters";
 import { SeasonFilters } from "../models/Filters";
 
 export default class SeasonMapper {
-  toCreateItem(data: SeasonCreateRequest): SeasonDynamoCreateItem {
+  toCreateItem = (data: SeasonCreateRequest): SeasonDynamoCreateItem => {
     const date = new Date().valueOf().toString();
 
     return {
@@ -22,7 +22,7 @@ export default class SeasonMapper {
       playerIds: data.players,
       updatedOn: date
     };
-  }
+  };
 
   toUpdateItem = (data: SeasonUpdateRequest): SeasonDynamoUpdateItem => ({
     isActive: data.isActive,
@@ -48,7 +48,7 @@ export default class SeasonMapper {
     endedOn: data.endDate
   });
 
-  toFilters(queryParams: SeasonQueryParams): SeasonFilters {
+  toFilters = (queryParams: SeasonQueryParams): SeasonFilters => {
     const filters: SeasonFilters = {};
 
     if (queryParams.active === "true" || queryParams.active === "false") {
@@ -64,5 +64,5 @@ export default class SeasonMapper {
     }
 
     return filters;
-  }
+  };
 }
