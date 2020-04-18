@@ -6,10 +6,10 @@ export interface MatchView {
 }
 
 export interface PlayerView {
-  colors: string[];
+  colors?: string[];
   displayName?: string;
   email: string;
-  epithet: string;
+  epithet?: string;
   id: string;
   userName: string;
 }
@@ -51,7 +51,7 @@ export interface ScryfallSetView {
 }
 
 export interface SeasonView {
-  endedOn: string;
+  endedOn?: string;
   id: string;
   isActive: boolean;
   startedOn: string;

@@ -29,8 +29,6 @@ export interface ScryfallCardQueryParameters {
 }
 
 export interface SeasonQueryParams {
-  season?: string;
-  "season|"?: string;
   active?: string;
   "active|"?: string;
 }

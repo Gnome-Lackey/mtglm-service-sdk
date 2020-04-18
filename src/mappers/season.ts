@@ -57,12 +57,6 @@ export default class SeasonMapper {
       filters["isActive|"] = queryParams["active|"] === "true";
     }
 
-    if (queryParams.season) {
-      filters.seasonId = queryParams.season;
-    } else if (queryParams["season|"]) {
-      filters["seasonId|"] = queryParams["season|"];
-    }
-
     return filters;
   };
 }

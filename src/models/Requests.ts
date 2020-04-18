@@ -32,7 +32,7 @@ export interface PlayerCreateRequest {
   epithet?: string;
   favoriteColors?: string[];
   id: string;
-  name: string;
+  name?: string;
   userName: string;
 }
 
@@ -53,7 +53,7 @@ export interface ResendConfirmationCodeBodyRequest {
 }
 
 export interface SeasonCreateRequest {
-  endedOn: string;
+  endedOn?: string;
   isActive: boolean;
   players: string[];
   set: string;
